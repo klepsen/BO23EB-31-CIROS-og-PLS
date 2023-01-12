@@ -26,3 +26,22 @@ Smart maintenance kombinerer konsepter av forutsigbar vedlikehold, maskin og pro
 Nøkkel forhold:
 Dette linker sammen tradisjonelt vedlikehold som inspeksjoner, service, oppgraderinger og reprasjoner, med smarte sensorer/aktuatorer kombinert med 
 forventingsfull software.
+
+### 12.01.23 Daniel.
+### RFID intro kurs
+The transponder is often referred to as the chip. The transponder has a globally unique serial number, which can be read out, but not overwritten. Often this is enough for identification, but the transponder is also able to store data, so if it´s desired, the user must determine the memory requirement of the chip.
+The transponder also can have different design, depending on the use.
+
+The RFID reading and writing devices are made up of an HF (high frequency) module, an antenna and a communication interface.
+The HF and antenna is needed to create an electromagnetic field, to receive back data from the transponder. 
+The communication interface is for data exchange with higher-order IT system. An IT system, e.g., a PLC uses the device for reading out or writing to transponders. 
+
+The range of the RFID system we wants plays a big role, if we have wants a long range system, it can be cause a security problem.
+
+Ranges:
+Main interference include:
+-Ambient conditions
+-Materials
+-Electromagnetic waves
+
+
