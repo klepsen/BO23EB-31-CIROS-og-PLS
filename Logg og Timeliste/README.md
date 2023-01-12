@@ -44,4 +44,8 @@ Main interference include:
 -Materials
 -Electromagnetic waves
 
+###11.01.23 Josef.
+Begynt å skrive forprosjektet. Utforming av dokumentet er ferdig.
 
+###12.01.23 Josef. 
+Gjort ferdig kurs for industry 4.0. Fortsatt med skriving av forprosjekt og gjort alt eg kan med det før møte med veileder 13.01.23
