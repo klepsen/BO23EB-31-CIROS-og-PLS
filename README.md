@@ -1,1 +1,1 @@
-[Forprosjekt_sky_wordfil](https://1drv.ms/w/s!An4Z2t_LGP8EgfcWLFxi_0dPhQg29w?e=6Fj1Y6)
+[Forprosjekt_wordfil](https://1drv.ms/w/s!An4Z2t_LGP8EgfcWLFxi_0dPhQg29w?e=6Fj1Y6)
