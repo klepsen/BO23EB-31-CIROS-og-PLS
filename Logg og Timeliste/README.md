@@ -90,3 +90,10 @@ Tilstede
   
  Bare kort introduksjon til hverandre og litt diskusjon om oppgaven fremover
  plan fremover å møtes hver fredag kl 10:30 på HVL M2 bygget
+ 
+### 17.01.23 Daniel
+Vi startet dagen med å fullføre registrering til fagskolen sitt IT system. Dermed fikk vi tilgang til google drive, som inneholder CIROS og Siemens TIA 15, som vi vil trenge. Problemet etter å ha kommet meg innpå google drive, var at det var en knapp som het «skjulte filer», oppe i høyre hjørne som ikke viste filene for meg. Men etter dette ble løst, kom jeg i gang med å laste ned Siemens TIA portal, der jeg lastet ned hele «SIEMENS» mappen.
+
+Mens det holdt på å laste ned, lastet jeg ned VPN for å holde oss på skole nettet, slik at det er mulig å bruke CIROS uansett hvor vi er. Da gikk jeg inn på siden https://ssl.sfj.no/dana/home/index.cgi, og registrerte meg med brukernavn og passord + microsoft autenticator. Da ble jeg logget inn, og fikk lov å laste ned VPN’en. 
+
+Når vi skal installere SIEMENS TIA, må vi laste ned hele mappen på google drive. Deretter på vi trykke innpå hver mappe, og trykke "start" filen. Den ønsker da å starte pc'en pånytt, for å så gi ut en feilmelding. Deretter vil du starte denne filen enda en gang, som da vil starte installasjons hjelper.
