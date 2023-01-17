@@ -79,4 +79,14 @@ Main interference include:
 ### 12.01.23 Josef. 
 Gjort ferdig kurs for industry 4.0. Fortsatt med skriving av forprosjekt og gjort alt eg kan med det før møte med veileder 13.01.23
 
+### 13.01.23 Johannes
+###Introduksjons møte med HVL veilder Gerhard Nygaard
 
+Tilstede
+  Gerhard Nygaard
+  Johannes Eidsvik
+  Daniel Klepsvik
+  Josef Heimset
+  
+ Bare kort introduksjon til hverandre og litt diskusjon om oppgaven fremover
+ plan fremover å møtes hver fredag kl 10:30 på HVL M2 bygget
