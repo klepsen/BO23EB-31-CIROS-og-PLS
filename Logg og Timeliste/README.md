@@ -97,3 +97,7 @@ Vi startet dagen med å fullføre registrering til fagskolen sitt IT system. Der
 Mens det holdt på å laste ned, lastet jeg ned VPN for å holde oss på skole nettet, slik at det er mulig å bruke CIROS uansett hvor vi er. Da gikk jeg inn på siden https://ssl.sfj.no/dana/home/index.cgi, og registrerte meg med brukernavn og passord + microsoft autenticator. Da ble jeg logget inn, og fikk lov å laste ned VPN’en. 
 
 Når vi skal installere SIEMENS TIA, må vi laste ned hele mappen på google drive. Deretter på vi trykke innpå hver mappe, og trykke "start" filen. Den ønsker da å starte pc'en pånytt, for å så gi ut en feilmelding. Deretter vil du starte denne filen enda en gang, som da vil starte installasjons hjelper.
+
+### 17.01.23 Johannes
+#### Installasjon av VPN for lisens server
+I dag ble vi registrert i fylkes kommunen sine systemer og fikk da tilgang til lisenser for CIROS og TIA v15. Har litt problemer med tilgang til google drive hvor filer for TIA v15 ligger så dette må løses senere, kom rundt dette for CIROS ved å laste ned CIROS 6 direkte fra festo sin nettside. Ellers lastet jeg ned VPN ivanta slik at jeg får tilgang til lisenser fra hvor som helst. Var noe problemer ved dette fikk blandt annet et SSL error som ble fikset ved å cleare SSL state på datamaskinen oppdaterer installasjons instruks dokument for å inkludere hvordan gjøre dette
