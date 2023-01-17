@@ -27,6 +27,37 @@ Nøkkel forhold:
 Dette linker sammen tradisjonelt vedlikehold som inspeksjoner, service, oppgraderinger og reprasjoner, med smarte sensorer/aktuatorer kombinert med 
 forventingsfull software.
 
+### 11.01.23 Josef.
+Begynt å skrive forprosjektet. Utforming av dokumentet er ferdig.
+
+### 11.01.23 Johannes
+### I4.0 og Ciros first steps kurs i festo learning
+Fullførte industry 4.0 kurs mye generelt nyttig info. Fullførte også CIROS first step kurset og lister viktige punkter under
+
+  Modell hierarki i CIROS MPS
+  1. objects(en robot)
+  2. groups (aksen av en robot)
+  3. sleeves (den grafiske representasjon: en overflate eller kube f.eks)
+  4. gripper points (sjette aksen til en robot arm)
+  5. gripping points (work piece gripping point)
+  
+ I/O panel
+  1. linje mellom input og output indikerer tilkobling
+  2. farge av linjen indikerer verdi, ikke lik null grønn og lik null rød
+  3. en output kan være koblet til mange input, men bare en output kan være koblet til hver input
+  4. koblinger slettes alltid på siden av inputs for ryddighets skyld
+  
+ Programmering i CIROS
+  1. F8 for å åpne teach in window for enkel programmering av robot arm. Kan brukes for å manuelt flytte på valgt kontroll objekt
+  2. teach in window har både joint cordinate space og cartesian cordinate space
+  3. posisjons liste programmeres i .mb4 filer og inneholder antall posisjoner en robot skal flyttes gjennom
+  4. robot posisjon i kordinater (x,y,z og orientering av posisjon)
+ 
+ Simulering i CIROS
+  1.start/stopp shortcut f5
+  2. Reset shortcut ctrl + F5
+  3. Neste/forrige steg kommando (kun tilgjengelig hvis valgt vindu er enten posisjon liste eller en robot) shortcut F10
+
 ### 12.01.23 Daniel.
 ### RFID intro kurs
 The transponder is often referred to as the chip. The transponder has a globally unique serial number, which can be read out, but not overwritten. Often this is enough for identification, but the transponder is also able to store data, so if it´s desired, the user must determine the memory requirement of the chip.
@@ -44,8 +75,8 @@ Main interference include:
 -Materials
 -Electromagnetic waves
 
-### 11.01.23 Josef.
-Begynt å skrive forprosjektet. Utforming av dokumentet er ferdig.
 
 ### 12.01.23 Josef. 
 Gjort ferdig kurs for industry 4.0. Fortsatt med skriving av forprosjekt og gjort alt eg kan med det før møte med veileder 13.01.23
+
+
