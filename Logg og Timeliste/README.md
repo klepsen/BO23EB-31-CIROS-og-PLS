@@ -2,7 +2,7 @@
 # Logg-Bachelor
 
 ### 11.01.23 Daniel.
-### Industry 4.0 og HRC Kurs.
+#### Industry 4.0 og HRC Kurs.
 
 Idag gjennomførte jeg kursene for Industy 4.0 og HRC.
 
@@ -31,7 +31,7 @@ forventingsfull software.
 Begynt å skrive forprosjektet. Utforming av dokumentet er ferdig.
 
 ### 11.01.23 Johannes
-### I4.0 og Ciros first steps kurs i festo learning
+#### I4.0 og Ciros first steps kurs i festo learning
 Fullførte industry 4.0 kurs mye generelt nyttig info. Fullførte også CIROS first step kurset og lister viktige punkter under
 
   Modell hierarki i CIROS MPS
@@ -59,7 +59,7 @@ Fullførte industry 4.0 kurs mye generelt nyttig info. Fullførte også CIROS fi
   3. Neste/forrige steg kommando (kun tilgjengelig hvis valgt vindu er enten posisjon liste eller en robot) shortcut F10
 
 ### 12.01.23 Daniel.
-### RFID intro kurs
+#### RFID intro kurs
 The transponder is often referred to as the chip. The transponder has a globally unique serial number, which can be read out, but not overwritten. Often this is enough for identification, but the transponder is also able to store data, so if it´s desired, the user must determine the memory requirement of the chip.
 The transponder also can have different design, depending on the use.
 
@@ -80,7 +80,7 @@ Main interference include:
 Gjort ferdig kurs for industry 4.0. Fortsatt med skriving av forprosjekt og gjort alt eg kan med det før møte med veileder 13.01.23
 
 ### 13.01.23 Johannes
-###Introduksjons møte med HVL veilder Gerhard Nygaard
+#### Introduksjons møte med HVL veilder Gerhard Nygaard
 
 Tilstede
   Gerhard Nygaard
