@@ -104,3 +104,7 @@ I dag ble vi registrert i fylkes kommunen sine systemer og fikk da tilgang til l
 
 ### 17.01.23 Josef
 Fått tilgang til kontoer og lisenser. Lastet ned CIROS 6.4 og gjort introduction to CIROS kurs på FESTO LX. Lastet ned VPN får å få tilgang til Fylkeskommunen sine nettsider og lisenser.
+
+### 18.01.23 Daniel
+I dag var Siemens programmet ferdig, så da skrev jeg installasjonsinstrukser. Når denne var ferdig skrevet, og lastet opp i Github, begynte jeg å laste ned CIROS. Mens jeg holdt på med dette, skrev jeg installasjonsinstrukser, inkludert problemer jeg møtte på underveis. Når Ciros var ferdig installert, lastet jeg filen opp i Github.
+
