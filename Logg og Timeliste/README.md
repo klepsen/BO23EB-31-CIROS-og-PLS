@@ -101,3 +101,6 @@ Når vi skal installere SIEMENS TIA, må vi laste ned hele mappen på google dri
 ### 17.01.23 Johannes
 #### Installasjon av VPN for lisens server
 I dag ble vi registrert i fylkes kommunen sine systemer og fikk da tilgang til lisenser for CIROS og TIA v15. Har litt problemer med tilgang til google drive hvor filer for TIA v15 ligger så dette må løses senere, kom rundt dette for CIROS ved å laste ned CIROS 6 direkte fra festo sin nettside. Ellers lastet jeg ned VPN ivanta slik at jeg får tilgang til lisenser fra hvor som helst. Var noe problemer ved dette fikk blandt annet et SSL error som ble fikset ved å cleare SSL state på datamaskinen oppdaterer installasjons instruks dokument for å inkludere hvordan gjøre dette
+
+### 17.01.23 Josef
+Fått tilgang til kontoer og lisenser. Lastet ned CIROS 6.4 og gjort introduction to CIROS kurs på FESTO LX. Lastet ned VPN får å få tilgang til Fylkeskommunen sine nettsider og lisenser.
