@@ -108,3 +108,5 @@ Fått tilgang til kontoer og lisenser. Lastet ned CIROS 6.4 og gjort introductio
 ### 18.01.23 Daniel
 I dag var Siemens programmet ferdig, så da skrev jeg installasjonsinstrukser. Når denne var ferdig skrevet, og lastet opp i Github, begynte jeg å laste ned CIROS. Mens jeg holdt på med dette, skrev jeg installasjonsinstrukser, inkludert problemer jeg møtte på underveis. Når Ciros var ferdig installert, lastet jeg filen opp i Github.
 
+### 18.01.23 Josef
+Fortsetter opplæring i CIROS både gjennom kurs og på egenhånd. Lastet ned TIA portalen v15 i forberedelse på å koble sammen TIA og CIROS.
