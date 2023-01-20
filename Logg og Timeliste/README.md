@@ -110,3 +110,19 @@ I dag var Siemens programmet ferdig, så da skrev jeg installasjonsinstrukser. N
 
 ### 18.01.23 Josef
 Fortsetter opplæring i CIROS både gjennom kurs og på egenhånd. Lastet ned TIA portalen v15 i forberedelse på å koble sammen TIA og CIROS.
+
+### 20.01.23 Johannes
+#### Møtelogg
+   
+  Tilstede
+  Gerhard Nygaard
+  Johannes Eidsvik
+  Daniel Klepsvik
+  Josef Heimset
+  
+  1. Neste uke (27.01) gjennomgang av forprosjekt med Gerhard, hos bedriften han jobber i
+  2. Ønske om å lage lab oppgaver i SCL til fagskole elevene siden skripting og høytnivå programmering er en viktig del av industrien. Hvilken hammer passer til            jobben?
+  3. Fikk vist fram hvor langt vi er kommet i sammenkobling av TIA og CIROS
+  4. Laget plan for videre utforming av forprosjekt
+  5. Ny møteplass for møter fremover blir CDT, Thormølhensgate 49a Torsdager kl 1300
+  6. Enighet om bruk av outlook fremover for organisering av møter
