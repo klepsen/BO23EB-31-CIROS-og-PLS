@@ -140,7 +140,7 @@ Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften 
 Idag kjørte jeg PLS og CIROS sammen, dette fungerte fint uten at programmet kræsjet som sist. Jeg begynte å ekspremintere litt med å lage funskjonsblokk og skrive kode for å starte lyset på start knappen, når denne ble trykket inn. Dette gikk fint, videre startet jeg også belte på modulen, når start knappen ble trykket inn, som også fungerte. Problemet var at sourcen stoppet opp halveis på beltet og ville ikke kjøre lengre. Videre endte CIROS opp med å klikke litt, med at de nye opplastningene fra PLS´en ikke kom opp i CIROS. Prøve å stoppe PLS simmen, etter råd fra geniet Johannes, som endte opp med at hele CIROS klikket, og jeg måtte lukke CIROS og mistet alt... <br>
 Nottat fra johannes: ikke skyld på mæ for at du gjør det feil idiot :hankey:
 
-### 24.01.23 Johnnaes
+### 24.01.23 Johannes
 Idag fortsatte jeg med å prøve å få CIROS og TIA til å samkjøre hvor jeg da møtte på en del problemer som jeg tror jeg fikk utredet. 
 Uansett fikk CIROS og TIA til å samkjøre og bekreftet dette ved å se at taggen i TIA ble høy når start knappen ble trykket inn i CIROS.
 under er en liste av problemene jeg møtte på og fikser 
