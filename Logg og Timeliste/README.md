@@ -135,3 +135,6 @@ Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften 
   4. Laget plan for videre utforming av forprosjekt
   5. Ny møteplass for møter fremover blir CDT, Thormølhensgate 49a Torsdager kl 1300
   6. Enighet om bruk av outlook fremover for organisering av møter
+
+### 24.01.23 Daniel
+Idag kjørte jeg PLS og CIROS sammen, dette fungerte fint uten at programmet kræsjet som sist. Jeg begynte å ekspremintere litt med å lage funskjonsblokk og skrive kode for å starte lyset på start knappen, når denne ble trykket inn. Dette gikk fint, videre startet jeg også belte på modulen, når start knappen ble trykket inn, som også fungerte. Problemet var at sourcen stoppet opp halveis på beltet og ville ikke kjøre lengre. Videre endte CIROS opp med å klikke litt, med at de nye opplastningene fra PLS´en ikke kom opp i CIROS. Prøve å stoppe PLS simmen, etter råd fra geniet Johannes, som endte opp med at hele CIROS klikket, og jeg måtte lukke CIROS og mistet alt...
