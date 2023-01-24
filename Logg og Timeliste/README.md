@@ -111,8 +111,14 @@ I dag var Siemens programmet ferdig, så da skrev jeg installasjonsinstrukser. N
 ### 18.01.23 Josef
 Fortsetter opplæring i CIROS både gjennom kurs og på egenhånd. Lastet ned TIA portalen v15 i forberedelse på å koble sammen TIA og CIROS.
 
+### 18.01.23 Johannes
+Dagen gikk til å få tilgang til google drive og laste ned programvare CIROS og TIA portal v15
+
 ### 19.01.23 Daniel
 Idag begynte vi å teste PLS og CIROS sammen, med instruksjonsmalen vi fikk av Guttorm. Dette gikk fint, helt fram til jeg skulle starte begge simuleringene sammen, og samkjøre de. Da klikket CIROS, fikk opp feilmelding om at programmet ikke svarte, og det lukket seg automatisk. Dermed mistet jeg alt jeg hadde gjort i CIROS, og da gav eg meg for dagen.
+
+### 19.01.23 Johannes
+Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften "PLCSIM-CIROS-Step-by-step" som vi har fått av Guttorm, kom så langt at vi fikk test kjørt problem er at CIROS henger seg helt opp med engang den kobler til PLCSIM
 
 ### 20.01.23 Johannes
 #### Møtelogg
