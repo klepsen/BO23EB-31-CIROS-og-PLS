@@ -147,7 +147,7 @@ under er en liste av problemene jeg møtte på og fikser
 
   1. Problem med å laste opp prosjekt mapper på Github sin nettside siden de ikke lar en laste opp mer enn 100 filer omgange.
   Fiks er å benytte Github desktop å commit og pushe derfra ettersom den ikke har denne begrensningen
-  2.Hvis noen utganger er feil i IO interfacen til den digitale PLSen i CIROS så henger CIROS ser opp når den kobler til PLCSIM advanced. 
+  2. Hvis noen utganger er feil i IO interfacen til den digitale PLSen i CIROS så henger CIROS ser opp når den kobler til PLCSIM advanced. 
   Fiks for dette er deklarer IO taggene rett og med adresse 42 isteden for 18. Hvis at CIROS fortsatt er hengt opp så kan det fikses med å starte PLCSIM instansen       pånytt eller slette instansen og lage en ny hvis ikke svenskemetoden går heller.
   3. IO tags må oppdateres i IO interface når de endres i TIA(pls programmet)
 
