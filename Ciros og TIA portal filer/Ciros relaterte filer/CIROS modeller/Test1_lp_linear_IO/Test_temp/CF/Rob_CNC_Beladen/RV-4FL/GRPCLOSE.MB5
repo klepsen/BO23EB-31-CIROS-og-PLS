@@ -1,0 +1,29 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - GrpClose
+4 '###
+5 '### ProgramDescription:
+6 '### Close the gripper
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '##########################################################'
+14 '		Decleration Of Input and Output signals
+15 '##########################################################'
+16 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+17 Def Io DI_GripperOpened = Bit,900 'Gripper is opened
+18 Def Io DI_PartGripped = Bit,901 'Part is gripped
+19 Def Io DI_GripperClosed = Bit,902 'Gripper is opened
+20 '
+21 '###########################################################'
+22 '       Program
+23 '###########################################################'
+24 '>>>>>> Close the gripper <<<<<<<<<<'
+25 HClose 1
+26 Dly 0.2
+27 Wait DI_GripperOpened = 0
+28 Wait DI_GripperClosed = 1
+29 Dly 0.2

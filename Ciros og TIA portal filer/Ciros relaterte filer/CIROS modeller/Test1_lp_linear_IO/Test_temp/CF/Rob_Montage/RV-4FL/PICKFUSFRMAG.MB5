@@ -1,0 +1,79 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PickFusFrMag
+4 '###
+5 '### Function Input Parameters:
+6 '###  - MagazineNumber
+7 '###
+8 '### ProgramDescription:
+9 '### Pick a fuse out from the magazine
+10 '###
+11 '### Modifications:
+12 '###  - 27.07.2016		Puneeth Rajendra		Created
+13 '###
+14 '##########################################################'
+15 '
+16 '##########################################################'
+17 '		Decleration Of Input parameters for the Program
+18 '##########################################################'
+19 Def Inte MagazineNumber 'Magazine No sent by the program
+20 FPrm MagazineNumber%
+21 '
+22 '##########################################################'
+23 '		Decleration Of Local Positions
+24 '##########################################################'
+25 Def Pos pFuseMagTarget
+26 '
+27 '##########################################################'
+28 '		Decleration Of Local Variables
+29 '##########################################################'
+30 Def Inte FunErrorStatus
+31 '
+32 '##########################################################'
+33 '		Decleration Of Input and Output signals
+34 '##########################################################'
+35 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+36 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+37 '
+38 '###########################################################'
+39 '       Program
+40 '###########################################################'
+41 '>>>>>> Initialize the values <<<<<<<<<<'
+42 FunErrorStatus% = 0
+43 ReturnErrorValue = 0
+44 JOvrd 20
+45 Accel 15,15
+46 Ovrd m_ProgOvrd
+47 '
+48 '>>>>>> Pick a fuse out from the magazine <<<<<<<<<<'
+49 Select MagazineNumber%
+50 	Case 1
+51 		pFuseMagTarget = P_FuseMagazine1
+52 		Break
+53 	Case 2
+54 		pFuseMagTarget = P_FuseMagazine2
+55 		Break
+56 	Case 3
+57 		pFuseMagTarget = P_FuseMagazine3
+58 		Break
+59 	Default
+60 		FunErrorStatus% = 0'm_UndefFuseNo
+61 		Break
+62 End Select
+63 If (FunErrorStatus% > 0) GoTo *ErrorLable
+64 Spd m_Fast
+65 TOOL P_tGripperFuse
+66 Mov pFuseMagTarget, -150
+67 Mvs pFuseMagTarget, -30
+68 Spd m_Slow
+69 Mvs pFuseMagTarget
+70 Dly 0.5
+71 CallP "GrpClose"
+72 Spd m_Fast
+73 Mvs pFuseMagTarget, -150
+74 *ErrorLable:
+75 	ReturnErrorValue = FunErrorStatus%
+76 *EndOfProg:
+77 	m_ReturnedError = FunErrorStatus%
+78 '
+79 

@@ -1,0 +1,17 @@
+ * RobotSystemDriver.mb5 erstellt um Ansteuerung durch SPS zu simulieren
+ * Die numerische Toolzuweisung (M_TOOL=x) wird in CIROS nicht unterstützt
+	Neue Toolvariable P_tGripper angelegt und benutzt
+ * CIROS unterstützt nur 1024 digitale E/As. Adressen die oberhalb liegen können nicht verarbeitet werden, daher wurden die E/As ab 2000 in den Bereich ab 100 gemappt.
+ 
+ UBP.MB5:
+  Redundante Definition der Roboterpositionen P_* entfernt
+ PLACEINMILL.MB5:
+  Z82: Schreibfehler in GOTO Anweisung gefixt: EndOfPrg > EndOfProg
+ PICKFROMMILL.MB5:
+  Z79: Schreibfehler in GOTO Anweisung gefixt: EndOfPrg > EndOfProg
+ MONITORPALWS.MB5:
+  Z38: P_PCBPaletOrigin nicht definiert (nachgetragen in UBP.MB5)
+ MonitorHome.mb5:
+  Z71: m_IsRobotArmHelp nicht definiert (auskommentiert, wird sonst nirgends verwendet)
+ CNCINTFACE16.MB5:
+  Z69: SELECT mit Strings in Ciros nicht unterstützt (umgebaut auf Inte)

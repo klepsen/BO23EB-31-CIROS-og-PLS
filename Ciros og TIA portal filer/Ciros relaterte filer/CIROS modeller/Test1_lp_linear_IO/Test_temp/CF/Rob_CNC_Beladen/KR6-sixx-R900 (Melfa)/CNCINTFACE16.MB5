@@ -1,0 +1,154 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - CNCIntFace16(Mill 55)
+4 '###
+5 '### ProgramDescription:
+6 '### This is a function block which provides the CNC-Robot-interface, and the I/O starts at address location 16
+7 '###
+8 '### Modifications:
+9 '###  - 21.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '### Process of Operation:
+12 '### Reads the input parameter of the function
+13 '### Command the CNC machine based on the input request
+14 '###
+15 '##########################################################'
+16 '
+17 '##########################################################'
+18 '		Decleration Of Input parameters for the Program
+19 '##########################################################'
+20 Def Char RobotRequest 'Request from the calling program
+21 FPrm RobotRequest$
+22 '
+23 '##########################################################'
+24 '		Decleration Of Input and Output signals
+25 '##########################################################'
+26 '
+27 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+28 Def Io DoorOpened = Bit,16  'CNC door is opened
+29 Def Io DoorClosed = Bit,17  'CNC door is closed
+30 Def Io ViceOpened = Bit,18  'CNC vice is opened
+31 Def Io ViceClosed = Bit,19  'CNC vice is closed
+32 Def Io CNCRefPose = Bit,20  'CNC in Reference mode
+33 Def Io CNCStopped = Bit,21  'CNC axis are stopped
+34 Def Io CNCInError = Bit,22  'CNC has error
+35 '
+36 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+37 Def Io StartNCPrg = Bit,16  'Start the loaded CNC program
+38 Def Io StopCNC = Bit,17   'Select Automatic mode on CNC'SelAutoMod
+39 Def Io OpenDoor = Bit,20  'Open CNC door
+40 Def Io CloseDoor = Bit,21  'Close CNC door
+41 Def Io OpenVice = Bit,22  'Open the vice of the CNC
+42 Def Io CloseVice = Bit,23  'Close the vice of the CNC
+43 '
+44 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+45 Def Io DI_RetryLastStep = Bit,132
+46 Def Io DI_ExitCurrCycle = Bit,133
+47 '
+48 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+49 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+50 '
+51 '##########################################################'
+52 '		Decleration Of Local Variables
+53 '##########################################################'
+54 Def Inte FunErrorStatus
+55 Def Inte selectDummy
+56 '
+57 '###########################################################'
+58 '       Program
+59 '###########################################################'
+60 *RetryStep:
+61  '>>>>>> Initialize the values <<<<<<<<<<'
+62  FunErrorStatus% = 0
+63  ReturnErrorValue = 0
+64  If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+65  '
+66  If ((CNCInError = 1) Or (CNCStopped = 0)) Then
+67   FunErrorStatus% = M_CNCRdyErr
+68  EndIf
+69  If (FunErrorStatus% > 0) GoTo *ErrorLable
+70  
+71  If (RobotRequest$ = "OpenDoor" ) Then 
+72 	selectDummy = 1 
+73  EndIf
+74  If (RobotRequest$ = "CloseDoor" ) Then 
+75 	selectDummy = 2
+76  EndIf
+77  If (RobotRequest$ = "OpenVice" ) Then 
+78 	selectDummy = 3
+79  EndIf
+80  If (RobotRequest$ = "CloseVice" ) Then 
+81 	selectDummy = 4
+82  EndIf
+83  Select selectDummy
+84   Case 1
+85    If (DoorOpened = 0) Then
+86     OpenDoor = 0
+87     CloseDoor = 0
+88     Dly 0.5
+89     OpenDoor = 1
+90     Dly 5
+91     If (DoorOpened = 0 Or DoorClosed = 1) Then
+92      FunErrorStatus% = M_DrOpenErr
+93     EndIf
+94    EndIf
+95    OpenDoor = 0
+96    CloseDoor = 0
+97    Break
+98   Case 2
+99    If (DoorClosed = 0) Then
+100     OpenDoor = 0
+101     CloseDoor = 0
+102     Dly 0.5
+103     CloseDoor = 1
+104     Dly 5.5
+105     If (DoorOpened = 1 Or DoorClosed = 0) Then
+106      FunErrorStatus% = M_DrCloseErr
+107     EndIf
+108    EndIf
+109    OpenDoor = 0
+110    CloseDoor = 0
+111    Break
+112   Case 3
+113    If (ViceOpened = 0) Then
+114     OpenVice = 0
+115     CloseVice = 0
+116     Dly 0.5
+117     OpenVice = 1
+118     Dly 1
+119     If (ViceOpened = 0 Or ViceClosed = 1) Then
+120      FunErrorStatus% = M_ViOpenErr
+121     EndIf
+122    EndIf
+123    OpenVice = 0
+124    CloseVice = 0
+125    Break
+126   Case 4
+127    If (ViceClosed = 0) Then
+128     OpenVice = 0
+129     CloseVice = 0
+130     Dly 0.5
+131     CloseVice = 1
+132     Dly 1
+133     If (ViceOpened = 1 Or ViceClosed = 0) Then
+134      FunErrorStatus% = M_ViCloseErr
+135     EndIf
+136    EndIf
+137    OpenVice = 0
+138    CloseVice = 0
+139    Break
+140  End Select
+141  If (FunErrorStatus% > 0) GoTo *ErrorLable
+142  '>>>>>> Return if no error found <<<<<<<<<<'
+143  GoTo *EndOfProg
+144  '
+145 *ErrorLable:
+146  ReturnErrorValue = FunErrorStatus%
+147  If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+148  If DI_RetryLastStep = 1 GoTo *RetryStep
+149  If DI_ExitCurrCycle = 1 Then
+150   ReturnErrorValue = 0
+151  EndIf
+152 *EndOfProg:
+153  m_ReturnedError = FunErrorStatus%
+154 

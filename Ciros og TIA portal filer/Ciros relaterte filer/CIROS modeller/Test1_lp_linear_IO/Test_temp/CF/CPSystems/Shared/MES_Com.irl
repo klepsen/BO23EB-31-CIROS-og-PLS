@@ -1,0 +1,234 @@
+PROGRAM IRL;
+
+FROM MES_200 IMPORT ALL;
+FROM RFID_100 IMPORT ALL;
+FROM Applikationen IMPORT ALL;
+
+PROCEDURE CheckBufPos(IN real : resourceID; IN real : bufNo; IN real : bufPos; IN real : pNo );
+VAR	
+	bool : bufferPNoCorrect;
+	bool : messageWritten;
+	real : timeoutInSec;
+BEGIN
+{	if( pNo = 0 ) then
+		writeln( '[',myResourceId,'] Warte bis Buffer ', bufNo, bufPos, ' gelöscht ist' );	
+	else 
+		writeln( '[',myResourceId,'] Warte bis Buffer ', bufNo, bufPos, ' mit ',pNo, ' beschrieben ist' );	
+	endif;
+}	
+	messageWritten := false;
+	timeoutInSec := 0;
+	bufferPNoCorrect := false;
+	{Warten bis RFM den Buffer befüllt hat.}
+	while( not bufferPNoCorrect)
+		GetBufPos(myResourceId, bufNo, bufPos );
+		if( pNo	= -1 ) then
+			bufferPNoCorrect := I_PNo > 0;
+		else
+			bufferPNoCorrect := pNo = I_PNo;
+		endif;
+		
+		wait 1 sec;
+		timeoutInSec := timeoutInSec + 1;
+		if( timeoutInSec > 15 AND messageWritten = false ) then
+	if( pNo = 0 ) then
+				writeln( 'ResourceID [',myResourceId,'] Puffer ', bufNo, bufPos, ' wurde nicht gelöscht' );	
+	else 
+				writeln( 'ResourceID [',myResourceId,'] Puffer ', bufNo, bufPos, ' wurde nicht mit ',pNo, ' beschrieben' );	
+			endif;
+		endif;
+	endwhile;
+	
+	if( messageWritten ) then
+		writeln( '    ResourceID [',myResourceId,'] Puffer ', bufNo, bufPos, ' needed ', timeoutInSec, ' seconds to update!' );
+	endif;
+ENDPROC;
+
+PROCEDURE SetBufPosWithCheck(IN real : resourceID; IN real : oNo; IN real : oPos; IN real : bufNo; IN real : bufPos; IN real : palletID; IN real : pNo; IN real : boxID );
+VAR	
+BEGIN
+	SetBufPos(resourceID, oNo, oPos, bufNo, bufPos, palletID, pNo, boxID);
+	CheckBufPos(resourceID, bufNo, bufPos, pNo);
+ENDPROC;
+
+FUNCTION checkForWorkInThisStation( IN INT : RFIDId; INOUT RFIDFields : rfid; INOUT MESFields : mes; IN STRING : errorInfo ) : bool;
+VAR 
+	INPUT REAL	:	CIROS_Serie_ID	AT 97;	
+	INPUT REAL	:	CIROS_GM_ID	AT 98;	
+	INPUT REAL	:	CIROS_App_ID	AT 99;	
+	
+	BOOL : modulIstLager;
+BEGIN
+	modulIstLager := (CIROS_App_ID = 13) OR (CIROS_App_ID = 16);
+	{RFID lesen}	
+	if( RFIDId = 1 ) then
+		RFIDA_ReadMES( rfid, errorInfo );
+	else
+		RFIDB_ReadMES( rfid );
+	endif;
+	
+	{Ist die Station für MES konfguriert oder soll der Standardablauf starten?}
+	if( myResourceId = 0 ) then
+		saveMESAnswer( mes ); {Vom Benutzer gesetzte Parameter speichern}
+		return( true ); {Standardablauf}
+	else
+		{Enthaelt der RFID Auftragsdaten?}
+		if( rfid.ONo <> 0 AND rfid.PNo <> 0 AND rfid.OPos <> 0 ) then
+			{...die noch aktuell sind?}
+			claimCommunication( true );
+			GetOpForONoOPos( rfid.ONo, rfid.OPos );
+			saveMESAnswer( mes );
+			claimCommunication( false );
+				
+			if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
+				if( modulIstLager ) then
+					if((RFIDId = 1 AND (mes.Parameter[1] = 90 OR mes.Parameter[2] = 90)) OR
+					   (RFIDId = 2 AND (mes.Parameter[1] = 91 OR mes.Parameter[2] = 91))) then
+						return( rfid.ResourceId = myResourceId );
+					else
+						return( false );
+					endif;
+				else
+					return( rfid.ResourceId = myResourceId );
+				endif;
+			else
+				{Falls nein, WT loeschen}
+				if( RFIDId = 1 ) then
+					RFIDA_ClearCarrier();
+				else
+					RFIDB_ClearCarrier();
+				endif;
+			endif;
+		else
+			{Ist der WT auch nicht an eine andere Resource gebunden?}
+			if( rfid.ResourceId = 0 ) then
+				{Gibt es einen Auftrag fuer meine Station?}
+				claimCommunication( true );
+				if( modulIstLager ) then
+					GetOpForASRS( myResourceId, RFIDId );
+				else
+					GetFirstOpForRsc( myResourceId );
+				endif;				
+				
+				saveMESAnswer( mes );
+				claimCommunication( false );
+				
+				if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
+					{Falls ja, WT beschreiben und Bearbeitung starten}
+					claimCommunication( true );
+					SetCarrier( mes.ONo, mes.OPos, rfid.carrierId, mes.PNo );
+					claimCommunication( false );
+					return( true );
+				endif;			
+			endif;
+		endif;
+	endif;
+	
+	return( false );
+ENDFCT;
+
+FUNCTION callApp( IN INT : RFIDId; IN int : appId; IN RFIDFields : rfid; IN MESFields : mes ) : real;
+VAR
+	INPUT REAL	:	CIROS_Serie_ID	AT 97;	
+	INPUT REAL	:	CIROS_GM_ID	AT 98;	
+	INPUT REAL	:	CIROS_App_ID	AT 99;	
+	
+	int : appRetCode;
+	real: nextId;
+	
+	BOOL : modulIstLager;
+{	RFIDFields : test;}
+BEGIN
+	modulIstLager := CIROS_App_ID = 13;
+
+	claimCommunication( true );
+	{Start der Bearbeitung an MES melden}
+	OpStart( mes.ONo, mes.OPos );
+	claimCommunication( false );
+
+	{Applikation aufrufen}
+	setStateBusy( true );
+	appRetCode := App(appId, mes);
+	setStateBusy( false );		
+	
+	{Bearbeitungsende mit entspr. Fehlercode an MES melden}
+	claimCommunication( true );
+	OpEnd( appRetCode, mes.ONo, mes.OPos, rfid.carrierId );
+	saveMESAnswer( mes );
+	claimCommunication( false );
+
+	nextId := 0;
+	{Weitere Bearbeitung notwendig?}
+	if( mes.OpNo <> 0 ) then
+		{Falls ja: Träger aktualisieren und nächste ID merken}
+		nextId := mes.ResourceId;
+		if( RFIDId = 1 ) then
+			RFIDA_Write_MES_ResourceId( nextId );
+			RFIDA_Write_MES_ONo( mes.ONo );
+			RFIDA_Write_MES_PNo( mes.PNo );
+			RFIDA_Write_MES_OPos( mes.OPos );
+			RFIDA_Write_MES_OpNo( mes.OpNo );
+			
+{			RFIDA_ReadMES( test );
+			if( test.ResourceId <> nextId OR
+			    test.ONo <> mes.ONo OR
+			    test.PNo <> mes.PNo OR	
+			    test.OPos <> mes.OPos OR
+			    test.OpNo <> mes.OpNo ) then
+			    
+			    writeln( 'RFIDA beschreiben fehlgeschlagen in Station ', myResourceId);
+			    writeln( nextId, test.ResourceId);
+			    writeln( mes.ONo, test.ONo);
+			    writeln( mes.PNo, test.PNo);
+			    writeln( mes.OpNo, test.OpNo);
+			    writeln( mes.OPos, test.OPos);
+			endif;
+}			    
+			
+
+		else
+			RFIDB_Write_MES_ResourceId( nextId );
+			RFIDB_Write_MES_ONo( mes.ONo );
+			RFIDB_Write_MES_PNo( mes.PNo );
+			RFIDB_Write_MES_OPos( mes.OPos );
+			RFIDB_Write_MES_OpNo( mes.OpNo );
+			
+{			RFIDB_ReadMES( test );
+			if( test.ResourceId <> nextId OR
+			    test.ONo <> mes.ONo OR
+			    test.PNo <> mes.PNo OR	
+			    test.OPos <> mes.OPos OR
+			    test.OpNo <> mes.OpNo ) then
+			    
+			    writeln( 'RFIDB beschreiben fehlgeschlagen in Station ', myResourceId);
+			    writeln( nextId, test.ResourceId);
+			    writeln( mes.ONo, test.ONo);
+			    writeln( mes.PNo, test.PNo);
+			    writeln( mes.OpNo, test.OpNo);
+			    writeln( mes.OPos, test.OPos);
+			endif;
+}			
+		endif;
+	else
+		{Falls nein: Träger löschen und bei MES als frei melden}
+		if( RFIDId = 1 ) then
+			RFIDA_ClearCarrier();
+		else
+			RFIDB_ClearCarrier();
+		endif;
+		claimCommunication( true );
+		SetCarrier( 0, 0, rfid.carrierId, 0 );
+		claimCommunication( false );
+	endif;
+	
+	if( modulIstLager ) then
+		{Nächste Station ist am anderen Stopper sein}
+		if( mes.StopperID <> RFIDId ) then
+			nextId := 0;
+		endif;
+	endif;
+	return nextId;
+ENDFCT;
+
+ENDPROGRAM;
+

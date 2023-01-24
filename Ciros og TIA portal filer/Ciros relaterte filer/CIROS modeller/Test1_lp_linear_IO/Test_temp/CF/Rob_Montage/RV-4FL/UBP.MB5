@@ -1,0 +1,114 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - UBP [ User Base Program]
+4 '###
+5 '### ProgramDescription:
+6 '### This a global program having list of all global variable, flags, positions
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '### Global positions to teach :
+12 '###  ____________________________________________________
+13 '### | Position Name   |  Tool No & Workpiece   | Comment |
+14 '### |_________________|_____used to teach______|_________|
+15 '### | 1234567890123456|				  	    |
+16 '### | P_AssemblePCB   | Tool 1 - PCB			| PCB assembly postion
+17 '### | P_PCBPalletHelp | Tool 1 - PCB			| Safe position above the PCB pallet
+18 '### | P_PCBPaletOrigin| Tool 1 - PCB			| Origin position of the PCB pallet
+19 '### | P_PCBPaletXDir  | Tool 1 - PCB			| X Direction position of the PCB pallet
+20 '### | P_PCBPaletYDir  | Tool 1 - PCB			| Y Direction position of the PCB pallet
+21 '### | P_PCBPaletXYDir | Tool 1 - PCB			| XY Direction position of the PCB pallet
+22 '### | P_CarrierStop1  | Tool 2 - Upper part WP 	| Carrier stopper position 1
+23 '### | P_CarrierStop2  | Tool 2 - Upper part WP 	| Carrier stopper position 2
+24 '### | P_Vision	       | Tool 2 - Upper part WP 	| Position on the vision field
+25 '### | P_AssembleWp    | Tool 2 - Upper part WP 	| Upper part assembly position
+26 '### | P_AssembleFuse1 | Tool 3 - Fuse			| Fuse assembly position 1
+27 '### | P_AssembleFuse2 | Tool 3 - Fuse	  	    	| Fuse assembly position 2
+28 '### | P_FuseMagazine1 | Tool 3 - Fuse	  	    	| 1st Fuse Magazine position
+29 '### | P_FuseMagazine2 | Tool 3 - Fuse	  	    	| 2nd Fuse Magazine position
+30 '### | P_FuseMagazine3 | Tool 3 - Fuse	  	    	| 3rd Fuse Magazine position
+31 '### | P_Home	       | Tool 4 - Robot Flange  	| Home position
+32 '### | P_GrpStorageVac | Tool 4 - Robot Flange  	| Vacuum gripper storage position
+33 '### | P_GrpStorageWp  | Tool 4 - Robot Flange  	| Workpiece gripper storage position
+34 '### | P_GrpStorageFuse| Tool 4 - Robot Flange  	| Fuse gripper storage position
+35 '###
+36 '##########################################################'
+37 '
+38 '##########################################################'
+39 '		Decleration Of Global Positions
+40 '##########################################################'
+41 'Def Pos P_AssemblePCB
+42 'Def Pos P_PCBPalletHelp
+43 'Def Pos P_PCBPaletOrigin
+44 'Def Pos P_PCBPaletXDir
+45 'Def Pos P_PCBPaletYDir
+46 'Def Pos P_PCBPaletXYDir
+47 'Def Pos P_CarrierStop1
+48 'Def Pos P_CarrierStop2
+49 'Def Pos P_Vision
+50 'Def Pos P_VisionNew
+51 'Def Pos P_AssembleWp
+52 'Def Pos P_AssembleFuse1
+53 'Def Pos P_AssembleFuse2
+54 'Def Pos P_FuseMagazine1
+55 'Def Pos P_FuseMagazine2
+56 'Def Pos P_FuseMagazine3
+57 'Def Pos P_Home
+58 'Def Pos P_GrpStorageVac
+59 'Def Pos P_GrpStorageWp
+60 'Def Pos P_GrpStorageFuse
+61 'Def Pos P_ToolX180
+62 'Def Pos P_ToolXZ180
+63 'Def Pos P_ToolX80
+64 Def Pos P_tGripperVac
+65 Def Pos P_tGripperWP
+66 Def Pos P_tGripperFuse
+67 Def Pos P_tGripperNone
+68 '
+69 '##########################################################'
+70 '		Decleration Of Global Variables
+71 '##########################################################'
+72 '>>>>>>>>>>>> Constant Return values to the PLC <<<<<<<<<<<'
+73 Def Inte m_RobotToolError' Unknow tool type gripped
+74 Def Inte m_UndefStopperNo' Undefined Stopper Number
+75 Def Inte m_NoWPAtStopper ' No workpiece on the Pallet at stopper
+76 Def Inte m_CameraError   ' Camera found no workpiece
+77 Def Inte m_WPAssPoseFull ' Workpiece assembly position occupied
+78 Def Inte m_WPNotPresent  ' No workpiece placed at the assembly position
+79 Def Inte m_WPUpSideDown  ' Workpiece upside down oriented
+80 Def Inte m_WPWrongOrient ' Workpiece orientation not correct
+81 Def Inte m_WPNotClampped ' Workpiece not clampped at assembly position
+82 Def Inte m_UndefPCBPalNo ' Unknow PCB pallet number
+83 Def Inte m_NoPCBAtPalNo  ' No PCB found at the ordered Pallet Number
+84 Def Inte m_FuseMagEmpty  ' All Fuse magazines empty
+85 '
+86 '>>>>>>>>>>>> Flags and internally used varibles <<<<<<<<<<<'
+87 Def Inte m_PCBPalletCount'
+88 Def Inte m_IsInitDone  '
+89 Def Inte m_IsTrayLocked  '
+90 Def Inte m_IsTryUsedByRob'
+91 Def Inte m_IsVacuumOn  '
+92 Def Inte m_IsBlinkerOn  '
+93 Def Inte m_IsVacEnrgSvEna'
+94 Def Inte m_IsRobotArmTray'
+95 Def Inte m_IsRbtotArmHome'
+96 Def Inte m_CurrentGripper'
+97 Def Inte m_AvailFuseMagNo'
+98 Def Inte m_GripperVac  '
+99 Def Inte m_GripperWP  '
+100 Def Inte m_GripperFuse  '
+101 Def Inte m_GripperNone   '
+102 Def Inte m_StopperNo  '
+103 Def Inte m_ReturnedError '
+104 Def Inte m_MaxNoPCBPallet '
+105 Def Inte m_VerySlow   '
+106 Def Inte m_Slow    '
+107 Def Inte m_Fast    '
+108 Def Inte m_ProgOvrd    '
+109 Def Inte m_XminCamField
+110 Def Inte m_XmaxCamField
+111 Def Inte m_YminCamField
+112 Def Inte m_YmaxCamField
+113 '
+114 

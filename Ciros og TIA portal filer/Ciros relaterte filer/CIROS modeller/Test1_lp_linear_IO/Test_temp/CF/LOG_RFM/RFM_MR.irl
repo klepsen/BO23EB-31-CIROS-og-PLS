@@ -1,0 +1,254 @@
+PROGRAM IRL;
+FROM RFM_150 IMPORT ALL;
+
+VAR
+	INPUT BOOL	:	IsIdle	AT 0;
+	INPUT BOOL	:	IsMoving	AT 1;
+	INPUT BOOL	:	IsBlocked	AT 2;
+	INPUT BOOL	:	WT_erkannt	AT 3;
+	INPUT BOOL	:	isBoxCarrier	AT 4;
+	INPUT BOOL	:	fromPLC		AT 10;
+
+VAR
+	OUTPUT BOOL	:	moveAbs	AT 0;
+	OUTPUT BOOL	:	moveRel	AT 1;
+	OUTPUT BOOL	:	ignoreObstacles	AT 2;
+	OUTPUT BOOL	:	allowLateralMovement AT 3;
+	OUTPUT BOOL	:	cancelMovement AT 4;
+	OUTPUT BOOL	:	toPLC		AT 10;
+	OUTPUT BOOL	:	BandEin		AT 11;
+	OUTPUT BOOL	:	BandRevers	AT 12;
+	OUTPUT BOOL	:	LED_On		AT 13;
+	OUTPUT BOOL	:	LED_Blink	AT 14;
+	
+	OUTPUT REAL	:	targetX	AT 0;
+	OUTPUT REAL	:	targetY	AT 1;
+	OUTPUT REAL	:	targetPhi	AT 2;
+VAR 
+	RFMJob : job;
+	bool : jobActive;
+	
+PROCEDURE sendSignalTicks(IN int : count);
+VAR 
+	int : i;
+BEGIN
+	if( not isBoxCarrier ) then
+		for i := 1 to count-1
+			toPLC := true;	
+			wait for fromPLC;
+			toPLC := false;	
+			wait for not fromPLC;
+		endfor;
+	endif;
+	
+	{Einen (Bzw. letzten) Tick immer senden und nicht zurück nehmen!}
+	toPLC := true;	
+	wait for fromPLC;
+
+ENDPROC;
+
+PROCEDURE jobGoToPosition(IN RFMJob : job);
+VAR 
+	int : i;
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	moveAbs := false;
+	wait for isIdle;
+	ignoreObstacles := false;
+	targetX := job.pos_x;
+	targetY := job.pos_y;
+	targetPhi := job.pos_phi;
+	moveAbs := true;
+	wait for not isIdle;
+	moveAbs := false;
+	wait for isIdle;
+
+	RFM_SendState( false, true, NoError );
+
+ENDPROC;
+
+PROCEDURE jobDockTo(IN RFMJob : job);
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	moveRel := false;
+	wait for isIdle;
+	allowLateralMovement := true;
+	targetX := 180;
+	targetY := 60;
+	targetPhi := 0;
+	moveRel := true;
+	wait for not isIdle;
+	moveRel := false;
+	wait for isIdle;
+
+	targetX := 0;
+	targetY := -60;
+	targetPhi := 0;
+	moveRel := true;
+	wait for not isIdle;
+	moveRel := false;
+	wait for isIdle;
+	
+	targetX := 60;
+	targetY := 0;
+	targetPhi := 0;
+	moveRel := true;
+	wait for not isIdle;
+	moveRel := false;
+	wait for isIdle;
+	
+	allowLateralMovement := false;
+	
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+PROCEDURE jobLoadBox(IN RFMJob : job);
+VAR
+	int : i;
+BEGIN
+	RFM_SendState( true, false, NoError );
+
+	sendSignalTicks(4);
+	
+	if( isBoxCarrier ) then
+		BandRevers := true;
+	endif;	
+	BandEin := true;
+	
+	wait for WT_erkannt;
+	BandEin := false;
+	
+	toPLC := false;	
+	wait for not fromPLC;
+	
+	BandRevers := false;
+	
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+PROCEDURE jobUnloadBox(IN RFMJob : job);
+VAR
+	int : i;
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	sendSignalTicks(8);
+	BandEin := true;
+	wait for not WT_erkannt;
+	wait 1.0 sec;
+	
+	toPLC := false;	
+	wait for not fromPLC;
+
+	BandEin := false;
+
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+PROCEDURE jobUndock(IN RFMJob : job);
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	moveRel := false;
+	wait for isIdle;
+	allowLateralMovement := true;
+	targetX := -240;
+	targetY := 0;
+	targetPhi := 0;
+	moveRel := true;
+	wait for not isIdle;
+	moveRel := false;
+	wait for isIdle;
+	allowLateralMovement := false;
+	
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+
+PROCEDURE jobDockToCharger(IN RFMJob : job);
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	WAIT 5 SEC;
+	
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+PROCEDURE jobUndockCharger(IN RFMJob : job);
+BEGIN
+	RFM_SendState( true, false, NoError );
+	
+	WAIT 5 SEC;
+	
+	RFM_SendState( false, true, NoError );
+ENDPROC;
+
+PROCESS runJobs();
+VAR
+	RFMJob : job;
+BEGIN
+	while( true )
+		RFM_CobyJob( job );
+		if NewJob = true then
+			LED_Blink := true;
+			if( job.GoToPosition ) then
+				jobGoToPosition( job );
+			endif;
+			if( job.DockTo ) then
+				jobDockTo( job );
+			endif;
+			if( job.LoadBox ) then
+				jobLoadBox( job );
+			endif;
+			if( job.UnloadBox ) then
+				jobUnloadBox( job );
+			endif;
+			if( job.Undock ) then
+				jobUndock( job );
+			endif;
+			if( job.DockToCharger ) then
+				jobDockToCharger( job );
+			endif;
+			if( job.UndockCharger ) then
+				jobUndockCharger( job );
+			endif;	
+			LED_Blink := false;
+		endif;
+	endwhile;
+ENDPROCESS;
+
+BEGIN
+
+laserwarning := false;
+lasersafety := true;
+boxpresent := false;
+
+batteryvoltage := 24; 
+current := 3;
+
+LED_On := true;
+
+jobActive := false;
+RFM_ClearJob( job );
+
+RUN runJobs;
+
+while( true )
+	WAIT 0.0 SEC;
+	if( CancelJob ) then
+		CANCEL runJobs;
+		RFM_ClearJob( job );
+		RFM_SendState( false, true, NoError );
+		
+		if( not IsIdle ) then
+			cancelMovement := true;
+			wait for IsIdle;
+			cancelMovement := false;
+		endif;
+		RUN runJobs;
+	endif;
+endwhile;
+
+ENDPROGRAM;

@@ -1,0 +1,42 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PickWpFrmAss
+4 '###
+5 '### ProgramDescription:
+6 '### Pick the upper part from assembly position
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '##########################################################'
+14 '		Decleration Of Input and Output signals
+15 '##########################################################'
+16 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+17 Def Io DI_WPClampped = Bit,16 'Upper part is clampped at assembly position
+18 '
+19 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+20 Def Io DO_WPMountLock = Bit,16 'Lock the upper part at assembly position
+21 '
+22 '###########################################################'
+23 '       Program
+24 '###########################################################'
+25 '>>>>>> Pick the upper part from assembly position <<<<<<<<<<'
+26 Spd m_Fast
+27 JOvrd 20
+28 Ovrd m_ProgOvrd
+29 Accel 15,15
+30 TOOL P_tGripperWP
+31 Mov P_AssembleWp, -120
+32 Mvs P_AssembleWp, -30
+33 Spd m_Slow
+34 Mvs P_AssembleWp
+35 Dly 0.5
+36 CallP "GrpClose"
+37 DO_WPMountLock = 0
+38 Dly 0.2
+39 Wait DI_WPClampped = 0
+40 Spd m_Fast
+41 Mvs P_AssembleWp, -120
+42 

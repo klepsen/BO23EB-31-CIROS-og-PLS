@@ -1,0 +1,96 @@
+TIMESTAMP: DATE: 17.6.2019 TIME: 12:7:57
+---------------------------------------------------------------------------
+
+MODUL: §$$$PROG$$$INITIALIZE§ 
+COMPILER: cirosCompilerMelfaBasic5.EXE
+VERSION: 6.4.3.16513
+NEXT GLOBAL ADDRESS: <0:2>
+
+---------------------------------------------------------------------------
+EXPORT
+---------------------------------------------------------------------------
+
+PROC: $$$PROG$$$INITIALIZE
+FORMAL PARAMETERS: 
+
+---------------------------------------------------------------------------
+IMPORT
+---------------------------------------------------------------------------
+
+VAR: M_ISTRYUSEDBYROB
+TYPE: INT
+
+VAR: M_ISVACENRGSVENA
+TYPE: INT
+
+---------------------------------------------------------------------------
+SYMBOLIC IRDATA
+---------------------------------------------------------------------------
+DECLARATION :
+BEGIN
+DEFREC,1,I; <TYPE:1,I><USER:$$$PROG$$$INITIALIZE#RETURNERRORVALUE> :=  <0:0>
+DEFREC,1,I; <TYPE:1,I><USER:$$$PROG$$$INITIALIZE#DO_MOUNTLOCK> :=  <0:1>
+END
+---------------------------------------------------------------------------
+BODY :
+BEGIN
+TSKBEG,0,25,'TASK::$$$PROG$$$INITIALIZE';
+MOVDAT,I,%ST,0,I,%CON,24270;
+!EXT:$$$PROG$$$INITIALIZE!!$$$PROG$$$INITIALIZE:_$$$PROG$$$INITIALIZE!PRCBEG,0,'$$$PROG$$$INITIALIZE';
+BLBEG,0,1;
+!$$$PROG$$$INITIALIZE:1!CASE,%ST,0,-1,?$$$PROG$$$INITIALIZE:2?;
+!$$$PROG$$$INITIALIZE:2!!$$$PROG$$$INITIALIZE:_1!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,1;
+!$$$PROG$$$INITIALIZE:_2!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,2;
+!$$$PROG$$$INITIALIZE:_3!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,3;
+!$$$PROG$$$INITIALIZE:_4!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,4;
+!$$$PROG$$$INITIALIZE:_5!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,5;
+!$$$PROG$$$INITIALIZE:_6!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,6;
+!$$$PROG$$$INITIALIZE:_7!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,7;
+!$$$PROG$$$INITIALIZE:_8!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,8;
+!$$$PROG$$$INITIALIZE:_9!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,9;
+!$$$PROG$$$INITIALIZE:_10!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,10;
+!$$$PROG$$$INITIALIZE:_11!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,11;
+!$$$PROG$$$INITIALIZE:_12!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,12;
+!$$$PROG$$$INITIALIZE:_13!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,13;
+!$$$PROG$$$INITIALIZE:_14!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,14;
+!$$$PROG$$$INITIALIZE:_15!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,15;
+!$$$PROG$$$INITIALIZE:_16!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,16;
+!$$$PROG$$$INITIALIZE:_17!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,17;
+!$$$PROG$$$INITIALIZE:_18!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,18;
+!$$$PROG$$$INITIALIZE:_19!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,19;
+!$$$PROG$$$INITIALIZE:_20!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,20;
+!$$$PROG$$$INITIALIZE:_21!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,21;
+!$$$PROG$$$INITIALIZE:_22!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,22;
+!$$$PROG$$$INITIALIZE:_23!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,23;
+!$$$PROG$$$INITIALIZE:_24!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,24;
+!$$$PROG$$$INITIALIZE:_25!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,25;
+LINENO,25,'..\INITIALIZE.MB5',513;
+MOVDAT,I,%BR,<0:0>,I,%CON,0;
+DIGOUT,%CON,164,%CON,8,I,%BR,<0:0>,%ST,0,I,%CON,0;
+CLRST,I;
+!$$$PROG$$$INITIALIZE:_26!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,26;
+LINENO,26,'..\INITIALIZE.MB5',513;
+MOVDAT,I,%BR,<0:1>,I,%CON,0;
+DIGOUT,%CON,16,%CON,1,I,%BR,<0:1>,%ST,0,I,%CON,0;
+CLRST,I;
+!$$$PROG$$$INITIALIZE:_27!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,27;
+LINENO,27,'..\INITIALIZE.MB5',513;
+MOVDAT,I,%BR,<EXT:M_ISTRYUSEDBYROB:0>,I,%CON,0;
+!$$$PROG$$$INITIALIZE:_28!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,28;
+LINENO,28,'..\INITIALIZE.MB5',513;
+MOVDAT,I,%BR,<EXT:M_ISVACENRGSVENA:0>,I,%CON,0;
+!$$$PROG$$$INITIALIZE:_29!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,29;
+LINENO,29,'..\INITIALIZE.MB5',513;
+SUSPND,%CON,0.2;
+!$$$PROG$$$INITIALIZE:_30!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,30;
+!$$$PROG$$$INITIALIZE:_31!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,31;
+!$$$PROG$$$INITIALIZE:0!CONSTATE,%CON,-2,%CON,0;
+BLEND;
+PRCEND;
+TSKEND;
+END
+---------------------------------------------------------------------------
+SUBROUTINES :
+BEGIN
+END
+---------------------------------------------------------------------------

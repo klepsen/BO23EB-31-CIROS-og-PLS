@@ -1,0 +1,219 @@
+PROGRAM IRL;
+
+FROM MES_200 IMPORT ALL;
+FROM RFID_100 IMPORT ALL;
+FROM APPLIKATION_LAGER IMPORT ALL;
+FROM APPLIKATIONEN IMPORT ALL;
+FROM MES_COM IMPORT ALL;
+
+VAR
+	INT : appId;
+	INT : handlingControlledByStopperPos;
+	
+PROCESS ControlBand1();
+VAR
+	INPUT BOOL	:	DI_StopperUnten  AT 8;
+	INPUT BOOL	:	DI_Bit0		 AT 9;
+	INPUT BOOL	:	DI_Bit1		 AT 10;
+	INPUT BOOL	:	DI_Bit2		 AT 11;
+	INPUT BOOL	:	DI_Bit3	 	 AT 12;
+	INPUT BOOL	:	DI_PaletteLinks	 AT 14;
+	INPUT BOOL	:	DI_PaletteRechts AT 15;	
+	
+	INPUT BOOL	: 	DI_Stauueberwachung AT 90;
+	INPUT BOOL	: 	DI_Bandabschaltung  AT 91;
+	
+	OUTPUT BOOL	:	DO_BandRechtslauf   	AT 15;
+	OUTPUT BOOL	:	DO_BandLinkslauf    	AT 16;
+	OUTPUT BOOL	:	DO_BandSchleichgang 	AT 17;
+	OUTPUT BOOL	:	DO_StopperSenken   	AT 7;
+	
+	RFIDFields : rfid;
+	MESFields : mes;
+	
+	REAL : nextResourceId;	
+BEGIN
+	handlingControlledByStopperPos := 1;
+	
+	{MES Zustand initialisieren}
+	setStateBusy( true );
+	referenzfahrt();
+	setStateBusy( false );
+	
+	handlingControlledByStopperPos := 0;
+	
+	DO_BandLinkslauf := false;
+	DO_BandSchleichgang := false;
+	DO_StopperSenken := false;
+
+while( true )
+	{BandEin}
+	DO_BandRechtslauf := true;
+
+	{Auf WT warten}
+	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
+	while( not RFIDAInventory() )
+		wait 0.5 SEC;
+	endwhile;
+
+
+	if( checkForWorkInThisStation( 1, rfid, mes, 'ControlBand1' ) ) then
+		{Falls ja, Bearbeitung starten und nächste Station ermitteln}
+		if( DI_Bandabschaltung ) then
+			{Band stoppen}
+			DO_BandRechtslauf := false;
+		endif;
+		wait for handlingControlledByStopperPos = 0;
+		handlingControlledByStopperPos := 1;
+		nextResourceId := callApp( 1, appId, rfid, mes );
+		handlingControlledByStopperPos := 0;
+	endif;
+	
+	{Findet der nächste Arbeitsschritt in dieser Station statt?}
+	if( nextResourceId <> myResourceId ) then
+		{Release WT}
+		
+		DO_BandRechtslauf := true;	
+		
+		if( DI_Stauueberwachung ) then
+			wait for not DI_PaletteRechts;
+		endif;
+		
+		DO_StopperSenken := true;
+		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
+		while( RFIDAInventory() )
+			wait 0.1 SEC;
+		endwhile;
+		DO_StopperSenken := false;
+	endif;
+endwhile;
+ENDPROCESS;
+
+PROCESS ControlBand2();
+VAR
+	INPUT BOOL	:	DI_StopperUnten  AT 0;
+	INPUT BOOL	:	DI_Bit0		 AT 1;
+	INPUT BOOL	:	DI_Bit1		 AT 2;
+	INPUT BOOL	:	DI_Bit2		 AT 3;
+	INPUT BOOL	:	DI_Bit3	 	 AT 4;
+	INPUT BOOL	:	DI_PaletteLinks	 AT 22;
+	INPUT BOOL	:	DI_PaletteRechts AT 23;	
+	
+	INPUT BOOL	: 	DI_Stauueberwachung AT 90;
+	INPUT BOOL	: 	DI_Bandabschaltung  AT 91;
+	
+	OUTPUT BOOL	:	DO_BandRechtslauf   	AT 19;
+	OUTPUT BOOL	:	DO_BandLinkslauf    	AT 20;
+	OUTPUT BOOL	:	DO_BandSchleichgang 	AT 21;
+	OUTPUT BOOL	:	DO_StopperSenken   	AT -1;
+	
+	RFIDFields : rfid;
+	MESFields : mes;
+	
+	REAL : nextResourceId;	
+	BOOL : firstWorkOrder;
+BEGIN
+	DO_BandLinkslauf := false;
+	DO_BandSchleichgang := false;
+	DO_StopperSenken := false;
+
+while( true )
+	{BandEin}
+	DO_BandRechtslauf := true;
+
+	{Auf WT warten}
+	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
+	while( not RFIDBInventory() )
+		wait 0.5 SEC;
+	endwhile;
+
+
+	if( checkForWorkInThisStation( 2, rfid, mes, 'ControlBand2' ) ) then
+		{Falls ja, Bearbeitung starten und nächste Station ermitteln}
+		if( DI_Bandabschaltung ) then
+			{Band stoppen}
+			DO_BandRechtslauf := false;
+		endif;	
+		wait for handlingControlledByStopperPos = 0;
+		handlingControlledByStopperPos := 2;
+		nextResourceId := callApp( 2, appId, rfid, mes );
+		handlingControlledByStopperPos := 0;
+	
+	endif;
+	
+	{Findet der nächste Arbeitsschritt in dieser Station statt?}
+	if( nextResourceId <> myResourceId ) then
+		{Release WT}
+		DO_BandRechtslauf := true;
+		
+		if( DI_Stauueberwachung ) then
+			wait for not DI_PaletteRechts;
+		endif;
+
+		DO_StopperSenken := true;
+		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
+		while( RFIDBInventory() )
+			wait 0.1 SEC;
+		endwhile;
+		DO_StopperSenken := false;
+	endif;
+endwhile;
+ENDPROCESS;
+	
+{
+ Weiche
+}
+PROCESS CPFactory_Lager();
+VAR
+	BOOL : boolDummy;
+	
+BEGIN
+	{MES Zustand initialisieren}
+	setStateMESMode( true );
+	setStateReset( false );
+ENDPROCESS;
+
+PROCEDURE startGM(IN INT: gmId);
+BEGIN
+	CASE gmId OF
+	WHEN 3: 
+		RUN CPFactory_Lager;
+		RUN ControlBand1;
+		RUN ControlBand2;
+	ENDCASE;
+ENDPROC;
+
+PROCEDURE stopGM(IN INT: gmId);
+BEGIN
+	CASE gmId OF
+	WHEN 3: 
+		CANCEL CPFactory_Lager;
+		CANCEL ControlBand1;
+		CANCEL ControlBand2;
+	ENDCASE;
+ENDPROC;
+{
+ Hauptmodul
+}
+PROCEDURE CPFactory_StartLager(IN INT: gmId; IN INT: _appId);
+VAR
+	INPUT BOOL	:	DI_SPSEnable 	 AT 16;
+BEGIN
+	appId := _appId;
+	appId := 13; {Aktuell nur ein Lager implementiert}
+while( true )
+	setStateError( 0 );
+	setStateAuto( false );
+
+	WAIT FOR DI_SPSEnable;
+	startGM(gmId);
+	setStateError( -1 );
+	setStateAuto( true );
+	
+	WAIT FOR NOT DI_SPSEnable;
+	stopGM(gmId);
+	
+endwhile;	
+
+ENDPROC;
+ENDPROGRAM;

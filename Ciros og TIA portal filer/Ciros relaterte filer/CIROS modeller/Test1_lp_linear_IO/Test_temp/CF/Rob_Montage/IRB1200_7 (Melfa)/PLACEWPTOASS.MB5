@@ -1,0 +1,91 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PlaceWpToAss
+4 '###
+5 '### ProgramDescription:
+6 '### Place the upper part at assembly position
+7 '### Clamp the upper part
+8 '### Verify the assembly sensors
+9 '###
+10 '### Modifications:
+11 '###  - 27.07.2016		Puneeth Rajendra		Created
+12 '###
+13 '##########################################################'
+14 '
+15 '##########################################################'
+16 '		Decleration Of Input and Output signals
+17 '##########################################################'
+18 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+19 Def Io DI_WPClampped = Bit,16 'Upper part is clampped at assembly position
+20 Def Io DI_WPAvail = Bit,17   'upper part available at assembly position
+21 Def Io DI_WPOrientOk = Bit,18 'upper part not upside down at assembly position
+22 Def Io DI_WPHoleOk = Bit,19   'Hole found on the upper part
+23 '
+24 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+25 Def Io DO_WPMountLock = Bit,16 'Lock the upper part at assembly position
+26 '
+27 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+28 Def Io DI_RetryLastStep = Bit,132
+29 Def Io DI_ExitCurrCycle = Bit,133
+30 '
+31 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+32 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+33 '
+34 '##########################################################'
+35 '		Decleration Of Local Variables
+36 '##########################################################'
+37 Def Inte FunErrorStatus
+38 '
+39 '###########################################################'
+40 '       Program
+41 '###########################################################'
+42 '>>>>>> Initialize the values <<<<<<<<<<'
+43 FunErrorStatus% = 0
+44 ReturnErrorValue = 0
+45 DO_WPMountLock = 0
+46 JOvrd 20
+47 Ovrd m_ProgOvrd
+48 Accel 15,15
+49 '
+50 '>>>>>> Place upper part at assembly pose <<<<<<<<<<'
+51 Spd m_Fast
+52 TOOL P_tGripperWP
+53 Mov P_AssembleWp, -120
+54 Mvs P_AssembleWp, -30
+55 Spd m_Slow
+56 Mvs P_AssembleWp + (0,-2,0,0,0,0)
+57 Dly 0.5
+58 CallP "GrpOpen"
+59 Spd m_Fast
+60 Mvs P_AssembleWp, -120 
+61 TOOL P_tGripperNone
+62 Mov P_Home WTH DO_WPMountLock = 1
+63 *RetryStep:
+64 	FunErrorStatus% = 0
+65 	ReturnErrorValue = 0
+66 	If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+67 	If (DI_WPClampped = 0) Then
+68 		FunErrorStatus% = m_WPNotClampped
+69 	EndIf
+70 	If (DI_WPAvail = 0) Then
+71 		FunErrorStatus% = m_WPNotPresent
+72 	EndIf
+73 	If (DI_WPOrientOk = 0) Then
+74 		FunErrorStatus% = m_WPUpSideDown
+75 	EndIf
+76 	If (DI_WPHoleOk = 0) Then
+77 		FunErrorStatus% = m_WPWrongOrient
+78 	EndIf
+79 	If (FunErrorStatus% > 0) GoTo *ErrorLable
+80 	GoTo *EndOfProg
+81  *ErrorLable:
+82 	DO_WPMountLock = 0
+83 	ReturnErrorValue = FunErrorStatus%
+84 	If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+85 	If DI_RetryLastStep = 1 GoTo *RetryStep
+86 	If DI_ExitCurrCycle = 1 Then
+87 		ReturnErrorValue = 0
+88 	EndIf
+89 *EndOfProg:
+90 	m_ReturnedError = FunErrorStatus%
+91 

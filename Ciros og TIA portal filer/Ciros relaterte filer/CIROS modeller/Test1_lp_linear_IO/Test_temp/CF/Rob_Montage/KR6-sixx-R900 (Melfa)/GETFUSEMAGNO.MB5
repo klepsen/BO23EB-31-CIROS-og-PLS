@@ -1,0 +1,69 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - GetFuseMagNo
+4 '###
+5 '### ProgramDescription:
+6 '### Check for fuse magazine with fuses
+7 '### Copy magazine number to global variable
+8 '###
+9 '### Modifications:
+10 '###  - 27.07.2016		Puneeth Rajendra		Created
+11 '###
+12 '##########################################################'
+13 '
+14 '##########################################################'
+15 '		Decleration Of Input and Output signals
+16 '##########################################################'
+17 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+18 Def Io DI_FuseMag1Avail = Bit,21 'Fuse available in fuse magazine 1
+19 Def Io DI_FuseMag2Avail = Bit,22 'Fuse available in fuse magazine 2
+20 Def Io DI_FuseMag3Avail = Bit,23 'Fuse available in fuse magazine 3
+21 '
+22 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+23 Def Io DO_MountLock = Bit,16
+24 '
+25 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+26 Def Io DI_RetryLastStep = Bit,132
+27 Def Io DI_ExitCurrCycle = Bit,133
+28 '
+29 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+30 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+31 '
+32 '##########################################################'
+33 '		Decleration Of Local Variables
+34 '##########################################################'
+35 Def Inte FunErrorStatus
+36 '
+37 '###########################################################'
+38 '       Program
+39 '###########################################################'
+40 *RetryStep:
+41 FunErrorStatus = 0
+42 ReturnErrorValue = 0
+43  If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+44  FunErrorStatus% = 100
+45  If (DI_FuseMag1Avail = 1) Then
+46   FunErrorStatus% = 1
+47  EndIf
+48  If (FunErrorStatus% < 4) GoTo *EndOfProg
+49  If (DI_FuseMag2Avail = 1) Then
+50   FunErrorStatus% = 2
+51  EndIf
+52  If (FunErrorStatus% < 4) GoTo *EndOfProg
+53  If (DI_FuseMag3Avail = 1) Then
+54   FunErrorStatus% = 3
+55  EndIf
+56  If (FunErrorStatus% < 4) GoTo *EndOfProg
+57  FunErrorStatus% = m_FuseMagEmpty
+58  *ErrorLable:
+59  ReturnErrorValue = FunErrorStatus%
+60  If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+61  If DI_RetryLastStep = 1 GoTo *RetryStep
+62  If DI_ExitCurrCycle = 1 Then
+63   ReturnErrorValue = 0
+64   DO_MountLock = 0
+65  EndIf
+66 *EndOfProg:
+67  m_AvailFuseMagNo = FunErrorStatus%
+68  m_ReturnedError = FunErrorStatus%
+69 

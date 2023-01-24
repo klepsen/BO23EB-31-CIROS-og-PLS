@@ -1,0 +1,97 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PickPCBFrPal
+4 '###
+5 '### ProgramDescription:
+6 '### Check if PCB pallet in position
+7 '### Pick the PCB from Pallet
+8 '###
+9 '### Modifications:
+10 '###  - 27.07.2016		Puneeth Rajendra		Created
+11 '###
+12 '##########################################################'
+13 '
+14 '##########################################################'
+15 '		Decleration Of PCB Pallet
+16 '##########################################################'
+17 Def Plt 1,P_PCBPaletOrigin,P_PCBPaletYDir,P_PCBPaletXDir,P_PCBPaletXYDir,2,5,2
+18 '
+19 '##########################################################'
+20 '		Decleration Of Input and Output signals
+21 '##########################################################'
+22 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+23 Def Io DI_PCBGripped = Bit,900 'PCB pallet is gripped
+24 '
+25 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+26 Def Io DO_MountLock = Bit,16
+27 '
+28 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+29 Def Io DI_RetryLastStep = Bit,132
+30 Def Io DI_ExitCurrCycle = Bit,133
+31 Def Io DI_PalletInFront = Bit,244 'PCB pallet inside the cell
+32 Def Io DI_PCBPalletNo = Byte,172
+33 '
+34 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+35 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+36 '
+37 '##########################################################'
+38 '		Decleration Of Local Variables
+39 '##########################################################'
+40 Def Inte FunErrorStatus
+41 '
+42 '###########################################################'
+43 '       Program
+44 '###########################################################'
+45 Spd m_Fast
+46 Ovrd m_ProgOvrd
+47 JOvrd 20
+48 Accel 15,15
+49 TOOL P_tGripperVac
+50 Mov P_PCBPalletHelp
+51 *RetryStep:
+52 	'>>>>>> Check if PCB pallet in position <<<<<<<<<<'
+53 	FunErrorStatus% = 0
+54 	ReturnErrorValue = 0
+55 	JOvrd 20
+56 	If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+57 	'
+58 	Spd m_Fast
+59 	TOOL P_tGripperVac
+60 	FunErrorStatus% = 0
+61 	m_IsVacEnrgSvEna = 0
+62 	CallP "GrpClose"
+63 	If ((m_IsTrayLocked = 0) Or (DI_PCBPalletNo > 10) Or (DI_PCBPalletNo < 1) Or (DI_PalletInFront = 0)) GoTo *RetryStep
+64 	m_IsTryUsedByRob = 1
+65 	'
+66 	'>>>>>> Pick the PCB from Pallet <<<<<<<<<<'
+67 	Mov (Plt 1,DI_PCBPalletNo),-150
+68 	Mvs (Plt 1,DI_PCBPalletNo), -30
+69 	Spd m_Slow
+70 	Mvs (Plt 1,DI_PCBPalletNo)
+71 	Dly 0.5
+72 	CallP "GrpVacOn"
+73 	Mvs (Plt 1,DI_PCBPalletNo), -30
+74 	m_IsVacEnrgSvEna = 1
+75 	Spd m_Fast
+76 	Mvs (Plt 1,DI_PCBPalletNo),-150
+77 	m_IsTryUsedByRob = 0
+78 	If (DI_PCBGripped = 0) Then
+79 	m_IsVacEnrgSvEna = 0
+80 	CallP "GrpClose"
+81 	FunErrorStatus% = m_NoPCBAtPalNo
+82 	EndIf
+83 	If (FunErrorStatus% > 0) GoTo *ErrorLable
+84 	'>>>>>> Return if no error found <<<<<<<<<<'
+85 	GoTo *EndOfProg
+86 	'
+87 *ErrorLable:
+88 	ReturnErrorValue = FunErrorStatus%
+89 	If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+90 	If DI_RetryLastStep = 1 GoTo *RetryStep
+91 	If DI_ExitCurrCycle = 1 Then
+92 		ReturnErrorValue = 0
+93 		DO_MountLock = 0
+94 	EndIf
+95 *EndOfProg:
+96 	m_ReturnedError = FunErrorStatus%
+97 
