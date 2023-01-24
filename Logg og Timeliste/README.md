@@ -138,3 +138,17 @@ Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften 
 
 ### 24.01.23 Daniel
 Idag kjørte jeg PLS og CIROS sammen, dette fungerte fint uten at programmet kræsjet som sist. Jeg begynte å ekspremintere litt med å lage funskjonsblokk og skrive kode for å starte lyset på start knappen, når denne ble trykket inn. Dette gikk fint, videre startet jeg også belte på modulen, når start knappen ble trykket inn, som også fungerte. Problemet var at sourcen stoppet opp halveis på beltet og ville ikke kjøre lengre. Videre endte CIROS opp med å klikke litt, med at de nye opplastningene fra PLS´en ikke kom opp i CIROS. Prøve å stoppe PLS simmen, etter råd fra geniet Johannes, som endte opp med at hele CIROS klikket, og jeg måtte lukke CIROS og mistet alt...
+Nottat fra johannes: ikke skyld på mæ for at du gjør det feil idiot :hankey:
+
+### 24.01.23 Johnnaes
+Idag fortsatte jeg med å prøve å få CIROS og TIA til å samkjøre hvor jeg da møtte på en del problemer som jeg tror jeg fikk utredet. 
+Uansett fikk CIROS og TIA til å samkjøre og bekreftet dette ved å se at taggen i TIA ble høy når start knappen ble trykket inn i CIROS.
+under er en liste av problemene jeg møtte på og fikser 
+
+  1. Problem med å laste opp prosjekt mapper på Github sin nettside siden de ikke lar en laste opp mer enn 100 filer omgange.
+  Fiks er å benytte Github desktop å commit og pushe derfra ettersom den ikke har denne begrensningen
+  2.Hvis noen utganger er feil i IO interfacen til den digitale PLSen i CIROS så henger CIROS ser opp når den kobler til PLCSIM advanced. 
+  Fiks for dette er deklarer IO taggene rett og med adresse 42 isteden for 18. Hvis at CIROS fortsatt er hengt opp så kan det fikses med å starte PLCSIM instansen       pånytt eller slette instansen og lage en ny hvis ikke svenskemetoden går heller.
+  3. IO tags må oppdateres i IO interface når de endres i TIA(pls programmet)
+
+ 
