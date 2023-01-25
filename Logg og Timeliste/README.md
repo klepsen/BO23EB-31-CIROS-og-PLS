@@ -151,4 +151,6 @@ under er en liste av problemene jeg møtte på og fikser
   Fiks for dette er deklarer IO taggene rett og med adresse 42 isteden for 18. Hvis at CIROS fortsatt er hengt opp så kan det fikses med å starte PLCSIM instansen       pånytt eller slette instansen og lage en ny hvis ikke svenskemetoden går heller.
   3. IO tags må oppdateres i IO interface når de endres i TIA(pls programmet)
 
+### 25.01.23 Daniel
+Idag fortsatte jeg med det sammen, kjøre PLS og CIROS sammen. Jeg lastet ned programmene som Johannes har lastet opp. Det første problemet jeg møtte på, var at jeg ikke hadde riktig navn på PLCSIM instansen. Det ble fikset med at jeg lagde et nytt instansnavn med samme navn som PLS prosjektet mitt. Deretter måtte jeg laste opp prosjektet til simulatoren. Så måtte jeg inn på CIROS prosjetet, og skifte navn på simulatoren under SPS_A. Tok en sjekk på at I/O var riktig. Og da endte programmet opp med å kjøre godt.
  
