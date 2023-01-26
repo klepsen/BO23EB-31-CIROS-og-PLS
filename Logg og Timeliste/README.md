@@ -1,5 +1,5 @@
 ## [Timeliste](https://1drv.ms/x/s!An4Z2t_LGP8Egfc6DhIkCmNc5jDyEw?e=exzyWd)
-## [Forprosjekt](https://1drv.ms/x/s!An4Z2t_LGP8EgfdFcF29zzugesIIWw?e=vxi3Ss)
+## [Forprosjekt Gantt](https://1drv.ms/x/s!An4Z2t_LGP8EgfdFcF29zzugesIIWw?e=vxi3Ss)
 # Logg-Bachelor
 
 ### 11.01.23 Daniel.
