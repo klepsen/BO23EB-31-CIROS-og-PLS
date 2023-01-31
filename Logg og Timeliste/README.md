@@ -128,7 +128,7 @@ Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften 
   Gerhard Nygaard
   Johannes Eidsvik
   Daniel Klepsvik
-  Josef Heimset
+  Josef Hellesen-Heimset
   
   1. Neste uke (27.01) gjennomgang av forprosjekt med Gerhard, hos bedriften han jobber i
   2. Ønske om å lage lab oppgaver i SCL til fagskole elevene siden skripting og høytnivå programmering er en viktig del av industrien. Hvilken hammer passer til            jobben?
@@ -155,3 +155,20 @@ under er en liste av problemene jeg møtte på og fikser
 ### 25.01.23 Daniel
 Idag fortsatte jeg med det sammen, kjøre PLS og CIROS sammen. Jeg lastet ned programmene som Johannes har lastet opp. Det første problemet jeg møtte på, var at jeg ikke hadde riktig navn på PLCSIM instansen. Det ble fikset med at jeg lagde et nytt instansnavn med samme navn som PLS prosjektet mitt. Deretter måtte jeg laste opp prosjektet til simulatoren. Så måtte jeg inn på CIROS prosjetet, og skifte navn på simulatoren under SPS_A. Tok en sjekk på at I/O var riktig. Og da endte programmet opp med å kjøre godt. Da lagde jeg en funksjonsblokk som startet start knapp lyset, og beltet i framover rettning når startknappen ble trykket. Problemet da var at objektet ble stoppet midt på båndet, dette var pga inngang I1.4 ble høy. Dette er nok en simulering av CIROS av en RFID tag som gir signal om at objektet skal stoppe der.
  
+ ### 25.01.23 Josef
+ Begynte med å kjøre CIROS og TIA Portalen i lag, var på jobb når dei andre møtte i går så eg tok igjen det dei hadde gjort dagen før. 
+ 
+ ### 26.01.23 Josef
+ ### Møtelogg
+ 
+ Tilstede:
+ Daniel Klepsvik
+ Gerhard nygaard
+ Johannes Eidsvik
+ Josef Hellesen-Heimset
+
+Planen for møtet denne gangen var hovedsaklig å vise fram forprosjektrapporten og få tilbakemelding på denne. Gerhard hadde flere forslag på ting vi kunne forbedre.
+
+1. Lage eksempeloppgave for studentene på Fagskulen vi kan legge til i rapporten.
+2. Legge inn element fra rapportmalen til HVL
+3. Rette rapporten mer mot studentene på Fagskulen.
