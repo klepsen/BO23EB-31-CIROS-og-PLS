@@ -172,3 +172,6 @@ Planen for møtet denne gangen var hovedsaklig å vise fram forprosjektrapporten
 1. Lage eksempeloppgave for studentene på Fagskulen vi kan legge til i rapporten.
 2. Legge inn element fra rapportmalen til HVL
 3. Rette rapporten mer mot studentene på Fagskulen.
+
+### Daniel 31.01.23
+Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt til, fikk endret at arbeidstykke stoppet på midten med PLS-en, dette gjorde jeg ved å endre Q1.7 til true, når carr.stopper.detectet ble true. Vidrer initialiserte jeg at hvis man trykket på reset btn så lyste den, og at båndet skiftet rettning det kjørte. Samt satt jeg meg inn i hvordan I/O oppbyggningen til CIROS fungerte.
