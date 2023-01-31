@@ -162,10 +162,10 @@ Idag fortsatte jeg med det sammen, kjøre PLS og CIROS sammen. Jeg lastet ned pr
  ### Møtelogg
  
  Tilstede:
- Daniel Klepsvik
- Gerhard nygaard
- Johannes Eidsvik
- Josef Hellesen-Heimset
+ Daniel Klepsvik <br>
+ Gerhard nygaard <br>
+ Johannes Eidsvik <br>
+ Josef Hellesen-Heimset <br>
 
 Planen for møtet denne gangen var hovedsaklig å vise fram forprosjektrapporten og få tilbakemelding på denne. Gerhard hadde flere forslag på ting vi kunne forbedre.
 
