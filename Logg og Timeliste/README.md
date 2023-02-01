@@ -158,6 +158,12 @@ Idag fortsatte jeg med det sammen, kjøre PLS og CIROS sammen. Jeg lastet ned pr
  ### 25.01.23 Josef
  Begynte med å kjøre CIROS og TIA Portalen i lag, var på jobb når dei andre møtte i går så eg tok igjen det dei hadde gjort dagen før. 
  
+ ### 25.01.23 Johannes
+ Skrevet på forprosjekt rapport del drøfting av løsningner (2.2) og litt rettskriving og revidering ellers
+ 
+ ### 26.01.23 Johannes
+ Skrevet videre på forporsjekt rapport i forberedelse til møte med Gerhard senere idag
+ 
  ### 26.01.23 Josef
  ### Møtelogg
  
@@ -175,3 +181,6 @@ Planen for møtet denne gangen var hovedsaklig å vise fram forprosjektrapporten
 
 ### Daniel 31.01.23
 Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt til, fikk endret at arbeidstykke stoppet på midten med PLS-en, dette gjorde jeg ved å endre Q1.7 til true, når carr.stopper.detectet ble true. Vidrer initialiserte jeg at hvis man trykket på reset btn så lyste den, og at båndet skiftet rettning det kjørte. Samt satt jeg meg inn i hvordan I/O oppbyggningen til CIROS fungerte.
+
+### Johannes 31.01.23
+Jobbet med forprosjekt rapport og skrevet ferdig valgt løsning (2.3)
