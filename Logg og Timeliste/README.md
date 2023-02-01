@@ -184,3 +184,9 @@ Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt 
 
 ### Johannes 31.01.23
 Jobbet med forprosjekt rapport og skrevet ferdig valgt løsning (2.3)
+
+### Josef 31.01.23
+Jobbet lii med forprosjektrapporten, men hovedsaklig jobbet videre med modellen i CIROS og TIA
+
+### Josef 01.02.23
+Jobbet Videre med modellen min I CIROS og TIA. Laget ekstra funksjonalitet for knappene. Begynt å skrive kode i TIA som er i blokkdiagram og ikke SCL.
