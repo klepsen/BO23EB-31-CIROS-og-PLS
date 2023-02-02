@@ -190,3 +190,9 @@ Jobbet lii med forprosjektrapporten, men hovedsaklig jobbet videre med modellen 
 
 ### Josef 01.02.23
 Jobbet Videre med modellen min I CIROS og TIA. Laget ekstra funksjonalitet for knappene. Begynt å skrive kode i TIA som er i blokkdiagram og ikke SCL.
+
+### Johannes 01.02.23
+Skrevet videre på forprosjekt rapporten
+
+### Johanens 02.02.23
+Jobbet med forprosjekt rapport og møte med veileder ble flytte fra 02.02 til 03.02
