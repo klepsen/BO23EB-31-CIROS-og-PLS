@@ -196,3 +196,6 @@ Skrevet videre på forprosjekt rapporten
 
 ### Johanens 02.02.23
 Jobbet med forprosjekt rapport og møte med veileder ble flytte fra 02.02 til 03.02
+
+### Josef 02.02.23
+Arbeidet videre med modellen min i CIROS. Lagt på applokasjonsmodul og laget funksjonsblokk og tag-table for den.
