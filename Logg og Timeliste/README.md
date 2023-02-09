@@ -1,4 +1,5 @@
 ## [Timeliste](https://1drv.ms/x/s!An4Z2t_LGP8Egfc6DhIkCmNc5jDyEw?e=exzyWd)
+## [Ganttplan](https://1drv.ms/x/s!An4Z2t_LGP8EgfdFcF29zzugesIIWw?e=vxi3Ss)
 # Logg-Bachelor
 
 ### 11.01.23 Daniel.
@@ -127,7 +128,7 @@ Idag fikk vi startet å prøve koble sammen CIROS og TIA. Vi fulgte oppskriften 
   Gerhard Nygaard
   Johannes Eidsvik
   Daniel Klepsvik
-  Josef Heimset
+  Josef Hellesen-Heimset
   
   1. Neste uke (27.01) gjennomgang av forprosjekt med Gerhard, hos bedriften han jobber i
   2. Ønske om å lage lab oppgaver i SCL til fagskole elevene siden skripting og høytnivå programmering er en viktig del av industrien. Hvilken hammer passer til            jobben?
@@ -154,3 +155,54 @@ under er en liste av problemene jeg møtte på og fikser
 ### 25.01.23 Daniel
 Idag fortsatte jeg med det sammen, kjøre PLS og CIROS sammen. Jeg lastet ned programmene som Johannes har lastet opp. Det første problemet jeg møtte på, var at jeg ikke hadde riktig navn på PLCSIM instansen. Det ble fikset med at jeg lagde et nytt instansnavn med samme navn som PLS prosjektet mitt. Deretter måtte jeg laste opp prosjektet til simulatoren. Så måtte jeg inn på CIROS prosjetet, og skifte navn på simulatoren under SPS_A. Tok en sjekk på at I/O var riktig. Og da endte programmet opp med å kjøre godt. Da lagde jeg en funksjonsblokk som startet start knapp lyset, og beltet i framover rettning når startknappen ble trykket. Problemet da var at objektet ble stoppet midt på båndet, dette var pga inngang I1.4 ble høy. Dette er nok en simulering av CIROS av en RFID tag som gir signal om at objektet skal stoppe der.
  
+ ### 25.01.23 Josef
+ Begynte med å kjøre CIROS og TIA Portalen i lag, var på jobb når dei andre møtte i går så eg tok igjen det dei hadde gjort dagen før. 
+ 
+ ### 25.01.23 Johannes
+ Skrevet på forprosjekt rapport del drøfting av løsningner (2.2) og litt rettskriving og revidering ellers
+ 
+ ### 26.01.23 Johannes
+ Skrevet videre på forporsjekt rapport i forberedelse til møte med Gerhard senere idag
+ 
+ ### 26.01.23 Josef
+ ### Møtelogg
+ 
+ Tilstede:
+ Daniel Klepsvik <br>
+ Gerhard nygaard <br>
+ Johannes Eidsvik <br>
+ Josef Hellesen-Heimset <br>
+
+Planen for møtet denne gangen var hovedsaklig å vise fram forprosjektrapporten og få tilbakemelding på denne. Gerhard hadde flere forslag på ting vi kunne forbedre.
+
+1. Lage eksempeloppgave for studentene på Fagskulen vi kan legge til i rapporten.
+2. Legge inn element fra rapportmalen til HVL
+3. Rette rapporten mer mot studentene på Fagskulen.
+
+### Daniel 31.01.23
+Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt til, fikk endret at arbeidstykke stoppet på midten med PLS-en, dette gjorde jeg ved å endre Q1.7 til true, når carr.stopper.detectet ble true. Vidrer initialiserte jeg at hvis man trykket på reset btn så lyste den, og at båndet skiftet rettning det kjørte. Samt satt jeg meg inn i hvordan I/O oppbyggningen til CIROS fungerte.
+
+### Johannes 31.01.23
+Jobbet med forprosjekt rapport og skrevet ferdig valgt løsning (2.3)
+
+### Josef 31.01.23
+Jobbet lii med forprosjektrapporten, men hovedsaklig jobbet videre med modellen i CIROS og TIA
+
+### Josef 01.02.23
+Jobbet Videre med modellen min I CIROS og TIA. Laget ekstra funksjonalitet for knappene. Begynt å skrive kode i TIA som er i blokkdiagram og ikke SCL.
+
+### Johannes 01.02.23
+Skrevet videre på forprosjekt rapporten
+
+### Johanens 02.02.23
+Jobbet med forprosjekt rapport og møte med veileder ble flytte fra 02.02 til 03.02
+
+### Josef 02.02.23
+Arbeidet videre med modellen min i CIROS. Lagt på applokasjonsmodul og laget funksjonsblokk og tag-table for den.
+
+### Daniel 07.02.23
+Idag fikk jeg lagt til iDrill modulen til å stå oppå transportbåndet. Måten jeg gjorde dette på var ved å lagge den til fra "Model library", så fant jeg I/O på denne siden: https://ip.festo-didactic.com/InfoPortal/CPFactoryLab/hardware/application/datasheet.php?model=CP-AM-iDRILL&lang=en 
+Deretter lagde jeg følgende I/O i tag table i TIA portalen. Det står på nettsiden at det er CECC I/O, men det funket helt fint å bruke disse som vanlig PLS I/O. Når disse var lagt inn i tag table, måtte jeg inn i SPS_A for CP_L_CONVEYOR, og la til de nye tagsene i CIROS. Når jeg såg at disse funket, koden jeg i fb´en, og gjorde slik at arbeidsstykket skulle stoppe på midten og bli borret på. Problemet med dette var at sourcen vår ikke gav arbeidstykke med front og bak deksel. Men jeg klarte å finne denne sourcen på en ferdiglaget drill inni model library. Når jeg fikk til denne fungerte drillen sånn halveis, neste steg vil være å legge til en timer som kan telle hvor lenge den skal borre fremme og bak på dekselet.
+
+### Johannes 07.02.23
+Lest opp på navn konvensjoner i pls programmering fra plcopen og IEC. Ellers bare definert tag-table til lagerhus modellen og startet å gjøre meg kjent med modellen. Så langt kommet frem til at modellen har 2 pls-er 1 for transportbåndene og 1 for den kartesiske roboten
