@@ -184,3 +184,25 @@ Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt 
 
 ### Johannes 31.01.23
 Jobbet med forprosjekt rapport og skrevet ferdig valgt løsning (2.3)
+
+### Josef 31.01.23
+Jobbet lii med forprosjektrapporten, men hovedsaklig jobbet videre med modellen i CIROS og TIA
+
+### Josef 01.02.23
+Jobbet Videre med modellen min I CIROS og TIA. Laget ekstra funksjonalitet for knappene. Begynt å skrive kode i TIA som er i blokkdiagram og ikke SCL.
+
+### Johannes 01.02.23
+Skrevet videre på forprosjekt rapporten
+
+### Johanens 02.02.23
+Jobbet med forprosjekt rapport og møte med veileder ble flytte fra 02.02 til 03.02
+
+### Josef 02.02.23
+Arbeidet videre med modellen min i CIROS. Lagt på applokasjonsmodul og laget funksjonsblokk og tag-table for den.
+
+### Daniel 07.02.23
+Idag fikk jeg lagt til iDrill modulen til å stå oppå transportbåndet. Måten jeg gjorde dette på var ved å lagge den til fra "Model library", så fant jeg I/O på denne siden: https://ip.festo-didactic.com/InfoPortal/CPFactoryLab/hardware/application/datasheet.php?model=CP-AM-iDRILL&lang=en 
+Deretter lagde jeg følgende I/O i tag table i TIA portalen. Det står på nettsiden at det er CECC I/O, men det funket helt fint å bruke disse som vanlig PLS I/O. Når disse var lagt inn i tag table, måtte jeg inn i SPS_A for CP_L_CONVEYOR, og la til de nye tagsene i CIROS. Når jeg såg at disse funket, koden jeg i fb´en, og gjorde slik at arbeidsstykket skulle stoppe på midten og bli borret på. Problemet med dette var at sourcen vår ikke gav arbeidstykke med front og bak deksel. Men jeg klarte å finne denne sourcen på en ferdiglaget drill inni model library. Når jeg fikk til denne fungerte drillen sånn halveis, neste steg vil være å legge til en timer som kan telle hvor lenge den skal borre fremme og bak på dekselet.
+
+### Johannes 07.02.23
+Lest opp på navn konvensjoner i pls programmering fra plcopen og IEC. Ellers bare definert tag-table til lagerhus modellen og startet å gjøre meg kjent med modellen. Så langt kommet frem til at modellen har 2 pls-er 1 for transportbåndene og 1 for den kartesiske roboten
