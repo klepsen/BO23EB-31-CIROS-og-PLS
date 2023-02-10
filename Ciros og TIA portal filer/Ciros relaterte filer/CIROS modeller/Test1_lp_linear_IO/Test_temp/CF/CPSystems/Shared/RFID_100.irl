@@ -53,21 +53,6 @@ ENDRECORD = RFIDFields;
  **** R F I D   A ****
 }
 
-FUNCTION RFIDAInventory () : BOOL;
-VAR 
-	BOOL : retVal;
-BEGIN
-	SEMA_WAIT semaRFIDA;
-
-	RFIDA_Inventory := true;
-	WAIT FOR RFIDA_Done;
-	retVal := NOT RFIDA_Error;
-	RFIDA_Inventory := false;
-	
-	SEMA_SIGNAL semaRFIDA;
-	return retVal;
-ENDFCT;
-
 PROCEDURE RFIDAWrite ( IN real : byte; IN real : val );
 BEGIN
 	SEMA_WAIT semaRFIDA;
@@ -85,7 +70,7 @@ BEGIN
 	SEMA_SIGNAL semaRFIDA;
 ENDPROC;
 
-FUNCTION RFIDARead ( IN real : byte; IN STRING : errorInfo) : real;
+FUNCTION RFIDARead ( IN real : byte) : real;
 VAR
 	int : ret;
 BEGIN
@@ -97,7 +82,7 @@ BEGIN
 	WAIT FOR RFIDA_Done;
 	ret := Round(RFIDA_Read_Val);
 	if RFIDA_Error then
-		writeln( 'RFIDA: Fehler beim Lesen! [', errorInfo, ']' );
+		writeln( 'RFIDA: Fehler beim Lesen!' );
 	endif;
 
 	RFIDA_Read := false;
@@ -106,88 +91,103 @@ BEGIN
 	return ret;
 ENDFCT;
 
-FUNCTION RFIDA_Read_CarrierId (IN STRING : errorInfo) : real;
+FUNCTION RFIDAInventory () : BOOL;
+VAR 
+	BOOL : retVal;
+BEGIN
+	SEMA_WAIT semaRFIDA;
+
+	RFIDA_Inventory := true;
+	WAIT FOR RFIDA_Done;
+	retVal := NOT RFIDA_Error;
+	RFIDA_Inventory := false;
+	
+	SEMA_SIGNAL semaRFIDA;
+	return retVal;
+ENDFCT;
+
+FUNCTION RFIDA_Read_CarrierId () : real;
 VAR
 	real : id;
 BEGIN
-	id := RFIDARead( 1, errorInfo ) + 256 * RFIDARead( 0, errorInfo );
+	id := RFIDARead( 1 ) + 256 * RFIDARead( 0 );
 	return id;
 ENDFCT;
 
-FUNCTION RFIDA_Read_Code (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_Code () : real;
 VAR
 	real : code;
 BEGIN
-	code := RFIDARead( 3, errorInfo ) + 256 * RFIDARead( 2, errorInfo );
+	code := RFIDARead( 3 ) + 256 * RFIDARead( 2 );
 	return code;
 ENDFCT;
 
 { Gültige Werte für Parameter sind 1,2,3,4 }
-FUNCTION RFIDA_Read_Parameter (IN real : nr; IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_Parameter (IN real : nr) : real;
 VAR
 	real : par;
 	real : startByte;
 BEGIN
 	startByte := 2 + (2 * nr);
-	par := RFIDARead( startByte + 1, errorInfo ) + 256 * RFIDARead( startByte, errorInfo );
+	par := RFIDARead( startByte + 1 ) + 256 * RFIDARead( startByte );
 	return par;
 ENDFCT;
 
-FUNCTION RFIDA_Read_MES_ONo (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_MES_ONo () : real;
 VAR
 	real : oNo;
 BEGIN
-	oNo := RFIDARead( 12, errorInfo );
+	oNo := RFIDARead( 12 );
 	oNo := oNo * 256;
-	oNo := oNo + RFIDARead( 13, errorInfo );
+	oNo := oNo + RFIDARead( 13 );
 	oNo := oNo * 256;
-	oNo := oNo + RFIDARead( 14, errorInfo );
+	oNo := oNo + RFIDARead( 14 );
 	oNo := oNo * 256;
-	oNo := oNo + RFIDARead( 15, errorInfo );
+	oNo := oNo + RFIDARead( 15 );
 	return oNo;
 ENDFCT;
 
-FUNCTION RFIDA_Read_MES_OPos (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_MES_OPos () : real;
 VAR
 	real : oPos;
 BEGIN
-	oPos := RFIDARead( 16, errorInfo );
+	oPos := RFIDARead( 16 );
 	oPos := oPos * 256;
-	oPos := oPos + RFIDARead( 17, errorInfo );
+	oPos := oPos + RFIDARead( 17 );
 	return oPos;
 ENDFCT;
 
-FUNCTION RFIDA_Read_MES_PNo (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_MES_PNo () : real;
 VAR
 	real : pNo;
 BEGIN
-	pNo := RFIDARead( 18, errorInfo );
+	pNo := RFIDARead( 18 );
 	pNo := pNo * 256;
-	pNo := pNo + RFIDARead( 19, errorInfo );
+	pNo := pNo + RFIDARead( 19 );
 	pNo := pNo * 256;
-	pNo := pNo + RFIDARead( 20, errorInfo );
+	pNo := pNo + RFIDARead( 20 );
 	pNo := pNo * 256;
-	pNo := pNo + RFIDARead( 21, errorInfo );
+	pNo := pNo + RFIDARead( 21 );
 	return pNo;
 ENDFCT;
 
-FUNCTION RFIDA_Read_MES_ResourceId (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_MES_ResourceId () : real;
 VAR
 	real : id;
 BEGIN
-	id := RFIDARead( 22, errorInfo );
+	id := RFIDARead( 22 );
 	id := id * 256;
-	id := id + RFIDARead( 23, errorInfo );
+	id := id + RFIDARead( 23 );
 	return id;
 ENDFCT;
 
-FUNCTION RFIDA_Read_MES_OpNo (IN STRING : errorInfo) : real;
+FUNCTION RFIDA_Read_MES_OpNo () : real;
 VAR
 	real : opNo;
 BEGIN
-	opNo := RFIDARead( 24, errorInfo );
+	opNo := RFIDARead( 24 );
 	opNo := opNo * 256;
-	opNo := opNo + RFIDARead( 25, errorInfo );
+	opNo := opNo + RFIDARead( 25 );
 	return opNo;
 ENDFCT;
 
@@ -287,14 +287,14 @@ BEGIN
 	RFIDAWrite( 24, val DIV 256 );
 ENDPROC;
 
-PROCEDURE RFIDA_ReadMES ( OUT RFIDFields : fields; IN STRING : errorInfo );
+PROCEDURE RFIDA_ReadMES ( OUT RFIDFields : fields );
 BEGIN
-	fields.carrierId 	:= RFIDA_Read_CarrierId(errorInfo);
-	fields.ONo			:= RFIDA_Read_MES_ONo(errorInfo);
-	fields.OPos			:= RFIDA_Read_MES_OPos(errorInfo);
-	fields.PNo			:= RFIDA_Read_MES_PNo(errorInfo);
-	fields.ResourceId	:= RFIDA_Read_MES_ResourceId(errorInfo);
-	fields.OpNo			:= RFIDA_Read_MES_OpNo(errorInfo);
+	fields.carrierId 	:= RFIDA_Read_CarrierId();
+	fields.ONo			:= RFIDA_Read_MES_ONo();
+	fields.OPos			:= RFIDA_Read_MES_OPos();
+	fields.PNo			:= RFIDA_Read_MES_PNo();
+	fields.ResourceId	:= RFIDA_Read_MES_ResourceId();
+	fields.OpNo			:= RFIDA_Read_MES_OpNo();
 ENDPROC
 {
  **** R F I D   B ****

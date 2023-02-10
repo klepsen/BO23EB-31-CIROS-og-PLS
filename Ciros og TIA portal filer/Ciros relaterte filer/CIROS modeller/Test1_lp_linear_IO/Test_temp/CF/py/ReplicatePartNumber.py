@@ -11,6 +11,12 @@ import CirosReplicator
 cpr = CirosReplicator.PartNr(sys.argv[1])
 cpr.checkForRepl()
 
+#import CirosMESCom
+#importlib.reload(CirosMESCom)
+		
+#mesCom = CirosMESCom.MESCommunication(0)
+#print( mesCom.GetBufferContent( 100, 1, 50 ))
+	
 	
 	
 		

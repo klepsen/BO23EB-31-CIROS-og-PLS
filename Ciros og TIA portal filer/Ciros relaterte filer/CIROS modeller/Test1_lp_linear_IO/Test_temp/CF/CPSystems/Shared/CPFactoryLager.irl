@@ -13,10 +13,10 @@ VAR
 PROCESS ControlBand1();
 VAR
 	INPUT BOOL	:	DI_StopperUnten  AT 8;
-	INPUT BOOL	:	DI_Bit0		 AT 9;
-	INPUT BOOL	:	DI_Bit1		 AT 10;
-	INPUT BOOL	:	DI_Bit2		 AT 11;
-	INPUT BOOL	:	DI_Bit3	 	 AT 12;
+	INPUT BOOL	:	DI_ID0		 AT 9;
+	INPUT BOOL	:	DI_ID1		 AT 10;
+	INPUT BOOL	:	DI_ID2		 AT 11;
+	INPUT BOOL	:	DI_ID3	 	 AT 12;
 	INPUT BOOL	:	DI_PaletteLinks	 AT 14;
 	INPUT BOOL	:	DI_PaletteRechts AT 15;	
 	
@@ -51,13 +51,9 @@ while( true )
 	DO_BandRechtslauf := true;
 
 	{Auf WT warten}
-	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-	while( not RFIDAInventory() )
-		wait 0.5 SEC;
-	endwhile;
+	wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
 
-
-	if( checkForWorkInThisStation( 1, rfid, mes, 'ControlBand1' ) ) then
+	if( checkForWorkInThisStation( 1, rfid, mes ) ) then
 		{Falls ja, Bearbeitung starten und nächste Station ermitteln}
 		if( DI_Bandabschaltung ) then
 			{Band stoppen}
@@ -80,10 +76,7 @@ while( true )
 		endif;
 		
 		DO_StopperSenken := true;
-		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
-		while( RFIDAInventory() )
-			wait 0.1 SEC;
-		endwhile;
+		WAIT FOR not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
 		DO_StopperSenken := false;
 	endif;
 endwhile;
@@ -92,10 +85,10 @@ ENDPROCESS;
 PROCESS ControlBand2();
 VAR
 	INPUT BOOL	:	DI_StopperUnten  AT 0;
-	INPUT BOOL	:	DI_Bit0		 AT 1;
-	INPUT BOOL	:	DI_Bit1		 AT 2;
-	INPUT BOOL	:	DI_Bit2		 AT 3;
-	INPUT BOOL	:	DI_Bit3	 	 AT 4;
+	INPUT BOOL	:	DI_ID0		 AT 1;
+	INPUT BOOL	:	DI_ID1		 AT 2;
+	INPUT BOOL	:	DI_ID2		 AT 3;
+	INPUT BOOL	:	DI_ID3	 	 AT 4;
 	INPUT BOOL	:	DI_PaletteLinks	 AT 22;
 	INPUT BOOL	:	DI_PaletteRechts AT 23;	
 	
@@ -122,13 +115,9 @@ while( true )
 	DO_BandRechtslauf := true;
 
 	{Auf WT warten}
-	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-	while( not RFIDBInventory() )
-		wait 0.5 SEC;
-	endwhile;
+	wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
 
-
-	if( checkForWorkInThisStation( 2, rfid, mes, 'ControlBand2' ) ) then
+	if( checkForWorkInThisStation( 2, rfid, mes ) ) then
 		{Falls ja, Bearbeitung starten und nächste Station ermitteln}
 		if( DI_Bandabschaltung ) then
 			{Band stoppen}
@@ -151,10 +140,7 @@ while( true )
 		endif;
 
 		DO_StopperSenken := true;
-		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
-		while( RFIDBInventory() )
-			wait 0.1 SEC;
-		endwhile;
+		WAIT FOR not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
 		DO_StopperSenken := false;
 	endif;
 endwhile;
@@ -171,6 +157,9 @@ BEGIN
 	{MES Zustand initialisieren}
 	setStateMESMode( true );
 	setStateReset( false );
+
+	while( true )
+	endwhile;
 ENDPROCESS;
 
 PROCEDURE startGM(IN INT: gmId);

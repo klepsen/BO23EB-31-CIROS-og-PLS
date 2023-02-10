@@ -814,9 +814,22 @@ VAR
 	INPUT REAL	:	workTime		AT 0;
 	INPUT REAL	:	targetPart		AT 2;
 	
+	REAL : prg_number;
+	REAL : sicherung_A;
+	REAL : sicherung_B;
+	REAL : platine;
+	REAL : cover;
+	
 	REAL : work_part_nr;
+	bool : prg_ok;
 	bool : noPartPickup;
 BEGIN
+	prg_number := Parameter[1];
+	sicherung_A := Parameter[2];
+	sicherung_B := Parameter[3];
+	platine := Parameter[4];
+	cover := Parameter[5];
+	
 	work_part_nr := 0;
 	noPartPickup := false;
 
@@ -825,9 +838,59 @@ BEGIN
 		work_part_nr := targetPart;
 		Delete := true;
 	else
-		{Ersetze das auf dem WST befindliche Bauteil mit dem via Parameter 7 angegebenen Bauteil}
-		work_part_nr := Parameter[7];
-		Delete := true; 
+		{Parameter check}
+		prg_ok := false;
+		if( prg_number = 1 ) then
+			if not ( sicherung_A <> 0 OR sicherung_B <> 0 OR platine <> 120 OR cover <> 0) then
+				work_part_nr := 120;
+				Delete := false;
+				prg_ok := true;
+			endif;
+		endif;
+		if( prg_number = 2 ) then
+			if not ( sicherung_A <> 130 OR sicherung_B <> 0 OR platine <> 120 OR cover <> 0) then
+				work_part_nr := 122;
+				Delete := false;
+				prg_ok := true;
+			endif;
+		endif;
+		if( prg_number = 3 ) then
+			if not ( sicherung_A <> 0 OR sicherung_B <> 130 OR platine <> 120 OR cover <> 0) then
+				work_part_nr := 121;
+				Delete := false;
+				prg_ok := true;
+			endif;
+		endif;		
+		if( prg_number = 4 ) then
+			if not ( sicherung_A <> 130 OR sicherung_B <> 130 OR platine <> 120 OR cover <> 0) then
+				work_part_nr := 123;
+				Delete := false;
+				prg_ok := true;
+			endif;
+		endif;	
+		if( prg_number = 5000 ) then
+			if not ( sicherung_A <> 0 OR sicherung_B <> 0 OR platine <> 0 OR cover <> 0) then
+				work_part_nr := 0;
+				Delete := true;
+				prg_ok := true;
+			endif;
+		endif;		
+		if( cover <> 0 ) then
+			if( cover >= 111 AND cover <= 114 OR cover = 210 OR cover = 310 OR cover = 410 OR cover = 510) then
+				work_part_nr := cover;
+				if( cover <= 114 ) then
+					work_part_nr := cover - 21; {Spezialteilenummern für aufgelegten Rückschalen 90-93}
+				endif;
+				noPartPickup := true;
+				Delete := false;
+				prg_ok := true;
+			endif;			
+		endif;		
+		
+		if( not prg_ok ) then
+			writeln( 'Handarbeitsplatz mit nicht unterstützten Parametern aufgerufen!', Parameter[1], Parameter[2], Parameter[3], Parameter[4], Parameter[5] );
+			return( 1 );
+		endif;
 	endif;
 
 	Worker_Pos_Home := false;

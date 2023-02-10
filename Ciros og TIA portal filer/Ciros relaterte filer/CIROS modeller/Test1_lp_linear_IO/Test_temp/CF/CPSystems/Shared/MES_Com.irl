@@ -51,7 +51,7 @@ BEGIN
 	CheckBufPos(resourceID, bufNo, bufPos, pNo);
 ENDPROC;
 
-FUNCTION checkForWorkInThisStation( IN INT : RFIDId; INOUT RFIDFields : rfid; INOUT MESFields : mes; IN STRING : errorInfo ) : bool;
+FUNCTION checkForWorkInThisStation( IN INT : RFIDId; INOUT RFIDFields : rfid; INOUT MESFields : mes ) : bool;
 VAR 
 	INPUT REAL	:	CIROS_Serie_ID	AT 97;	
 	INPUT REAL	:	CIROS_GM_ID	AT 98;	
@@ -62,7 +62,7 @@ BEGIN
 	modulIstLager := (CIROS_App_ID = 13) OR (CIROS_App_ID = 16);
 	{RFID lesen}	
 	if( RFIDId = 1 ) then
-		RFIDA_ReadMES( rfid, errorInfo );
+		RFIDA_ReadMES( rfid );
 	else
 		RFIDB_ReadMES( rfid );
 	endif;

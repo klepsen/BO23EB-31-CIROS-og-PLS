@@ -21,15 +21,10 @@ PN_Palette = [25]
 
 PN_Drehteil = [10] 
 
-PN_Front_Roh_sw = [101]
-PN_Front_Roh_gr = [102]
-PN_Front_Roh_bl = [103]
-PN_Front_Roh_rt = [104]
-
-PN_Front_Lochlos_sw = [110]
-PN_Front_Lochlos_gr = [109]
-PN_Front_Lochlos_bl = [108]
-PN_Front_Lochlos_rt = [107]
+PN_Front_Roh_sw = [110]
+PN_Front_Roh_gr = [109]
+PN_Front_Roh_bl = [108]
+PN_Front_Roh_rt = [107]
 
 PN_Front_sw = [90, 210, 211, 212, 213, 214, 1210, 1211, 1212, 1213, 1214]
 PN_Front_gr = [91, 310, 311, 312, 313, 314, 1310, 1311, 1312, 1313, 1314]
@@ -50,7 +45,6 @@ PN_Sicherung_B = [122, 123, 213, 313, 413, 513, 214, 314, 414, 514, 1213, 1313, 
 #Farbcodierung (Vereinfachung für manuelle Erzeugung von WS
 PN_by_color = [\
 	[90, 91, 92, 93],\
-	[101, 102, 103, 104],\
 	[110, 109, 108, 107],\
 	[111, 112, 113, 114],\
 	[210, 310, 410, 510],\
@@ -86,10 +80,6 @@ class internalPartNr(object):
 			[root_gpp_list,						'CP_Frontschale_Rohteil_gr', 	'Frontschalen',		PN_Front_Roh_gr,	[], 							[]],\
 			[root_gpp_list,						'CP_Frontschale_Rohteil_bl', 	'Frontschalen',		PN_Front_Roh_bl,	[], 							[]],\
 			[root_gpp_list,						'CP_Frontschale_Rohteil_rt', 	'Frontschalen',		PN_Front_Roh_rt,	[], 							[]],\
-			[root_gpp_list,						'CP_Frontschale_Lochlos_sw', 	'Frontschalen',		PN_Front_Lochlos_sw,[], 							[]],\
-			[root_gpp_list,						'CP_Frontschale_Lochlos_gr', 	'Frontschalen',		PN_Front_Lochlos_gr,[], 							[]],\
-			[root_gpp_list,						'CP_Frontschale_Lochlos_bl', 	'Frontschalen',		PN_Front_Lochlos_bl,[], 							[]],\
-			[root_gpp_list,						'CP_Frontschale_Lochlos_rt', 	'Frontschalen',		PN_Front_Lochlos_rt,[], 							[]],\
 			[root_gpp_list_kpl,					'CP_Frontschale_sw', 			'Frontschalen',		PN_Front_sw,		[], 							[]],\
 			[root_gpp_list_kpl,					'CP_Frontschale_gr', 			'Frontschalen',		PN_Front_gr, 		[], 							[]],\
 			[root_gpp_list_kpl,					'CP_Frontschale_bl', 			'Frontschalen',		PN_Front_bl, 		[], 							[]],\
@@ -236,8 +226,7 @@ class PartNr( object ):
 		log('Replicate: Obj:[' + self.objectname+'] GPP:['+  root_gpp + '] PNo:['+str(partNr)+']' )
 		ret = partNrReplicator.replicatePart( partNr, root_gpp )
 		if( ret == '' and partNr != 0  ):
-			env.addObjectFromTemplate( "CP_Unbekannt", root_gpp, "Frontschalen" )
-			#print( 'Replikator [' + self.objectname + ']: Konnte TeilNr [' + str(partNr) + '] nicht erzeugen' )
+			print( 'Replikator [' + self.objectname + ']: Konnte TeilNr [' + str(partNr) + '] nicht erzeugen' )
 
 		
 	def createInlay( self, boxType ):
@@ -327,7 +316,6 @@ class LagerReplicator( PartNr ):
 			log('Replicate: Obj:[' + self.objectname+'] GPP:['+  root_gpp + '] PNo:['+str(partNr)+']' )
 			ret = partNrReplicator.replicatePart( partNr, root_gpp )
 			if( ret == '' and partNr != 0  ):
-				env.addObjectFromTemplate( "CP_Unbekannt", root_gpp, "Frontschalen" )
-				#print( 'Replikator [' + self.objectname + ']: Konnte TeilNr [' + str(partNr) + '] nicht erzeugen' )	
+				print( 'Replikator [' + self.objectname + ']: Konnte TeilNr [' + str(partNr) + '] nicht erzeugen' )	
 				
 			self.replObj = saveObj;		

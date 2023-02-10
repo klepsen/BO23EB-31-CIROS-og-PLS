@@ -78,7 +78,6 @@ VAR
 	INPUT BOOL	:	DI_WT_vor_Einschleusung	AT 33;
 	INPUT BOOL	:	DI_Weichenbereich_Frei_Abbiegen AT 34;
 	INPUT BOOL	:	DI_Weichenbereich_Frei_Gerade AT 37;
-	INPUT BOOL 	: 	WT_AufAusschleusung AT 50;
 	INPUT BOOL	: 	ActivateRobotinoMode AT 92;
 	INPUT REAL	: 	AbbiegeModus AT 90;
 
@@ -92,7 +91,6 @@ VAR
 	OUTPUT BOOL	:	DO_Ausschleusung		AT 23;
 	OUTPUT BOOL	:	DO_Koppelsensor_Robotino	AT 28;
 	OUTPUT BOOL	:	DO_Stopper_vor_Einschleusung	AT 31;
-	OUTPUT BOOL 	: 	FakeStopperAufAusschleusung 	AT 50;
 	
 	BOOL : abbiegenLassen;
 	BOOL : WT_Ohne_Auftrag_Abbiegen_Lassen;
@@ -113,7 +111,9 @@ BEGIN
 		DO_Stopper_vor_Ausschleusung := false; 
 		DO_Stopper_vor_Einschleusung := false; 
 		{WT am Stopper Ausschleusung oder Stopper Einschleusung}
-		wait for DI_WT_vor_Einschleusung OR (DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3) OR DI_Koppelsensor_Robotino;
+		while( not (DI_WT_vor_Einschleusung OR DI_Bit0 OR DI_Koppelsensor_Robotino) )
+			wait for DI_WT_vor_Einschleusung OR (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) OR DI_Koppelsensor_Robotino;
+		endwhile;
 
 		{Stopper_vor_Einschleusung durchfahren lassen}
 		if( DI_WT_vor_Einschleusung ) then
@@ -171,15 +171,12 @@ BEGIN
 			endif;
 		endif;
 		
-		if( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3) then
-			while( not RFIDAInventory() )
-				wait 0.5 SEC;
-			endwhile;
+		if( DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) then
 			{An Stopper B RFID lesen und Weiche stellen
 			 ACHTUNG: Die Ansteuerung des RFID Lesegeräts ist in der Weiche vertauscht!
 					  RFID A an Stopper B, RFID B an Stopper A}
 			{RFID lesen}
-			RFIDA_ReadMES( rfid, 'JunctionControl' );
+			RFIDA_ReadMES( rfid );
 			
 			{Weichenstellung prüfen}
 			if(myResourceId <> 0 ) then
@@ -222,25 +219,15 @@ BEGIN
 				wait for DI_Weiche_Abbiegen;
 					
 				DO_Stopper_vor_Ausschleusung := true;
-				{wait for not (DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3);}
-				while( RFIDAInventory() )
-					wait 0.1 SEC;
-				endwhile;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
 				DO_Stopper_vor_Ausschleusung := false; 
 				
 				wait for DI_Weichenbereich_Frei_Abbiegen;
 
 				if( ActivateRobotinoMode ) then
 				{ Für den Robotino das Band anhalten}
-					FakeStopperAufAusschleusung := true;
-					WAIT for WT_AufAusschleusung;
-					{WAIT 0.625 sec;}
+					WAIT 0.75 sec;
 					DO_BandAusschleusung_Rechtslauf := false;
-
-					{Warten auf Bandstillstand}
-					wait 1.0 sec;					
-					FakeStopperAufAusschleusung := false;
-
 					{MES melden dass ein Pufferplatz belegt ist}
 					if( myResourceId <> 0) then
 						claimCommunication( true );
@@ -262,10 +249,7 @@ BEGIN
 				wait for not DI_Weichenbereich_Frei_Gerade;
 				
 				DO_Stopper_vor_Ausschleusung := true;
-				{wait for not (DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3);}
-				while( RFIDAInventory() )
-					wait 0.1 SEC;
-				endwhile;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
 				DO_Stopper_vor_Ausschleusung := false; 
 
 				wait for DI_Weichenbereich_Frei_Gerade;
@@ -280,10 +264,10 @@ ENDPROCESS;
 PROCESS CPFactory_Weiche();
 VAR
 	INPUT BOOL	:	DI_StopperUnten	 AT 40;
-	INPUT BOOL	:	DI_Bit0		 AT 41;
-	INPUT BOOL	:	DI_Bit1		 AT 42;
-	INPUT BOOL	:	DI_Bit2		 AT 43;
-	INPUT BOOL	:	DI_Bit3	 	 AT 44;
+	INPUT BOOL	:	DI_ID0		 AT 41;
+	INPUT BOOL	:	DI_ID1		 AT 42;
+	INPUT BOOL	:	DI_ID2		 AT 43;
+	INPUT BOOL	:	DI_ID3	 	 AT 44;
 	INPUT BOOL	:	DI_PaletteLinks	 AT 46;
 	INPUT BOOL	:	DI_PaletteRechts AT 47;
 
@@ -312,14 +296,10 @@ BEGIN
 while( true )
 	{Stopper ausfahren und auf WT warten}
 	DO_StopperSenken := false; 
-	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-	while( not RFIDBInventory() )
-		wait 0.5 SEC;
-	endwhile;
-
+	wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
 
 	nextResourceId := -1;		
-	if( checkForWorkInThisStation( 2, rfid, mes, 'CPFactory_Weiche' ) ) then
+	if( checkForWorkInThisStation( 2, rfid, mes ) ) then
 		if( DI_Bandabschaltung ) then
 			{Band stoppen}
 			DO_BandRechtslauf := false;
@@ -345,10 +325,7 @@ while( true )
 		
 		{Stopper einfahren und warten dass WT weiter gefahren ist}
 		DO_StopperSenken := true;
-		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
-		while( RFIDBInventory() )
-			wait 0.1 SEC;
-		endwhile;
+		wait for not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
 		
 		{Stopper ausfahren}
 		DO_StopperSenken := false;
