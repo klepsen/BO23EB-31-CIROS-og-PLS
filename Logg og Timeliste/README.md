@@ -225,3 +225,5 @@ Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse proble
 3. Daniel viste frem en brukerveiledning han har laget i dokument form som Gerhard syntes var ganske bra Som da reiste spørsmålet om vi skal gå bort fra video for brukerveiledning. Kanskje dokument format passer bedre siden er lettere å finne fram i til en senere tid, mens video gir bruker kanskje en mer implisit forståelse når de blir vist nøyaktig hvordan
 4. Legge til noe i forcetabel eller tag table slik at studentene får en forståelse for det også
 
+### Johannes 14.02.23
+Idag har jeg jobbet videre med Highbay-storage modulen. Det har vært lite fremgang i dag av synlige resultater, men har funnet ut endel om modulen. X og Z retningen til den cartesiske roboten styres via 2 servomotor-kontrollere av typen https://www.festo.com/net/SupportPortal/Files/380659/CMMP-AS-M3-HW_2012-03_760322g1.pdf via profinet. I morgen må jeg finne ut hvordan jeg kan skrive posisjons kommandoer fra hoved PLSen til servo motorene. Fant også ut hvordan å flytte roboten fra IO interfacen i CIROS ved å skrive verdier direkte til servocontroller target og så sette start utgangen høy.
