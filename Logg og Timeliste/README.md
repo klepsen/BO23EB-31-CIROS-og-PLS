@@ -206,3 +206,20 @@ Deretter lagde jeg følgende I/O i tag table i TIA portalen. Det står på netts
 
 ### Johannes 07.02.23
 Lest opp på navn konvensjoner i pls programmering fra plcopen og IEC. Ellers bare definert tag-table til lagerhus modellen og startet å gjøre meg kjent med modellen. Så langt kommet frem til at modellen har 2 pls-er 1 for transportbåndene og 1 for den kartesiske roboten
+
+### Johannes 08.02.23
+Jobbet videre med Highbay-storage modulen og gjort meg kjent med databladet til den. Merker spesielt nyttig med sekvens diagram i databladet
+
+### Johannes 09.02.23
+Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse problemer daniel og josef har allerede utredet disse problemene før så jeg utdyper ikke her
+
+### Johannes 09.02.23
+## Møtelogg
+ Tilstede:
+ Daniel Klepsvik <br>
+ Gerhard nygaard <br>
+ Johannes Eidsvik <br>
+
+1. 1 tips Gerhard hadde til oss i dag var å få klar 1 oppgave så fort som mulig, Josef er allerede godt igang med oppgave 1 så han fortsetter på det
+2. I oppgave 1b når vi sier modifiser programmet så kan jo dette introdusere feil i programmet har studentene ferdigheter til å debugge og feilsøke hvis bugs oppstår? Med dette i tankene må vi avklare med guttorm hvor studenten er i løpet i henhold til PLS programmering
+3. Daniel viste frem en brukerveiledning han har laget i dokument form som Gerhard syntes var ganske bra Som da reiste spørsmålet om vi skal gå bort fra video for brukerveiledning. Kanskje dokument format passer bedre siden er lettere å finne fram i til en senere tid, mens video gir bruker kanskje en mer implisit forståelse når de blir vist nøyaktig hvordan
