@@ -223,3 +223,5 @@ Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse proble
 1. 1 tips Gerhard hadde til oss i dag var å få klar 1 oppgave så fort som mulig, Josef er allerede godt igang med oppgave 1 så han fortsetter på det
 2. I oppgave 1b når vi sier modifiser programmet så kan jo dette introdusere feil i programmet har studentene ferdigheter til å debugge og feilsøke hvis bugs oppstår? Med dette i tankene må vi avklare med guttorm hvor studenten er i løpet i henhold til PLS programmering
 3. Daniel viste frem en brukerveiledning han har laget i dokument form som Gerhard syntes var ganske bra Som da reiste spørsmålet om vi skal gå bort fra video for brukerveiledning. Kanskje dokument format passer bedre siden er lettere å finne fram i til en senere tid, mens video gir bruker kanskje en mer implisit forståelse når de blir vist nøyaktig hvordan
+4. Legge til noe i forcetabel eller tag table slik at studentene får en forståelse for det også
+
