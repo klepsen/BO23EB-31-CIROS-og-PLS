@@ -227,3 +227,6 @@ Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse proble
 
 ### Johannes 14.02.23
 Idag har jeg jobbet videre med Highbay-storage modulen. Det har vært lite fremgang i dag av synlige resultater, men har funnet ut endel om modulen. X og Z retningen til den cartesiske roboten styres via 2 servomotor-kontrollere av typen https://www.festo.com/net/SupportPortal/Files/380659/CMMP-AS-M3-HW_2012-03_760322g1.pdf via profinet. I morgen må jeg finne ut hvordan jeg kan skrive posisjons kommandoer fra hoved PLSen til servo motorene. Fant også ut hvordan å flytte roboten fra IO interfacen i CIROS ved å skrive verdier direkte til servocontroller target og så sette start utgangen høy.
+
+### Daniel 15.02.23
+Idag jobbet jeg videre med å få timeren til iDrilling modulen til å fungere. Det fungerte sånn halvveis. Jeg la inn 3 timere som gjorde at det kan gå 5 sek med hver timer, der vi skal bruke 5 sek på å borre fremme, så 5 sek på å flytte borene bak, så 5 sek for å borre bak. Men problemet jeg møtte på var at alle timerene startet samtidig, som skapte problemer.
