@@ -214,7 +214,7 @@ Jobbet videre med Highbay-storage modulen og gjort meg kjent med databladet til 
 Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse problemer daniel og josef har allerede utredet disse problemene før så jeg utdyper ikke her
 
 ### Johannes 09.02.23
-## Møtelogg
+#### Møtelogg
  Tilstede:
  Daniel Klepsvik <br>
  Gerhard nygaard <br>
@@ -230,3 +230,6 @@ Idag har jeg jobbet videre med Highbay-storage modulen. Det har vært lite fremg
 
 ### Daniel 15.02.23
 Idag jobbet jeg videre med å få timeren til iDrilling modulen til å fungere. Det fungerte sånn halvveis. Jeg la inn 3 timere som gjorde at det kan gå 5 sek med hver timer, der vi skal bruke 5 sek på å borre fremme, så 5 sek på å flytte borene bak, så 5 sek for å borre bak. Men problemet jeg møtte på var at alle timerene startet samtidig, som skapte problemer.
+
+### Johannes 15.02.23
+Jobbet videre med highbay storage ennå ikke funnet ut hvordan jeg kan styre servo-kontrollerene fra en tia pls
