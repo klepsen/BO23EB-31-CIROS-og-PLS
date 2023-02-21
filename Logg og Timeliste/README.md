@@ -233,3 +233,6 @@ Idag jobbet jeg videre med å få timeren til iDrilling modulen til å fungere. 
 
 ### Johannes 15.02.23
 Jobbet videre med highbay storage ennå ikke funnet ut hvordan jeg kan styre servo-kontrollerene fra en tia pls
+
+### Johannes 21.02.23
+SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til servo kontrollere så trenger kanskje ikke styre med bus ordning
