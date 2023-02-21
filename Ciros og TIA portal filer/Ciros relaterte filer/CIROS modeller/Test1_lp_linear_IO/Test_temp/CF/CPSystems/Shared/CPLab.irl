@@ -14,14 +14,14 @@ VAR
 	INPUT BOOL	:	DI_Stop		 AT 9;
 	INPUT BOOL	:	DI_AutoManuell	 AT 10;
 	INPUT BOOL	:	DI_Richten	 AT 11;
-	INPUT BOOL	:	DI_Bit0_Extra	 AT 12;
+	INPUT BOOL	:	DI_ID0_Extra	 AT 12;
 	INPUT BOOL	:	DI_SPSEnable	 AT 13;
 	INPUT BOOL	:	DI_PaletteLinks	 AT 14;
 	INPUT BOOL	:	DI_PaletteRechts AT 15;
-	INPUT BOOL	:	DI_Bit0	AT 16;
-	INPUT BOOL	:	DI_Bit1 AT 17;
-	INPUT BOOL	:	DI_Bit2	AT 18;
-	INPUT BOOL	:	DI_Bit3	AT 19;
+	INPUT BOOL	:	DI_ID0	AT 16;
+	INPUT BOOL	:	DI_ID1 AT 17;
+	INPUT BOOL	:	DI_ID2	AT 18;
+	INPUT BOOL	:	DI_ID3	AT 19;
 	INPUT BOOL	:	DI_von_rechts		AT 20;
 	INPUT BOOL	:	DI_von_links		AT 21;
 	INPUT BOOL	:	DIN18_x6		AT 22;
@@ -68,14 +68,10 @@ BEGIN
 	while( true )	
 		{Stopper ausfahren und auf WT warten}
 		DO_StopperOeffnen := false; 
-		{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-		while( not RFIDAInventory() )
-			wait 0.5 SEC;
-		endwhile;
-
+		wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
 
 		nextResourceId := -1;		
-		if( checkForWorkInThisStation( 1, rfid, mes, 'CPLab_Linearmodul' ) ) then
+		if( checkForWorkInThisStation( 1, rfid, mes ) ) then
 			if( DI_Bandabschaltung ) then
 				{Band stoppen}
 				DO_BandRechtslauf := false;
@@ -101,10 +97,8 @@ BEGIN
 		
 			{Stopper einfahren und warten dass WT weiter gefahren ist}
 			DO_StopperOeffnen := true;
-			{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
-			while( RFIDAInventory() )
-				wait 0.1 SEC;
-			endwhile;
+			wait for not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
+			wait 1.0 sec;
 			
 			{Stopper ausfahren}
 			DO_StopperOeffnen := false;

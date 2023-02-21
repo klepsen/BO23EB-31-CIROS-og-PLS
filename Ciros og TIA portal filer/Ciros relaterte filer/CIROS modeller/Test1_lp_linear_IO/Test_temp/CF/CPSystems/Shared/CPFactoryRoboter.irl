@@ -169,74 +169,97 @@ BEGIN
 		{DO_Stopper3_Senken := false; }
 		
 		{WT am Stopper Ausschleusung oder App ist fertig}
-		{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-		while( not RFIDAInventory() )
-			wait 0.5 SEC;
+		while( not ((DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) OR(appState = appState_Ready) OR DI_WT_vor_Einschleusung))
+			wait for (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) OR (appState = appState_Ready) OR DI_WT_vor_Einschleusung;
 		endwhile;
-
-		{Stopper_vor_Einschleusung lesen}
-		RFIDA_ReadMES( rfid, 'ByPassRoboterControl' );
-
-		if( myResourceId = 0 ) then
-			if( DI_StauByPass = false ) then
-				abbiegenLassen := true;
-			endif;	
-		else 
-			{Enthält der RFID Auftragsdaten?}
-			if( rfid.ONo <> 0 AND rfid.PNo <> 0 AND rfid.OPos <> 0 ) then
-				{...die noch aktuell sind?}
-				claimCommunication( true );
-				GetOpForONoOPos( rfid.ONo, rfid.OPos );
-				saveMESAnswer( mes );
-				claimCommunication( false );
-				
-				if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
-					{Falls ja, abbiegen lassen falls Station fre}
-					if( DI_StauByPass = false ) then
-						abbiegenLassen := rfid.ResourceId = myResourceId;
-					endif;
-				endif;
-			endif;
-			{Ist der WT auch nicht an eine andere Resource gebunden?}
-			if( rfid.ResourceId = 0 ) then
-				{Gibt es einen Auftrag für meine Station?}
-				claimCommunication( true );
-				GetFirstOpForRsc( myResourceId );
-				saveMESAnswer( mes );
-				claimCommunication( false );
-				
-				if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
-					{Falls ja, abbiegen lassen falls Station fre}
-					if( DI_StauByPass = false ) then
-						abbiegenLassen := true;
-					endif;	
-				endif;			
-			endif;
-		endif;
-		
-		
-		if( abbiegenLassen ) then
-			DO_ByPass_schliessen := false;
-			DO_ByPass_oeffnen := true;
-			wait for DI_Weiche_Gerade = false;
-			wait for DI_Weiche_Abbiegen = true;
-			
-			wait for not DI_StauByPass;
-		else
-			DO_ByPass_schliessen := true;
-			DO_ByPass_oeffnen := false;
-			wait for DI_Weiche_Gerade = true;
-			wait for DI_Weiche_Abbiegen = false;
-			
-			wait for not DI_StauGerade;
+{
+		if( appState = appState_Ready ) then
+			appState := appState_Release;			
+			wait for DI_BandAuslauf;
+			wait for not DI_BandAuslauf;
 		endif;		
 
-		DO_Stopper1_Senken := true;
-		{wait for not (DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3);}
-		while( RFIDAInventory() )
-			wait 0.1 SEC;
-		endwhile;
-		DO_Stopper1_Senken := false; 
+		if( DI_WT_vor_Einschleusung ) then
+			DO_Stopper3_Senken := true;
+			wait for not DI_WT_vor_Einschleusung;
+			DO_Stopper3_Senken := false;
+			
+			wait for DI_BandAuslauf;
+			wait for not DI_BandAuslauf;
+		endif;
+}
+		{Stopper_vor_Einschleusung lesen}
+		if( DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3 ) then
+			{RFID lesen}
+			RFIDA_ReadMES( rfid );
+			
+			if( myResourceId = 0 ) then
+{				if( appState = appState_Waiting ) then}
+				if( DI_StauByPass = false ) then
+					abbiegenLassen := true;
+				endif;	
+			else 
+				{Enthält der RFID Auftragsdaten?}
+				if( rfid.ONo <> 0 AND rfid.PNo <> 0 AND rfid.OPos <> 0 ) then
+					{...die noch aktuell sind?}
+					claimCommunication( true );
+					GetOpForONoOPos( rfid.ONo, rfid.OPos );
+					saveMESAnswer( mes );
+					claimCommunication( false );
+					
+					if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
+						{Falls ja, abbiegen lassen falls Station fre}
+						if( DI_StauByPass = false ) then
+							abbiegenLassen := rfid.ResourceId = myResourceId;
+						endif;
+					endif;
+				endif;
+				{Ist der WT auch nicht an eine andere Resource gebunden?}
+				if( rfid.ResourceId = 0 ) then
+					{Gibt es einen Auftrag für meine Station?}
+					claimCommunication( true );
+					GetFirstOpForRsc( myResourceId );
+					saveMESAnswer( mes );
+					claimCommunication( false );
+					
+					if( mes.ONo <> 0 AND mes.OPos <> 0 ) then
+						{Falls ja, abbiegen lassen falls Station fre}
+						if( DI_StauByPass = false ) then
+							abbiegenLassen := true;
+						endif;	
+					endif;			
+				endif;
+			endif;
+			
+			
+			if( abbiegenLassen ) then
+				DO_ByPass_schliessen := false;
+				DO_ByPass_oeffnen := true;
+				wait for DI_Weiche_Gerade = false;
+				wait for DI_Weiche_Abbiegen = true;
+				
+				wait for not DI_StauByPass;
+				
+				DO_Stopper1_Senken := true;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
+				DO_Stopper1_Senken := false; 
+				
+				{wait for DI_StauByPass;}
+			else
+				DO_ByPass_schliessen := true;
+				DO_ByPass_oeffnen := false;
+				wait for DI_Weiche_Gerade = true;
+				wait for DI_Weiche_Abbiegen = false;
+				
+				wait for not DI_StauGerade;
+				
+				DO_Stopper1_Senken := true;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
+				DO_Stopper1_Senken := false; 
+				
+				{wait for DI_StauGerade;}
+			endif;		
+		endif;
 	endwhile;
 ENDPROCESS;
 
@@ -246,10 +269,10 @@ ENDPROCESS;
 PROCESS CPFactory_Roboter();
 VAR
 	INPUT BOOL	:	DI_StopperUnten	 AT 0;
-	INPUT BOOL	:	DI_Bit0		 AT 1;
-	INPUT BOOL	:	DI_Bit1		 AT 2;
-	INPUT BOOL	:	DI_Bit2		 AT 3;
-	INPUT BOOL	:	DI_Bit3	 	 AT 4;
+	INPUT BOOL	:	DI_ID0		 AT 1;
+	INPUT BOOL	:	DI_ID1		 AT 2;
+	INPUT BOOL	:	DI_ID2		 AT 3;
+	INPUT BOOL	:	DI_ID3	 	 AT 4;
 	
 	INPUT BOOL	:	DI_PaletteLinks	 AT 30;
 	INPUT BOOL	:	DI_PaletteRechts AT 31;
@@ -286,16 +309,12 @@ while( true )
 
 	{Stopper ausfahren und auf WT warten}
 	DO_StopperSenken := false; 
-	{wait for DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3;}
-	while( not RFIDBInventory() )
-		wait 0.5 SEC;
-	endwhile;
-
+	wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
 
 	appState := appState_Working;
 		
 	nextResourceId := -1;		
-	if( checkForWorkInThisStation( 2, rfid, mes, 'CPFactory_Roboter' ) ) then
+	if( checkForWorkInThisStation( 2, rfid, mes ) ) then
 {		if( DI_Bandabschaltung ) then
 			DO_BandRechtslauf := false;
 		endif;
@@ -330,14 +349,12 @@ while( true )
 		
 		{Stopper einfahren und warten dass WT weiter gefahren ist}
 		DO_StopperSenken := true;
-		{wait for not( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3 );}
-		while( RFIDBInventory() )
-			wait 0.1 SEC;
-		endwhile;
+		wait for not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
+		
 		{Stopper ausfahren}
 		DO_StopperSenken := false;
 		wait for not DI_StopperUnten;
-				
+		
 		appState := appState_Waiting;
 	endif;
 endwhile;

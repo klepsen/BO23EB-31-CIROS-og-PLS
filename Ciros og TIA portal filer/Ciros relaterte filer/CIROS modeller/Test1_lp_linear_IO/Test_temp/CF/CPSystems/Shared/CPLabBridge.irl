@@ -123,8 +123,9 @@ BEGIN
 		DO_Stopper_Einschleusung_oeffnen := false;
 		
 		{WT am Stopper Ausschleusung oder Stopper Einschleusung}
-		wait for (DI_WT_vor_Ausschleusung OR DI_WT_vor_Einschleusung OR (DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3) OR DI_Koppelsensor_Robotino);
-		wait 1.0 SEC;
+		while( not (DI_WT_vor_Ausschleusung OR DI_WT_vor_Einschleusung OR DI_Bit0 OR DI_Koppelsensor_Robotino) )
+			wait for (DI_WT_vor_Ausschleusung OR DI_WT_vor_Einschleusung OR (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) OR DI_Koppelsensor_Robotino);
+		endwhile;
 
 		{Stopper_vor_Einschleusung durchfahren lassen}
 		if( DI_WT_vor_Einschleusung ) then
@@ -188,14 +189,10 @@ BEGIN
 				DO_Stopper_Ausschleusung_oeffnen := false; 
 			endif;
 		endif;
-		
-		if( DI_Bit0 OR DI_Bit1 OR DI_Bit2 OR DI_Bit3) then
-			while( not RFIDAInventory() )
-				wait 0.5 SEC;
-			endwhile;
-			
+		if( DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3) then
+
 			{RFID lesen}
-			RFIDA_ReadMES( rfid, 'CPLab_Bridge' );
+			RFIDA_ReadMES( rfid );
 			
 			{Weichenstellung prüfen}
 			if(myResourceId <> 0 ) then
@@ -239,10 +236,7 @@ BEGIN
 				wait for DI_Weiche_Abbiegen;
 					
 				DO_Stopper_Hauptband_oeffnen := true;
-				{wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);}
-				while( RFIDAInventory() )
-					wait 0.1 SEC;
-				endwhile;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
 				DO_Stopper_Hauptband_oeffnen := false; 
 				
 				wait for DI_WT_vor_Ausschleusung;
@@ -264,10 +258,7 @@ BEGIN
 				wait for not DI_Weiche_Abbiegen;
 				
 				DO_Stopper_Hauptband_oeffnen := true;
-				{wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);}
-				while( RFIDAInventory() )
-					wait 0.1 SEC;
-				endwhile;
+				wait for not (DI_Bit0 AND DI_Bit1 AND DI_Bit2 AND DI_Bit3);
 				DO_Stopper_Hauptband_oeffnen := false; 
 
 				wait for DI_Bandende;
