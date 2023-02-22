@@ -206,3 +206,33 @@ Deretter lagde jeg følgende I/O i tag table i TIA portalen. Det står på netts
 
 ### Johannes 07.02.23
 Lest opp på navn konvensjoner i pls programmering fra plcopen og IEC. Ellers bare definert tag-table til lagerhus modellen og startet å gjøre meg kjent med modellen. Så langt kommet frem til at modellen har 2 pls-er 1 for transportbåndene og 1 for den kartesiske roboten
+
+### Johannes 08.02.23
+Jobbet videre med Highbay-storage modulen og gjort meg kjent med databladet til den. Merker spesielt nyttig med sekvens diagram i databladet
+
+### Johannes 09.02.23
+Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse problemer daniel og josef har allerede utredet disse problemene før så jeg utdyper ikke her
+
+### Johannes 09.02.23
+#### Møtelogg
+ Tilstede:
+ Daniel Klepsvik <br>
+ Gerhard nygaard <br>
+ Johannes Eidsvik <br>
+
+1. 1 tips Gerhard hadde til oss i dag var å få klar 1 oppgave så fort som mulig, Josef er allerede godt igang med oppgave 1 så han fortsetter på det
+2. I oppgave 1b når vi sier modifiser programmet så kan jo dette introdusere feil i programmet har studentene ferdigheter til å debugge og feilsøke hvis bugs oppstår? Med dette i tankene må vi avklare med guttorm hvor studenten er i løpet i henhold til PLS programmering
+3. Daniel viste frem en brukerveiledning han har laget i dokument form som Gerhard syntes var ganske bra Som da reiste spørsmålet om vi skal gå bort fra video for brukerveiledning. Kanskje dokument format passer bedre siden er lettere å finne fram i til en senere tid, mens video gir bruker kanskje en mer implisit forståelse når de blir vist nøyaktig hvordan
+4. Legge til noe i forcetabel eller tag table slik at studentene får en forståelse for det også
+
+### Johannes 14.02.23
+Idag har jeg jobbet videre med Highbay-storage modulen. Det har vært lite fremgang i dag av synlige resultater, men har funnet ut endel om modulen. X og Z retningen til den cartesiske roboten styres via 2 servomotor-kontrollere av typen https://www.festo.com/net/SupportPortal/Files/380659/CMMP-AS-M3-HW_2012-03_760322g1.pdf via profinet. I morgen må jeg finne ut hvordan jeg kan skrive posisjons kommandoer fra hoved PLSen til servo motorene. Fant også ut hvordan å flytte roboten fra IO interfacen i CIROS ved å skrive verdier direkte til servocontroller target og så sette start utgangen høy.
+
+### Daniel 15.02.23
+Idag jobbet jeg videre med å få timeren til iDrilling modulen til å fungere. Det fungerte sånn halvveis. Jeg la inn 3 timere som gjorde at det kan gå 5 sek med hver timer, der vi skal bruke 5 sek på å borre fremme, så 5 sek på å flytte borene bak, så 5 sek for å borre bak. Men problemet jeg møtte på var at alle timerene startet samtidig, som skapte problemer.
+
+### Johannes 15.02.23
+Jobbet videre med highbay storage ennå ikke funnet ut hvordan jeg kan styre servo-kontrollerene fra en tia pls
+
+### Johannes 21.02.23
+SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til servo kontrollere så trenger kanskje ikke styre med bus ordning
