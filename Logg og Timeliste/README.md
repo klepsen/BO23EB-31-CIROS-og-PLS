@@ -1,5 +1,6 @@
 ## [Timeliste](https://1drv.ms/x/s!An4Z2t_LGP8Egfc6DhIkCmNc5jDyEw?e=exzyWd)
 ## [Ganttplan](https://1drv.ms/x/s!An4Z2t_LGP8EgfdFcF29zzugesIIWw?e=vxi3Ss)
+## [Møtereferat Fagskulen](https://1drv.ms/w/s!An4Z2t_LGP8EgftweCPkOZMYfNhzLg?e=A8fHtz)
 # Logg-Bachelor
 
 ### 11.01.23 Daniel.
