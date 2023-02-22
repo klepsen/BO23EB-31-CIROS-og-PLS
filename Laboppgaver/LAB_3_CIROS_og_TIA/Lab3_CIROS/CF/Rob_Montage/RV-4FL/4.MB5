@@ -1,0 +1,115 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - 4 (All Fuse program)
+4 '###
+5 '### ProgramDescription:
+6 '### Pick from stopper
+7 '### Place to vision
+8 '### Run camera detection
+9 '### Pick the workpiece from the vision field
+10 '### Place it to the mounting station
+11 '### Pick PCB from pallet
+12 '### Mount PCB
+13 '### Pick fuse from magazine
+14 '### Place top fuse
+15 '### Pick fuse from magazine
+16 '### Place bottom fuse
+17 '### Place back to stopper
+18 '###
+19 '### Modifications:
+20 '###  - 27.07.2016		Puneeth Rajendra		Created
+21 '###
+22 '##########################################################'
+23 '
+24 '##########################################################'
+25 '		Decleration Of Local Positions
+26 '##########################################################'
+27 Def Pos pVisionResult
+28 '
+29 '##########################################################'
+30 '		Decleration Of Input and Output signals
+31 '##########################################################'
+32 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+33 Def Io DI_StopperNo = Byte,164
+34 '
+35 '##########################################################'
+36 '		Decleration Of Local Variables
+37 '##########################################################'
+38 Def Inte StopperNumber
+39 Def Inte CamPrgNumber
+40 Def Inte FuseMagNumber
+41 '
+42 '###########################################################'
+43 '       Program
+44 '###########################################################'
+45 '>>>>>> Initialize local variables <<<<<<<<<<'
+46 StopperNumber% = DI_StopperNo
+47 CamPrgNumber% = 1
+48 m_ReturnedError = 0
+49 CallP "Initialize"
+50 CallP "SensorCheck"
+51 If (m_ReturnedError > 0) GoTo *EndOfPrg
+52 '
+53 '>>>>>> Pick from stopper <<<<<<<<<<'
+54 CallP "PickNewTool", m_GripperWP
+55 If (m_ReturnedError > 0) GoTo *EndOfPrg
+56 CallP "PickFrmStopR", StopperNumber%
+57 If (m_ReturnedError > 0) GoTo *EndOfPrg
+58 '
+59 '>>>>>> Place to vision <<<<<<<<<<'
+60 CallP "PlaceToVison"
+61 '
+62 '>>>>>> Run camera detection <<<<<<<<<<'
+63 'CallP "GetCamResult", CamPrgNumber%
+64 If (m_ReturnedError > 0) GoTo *EndOfPrg
+65 pVisionResult = P_VisionNew
+66 '
+67 '>>>>>> Mount workpiece <<<<<<<<<<'
+68 CallP "PickFrmVison", pVisionResult
+69 CallP "PlaceWpToAss"
+70 If (m_ReturnedError > 0) GoTo *EndOfPrg
+71 '
+72 '>>>>>> Pick PCB <<<<<<<<<<'
+73 CallP "PickNewTool", m_GripperVac
+74 If (m_ReturnedError > 0) GoTo *EndOfPrg
+75 CallP "PickPCBFrPal"
+76 If (m_ReturnedError > 0) GoTo *EndOfPrg
+77 '
+78 '>>>>>> Mount PCB <<<<<<<<<<'
+79 CallP "MountPCB"
+80 '
+81 '>>>>>> Pick Top fuse <<<<<<<<<<'
+82 FuseMagNumber% = 0
+83 CallP "GetFuseMagNo"
+84 If (m_ReturnedError > 3) GoTo *EndOfPrg
+85 FuseMagNumber% = m_AvailFuseMagNo
+86 CallP "PickNewTool", m_GripperFuse
+87 If (m_ReturnedError > 0) GoTo *EndOfPrg
+88 CallP "PickFusFrMag", FuseMagNumber%
+89 '
+90 '>>>>>> Mount Top fuse <<<<<<<<<<'
+91 CallP "MountTopFuse"
+92 '
+93 '>>>>>> Pick Bottom fuse <<<<<<<<<<'
+94 FuseMagNumber% = 0
+95 CallP "GetFuseMagNo"
+96 If (m_ReturnedError > 3) GoTo *EndOfPrg
+97 FuseMagNumber% = m_AvailFuseMagNo
+98 CallP "PickFusFrMag", FuseMagNumber%
+99 '
+100 '>>>>>> Mount Bottom fuse <<<<<<<<<<'
+101 CallP "MountBotFuse"
+102 '
+103 '>>>>>> Unmount product <<<<<<<<<<'
+104 CallP "PickNewTool", m_GripperWP
+105 If (m_ReturnedError > 0) GoTo *EndOfPrg
+106 CallP "PickWpFrmAss"
+107 '
+108 '>>>>>> Place to stopper <<<<<<<<<<'
+109 CallP "PlaceToStopR", StopperNumber%
+110 If (m_ReturnedError > 0) GoTo *EndOfPrg
+111 '
+112 '>>>>>> Error during execution <<<<<<<<<<'
+113 '
+114 *EndOfPrg
+115 

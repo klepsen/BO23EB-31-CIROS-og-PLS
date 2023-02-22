@@ -1,0 +1,63 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - 999
+4 '###
+5 '### ProgramDescription:
+6 '### Initialise the values of the User Base Program
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '###########################################################'
+14 '       Initialisation of Variables & Robot positions
+15 '###########################################################'
+16 '>>>>>>>>>>>> Constant Help position of the Robot <<<<<<<<<<<'
+17 P_ToolX180 = (+180.00,+0.00,+0.00,+0.00,+0.00,+0.00)
+18 P_ToolXZ180 = (+180.00,+0.00,+50.00,+0.00,+0.00,+0.00)
+19 P_ToolX80 = (+80.00,+0.00,+0.00,+0.00,+0.00,+0.00)
+20 '
+21 P_tGripperVac=(0,0,205,0,0,33.50)
+22 P_tGripperWP=(0,0,170,0,0,33.50)
+23 P_tGripperFuse=(0,0,151.5,0,0,33.50)
+24 P_tGripperNone=(0,0,0,0,0,33.50) 
+25 '>>>>>>>>>>>> Constant Return  values to the PLC <<<<<<<<<<<'
+26 m_RobotToolError% = 11
+27 m_UndefStopperNo% = 21
+28 m_NoWPAtStopper% = 23
+29 m_CameraError% = 31
+30 m_WPAssPoseFull% = 41
+31 m_WPNotPresent% = 42
+32 m_WPUpSideDown% = 43
+33 m_WPWrongOrient% = 44
+34 m_WPNotClampped% = 45
+35 m_UndefPCBPalNo% = 52
+36 m_NoPCBAtPalNo% = 53
+37 m_FuseMagEmpty% = 63
+38 '
+39 '>>>>>>>>>>>> Flags and internally used varibles <<<<<<<<<<<'
+40 m_PCBPalletCount% = 0
+41 m_IsInitDone% = 0
+42 m_IsTryUsedByRob% = 0
+43 m_IsVacuumOn% = 0
+44 m_IsBlinkerOn% = 0
+45 m_IsVacEnrgSvEna% = 0
+46 m_GripperVac% = 1
+47 m_GripperWP% = 2
+48 m_GripperFuse% = 3
+49 m_GripperNone% = 4
+50 m_StopperNo% = 0
+51 m_ReturnedError% = 0
+52 m_MaxNoPCBPallet% = 10
+53 m_VerySlow% = 20
+54 m_Slow% = 200
+55 m_Fast% = 350
+56 m_ProgOvrd% = 80
+57 m_XminCamField% = -20
+58 m_XmaxCamField% = 220
+59 m_YminCamField% = -505
+60 m_YmaxCamField% = -280
+61 '
+62 '###########################################################'
+63 

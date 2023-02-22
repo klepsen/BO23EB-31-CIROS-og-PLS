@@ -1,0 +1,32 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PlaceToVison
+4 '###
+5 '### ProgramDescription:
+6 '### Place the upper part at the vision field
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '###########################################################'
+14 '       Program
+15 '###########################################################'
+16 '>>>>>> Place upper part to vision field <<<<<<<<<<'
+17 Spd m_Fast
+18 JOvrd 20
+19 Ovrd m_ProgOvrd
+20 Accel 15,15
+21 TOOL P_tGripperWP
+22 Mov P_Vision, -120
+23 Mvs P_Vision, -30
+24 Spd m_Slow
+25 Mvs P_Vision
+26 Dly 0.5
+27 CallP "GrpOpen"
+28 Spd m_Fast
+29 Mvs P_Vision, -120
+30 Mov P_AssembleWp, -120
+31 '
+32 

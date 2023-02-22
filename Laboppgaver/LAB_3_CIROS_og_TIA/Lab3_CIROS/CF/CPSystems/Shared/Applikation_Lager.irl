@@ -1,0 +1,280 @@
+PROGRAM IRL;
+
+FROM MES_200 IMPORT ALL;
+
+
+PROCEDURE bewegeZNach ( IN  REAL : zInMM; IN BOOL : waitForEndMovement );
+VAR
+	INPUT BOOL 	: 	Z_AbsBusy		AT 41;
+	INPUT REAL	: 	Z_ActPos		AT 40;
+	
+	OUTPUT BOOL	:	Z_MoveAbs		AT 41;
+	OUTPUT REAL	:	Z_SetPos		AT 40;
+	OUTPUT REAL	:	Z_Offset		AT 41;
+BEGIN
+	if( Z_ActPos <> zInMM * 100 ) then
+		Z_SetPos := zInMM * 100;
+		Z_MoveAbs := true;
+		wait for Z_AbsBusy;
+		Z_MoveAbs := false;
+	endif;
+	
+	if( waitForEndMovement ) then
+		wait for not Z_AbsBusy;
+	endif;
+ENDPROC;
+	
+PROCEDURE bewegeXNach ( IN  REAL : xInMM; IN BOOL : waitForEndMovement );
+VAR
+	INPUT BOOL 	: 	X_AbsBusy		AT 46;
+	INPUT REAL	: 	X_ActPos		AT 45;
+	
+
+	OUTPUT BOOL	:	X_MoveAbs		AT 46;
+	OUTPUT REAL	:	X_SetPos		AT 45;
+	OUTPUT REAL	:	X_Offset		AT 46;
+BEGIN
+	if( X_ActPos <> xInMM * 100 ) then
+		X_SetPos := xInMM * 100;
+		X_MoveAbs := true;
+		wait for X_AbsBusy;
+		X_MoveAbs := false;
+	endif;
+	
+	if( waitForEndMovement ) then
+		wait for not X_AbsBusy;
+	endif;
+ENDPROC;
+	
+PROCEDURE referenzfahrt();
+VAR
+	INPUT BOOL 	: 	Z_RefBusy		AT 40;
+	INPUT BOOL 	: 	X_RefBusy		AT 45;
+	INPUT BOOL 	: 	Z_RefDone		AT 42;
+	INPUT BOOL 	: 	X_RefDone		AT 47;	
+	OUTPUT BOOL	:	Z_RefStart		AT 40;
+	OUTPUT BOOL	:	X_RefStart		AT 45;	
+BEGIN
+	bewegeZNach( 0, false );
+	bewegeXNach( 0, true );
+
+	Z_RefStart := false;
+	X_RefStart := false;
+	wait for not Z_RefDone;
+	wait for not X_RefDone;
+	Z_RefStart := true;
+	X_RefStart := true;
+	wait for Z_RefDone;
+	wait for X_RefDone;
+	Z_RefStart := false;
+	X_RefStart := false;
+ENDPROC;
+
+PROCEDURE bewegeNach ( IN  REAL : fach );
+VAR
+	INPUT BOOL	:	Y_Achse_Pos1_hinten	AT 6;
+	INPUT BOOL	:	Y_Achse_Pos2_vorn	AT 7;
+	INPUT BOOL	:	Drehzylinder_Ist_0	AT 24;
+	INPUT BOOL	:	Drehzylinder_Ist_180	AT 25;
+
+	OUTPUT BOOL	:	Y_Achse_zurueck		AT 23;
+	OUTPUT BOOL	:	Y_Achse_nach_vorn	AT 24;
+	OUTPUT BOOL	:	Drehzylinder_0		AT 25;
+	OUTPUT BOOL	:	Drehzylinder_180	AT 26;
+	
+	bool : vorn;
+	
+	REAL : fachZInMM;
+	REAL : fachXInMM;
+BEGIN
+	if( fach > 32 ) then
+		fachXInMM := 265.5;
+		fachZInMM := 548.4;
+
+		{Mitte}
+		Y_Achse_zurueck := true;
+		Y_Achse_nach_vorn := false;
+		wait for Y_Achse_Pos1_hinten;
+		
+		{X-Achse}
+		bewegeXNach(fachXInMM, false);
+	
+		{Korrekte Seite}
+		if( fach = 91 ) then
+			Drehzylinder_0 := true;
+			Drehzylinder_180 := false;
+			
+			wait for Drehzylinder_Ist_0;
+		else
+			Drehzylinder_0 := false;
+			Drehzylinder_180 := true;
+			
+			wait for Drehzylinder_Ist_180;
+		endif;
+			
+		{Warte auf X fertig}
+		bewegeXNach(fachXInMM, true);
+		
+		{Z-Achse}
+		bewegeZNach(fachZInMM, true);
+	else
+		{Mitte}
+		Y_Achse_zurueck := true;
+		Y_Achse_nach_vorn := false;
+		wait for Y_Achse_Pos1_hinten;
+		
+		vorn := fach < 17;
+		if( not vorn ) then
+			fach := fach - 16;
+		endif;
+		{X-Achse + Z-Achse}
+		fachXInMM := (3-((fach-1) -(ROUND(((fach-1) / 4) -0.4)*4))) * 180 + 20; 
+		fachZInMM := (3-(ROUND(((fach-1) / 4) -0.4))) * 140 - 5; 
+
+		bewegeXNach(fachXInMM, false);
+		bewegeZNach(fachZInMM-10, false);
+		
+		{Korrekte Seite}
+		if( vorn ) then
+			Drehzylinder_0 := false;
+			Drehzylinder_180 := true;
+			
+			wait for Drehzylinder_Ist_180;
+		else
+			Drehzylinder_0 := true;
+			Drehzylinder_180 := false;
+			
+			wait for Drehzylinder_Ist_0;
+		endif;
+			
+		bewegeXNach(fachXInMM, true);
+		bewegeZNach(fachZInMM-10, true);
+		
+		{Mitte}
+		Y_Achse_zurueck := false;
+		Y_Achse_nach_vorn := true;
+		wait for Y_Achse_Pos2_vorn;
+		
+		{Runter auf Pos}
+		bewegeZNach(fachZInMM, true);
+	endif;
+
+ENDPROC;
+
+
+PROCEDURE bewegeZuMitte ( IN  REAL : fach );
+VAR
+	INPUT BOOL	:	Y_Achse_Pos1_hinten	AT 6;
+	INPUT BOOL	:	Y_Achse_Pos2_vorn	AT 7;
+	INPUT BOOL	:	Drehzylinder_Ist_0	AT 24;
+	INPUT BOOL	:	Drehzylinder_Ist_180	AT 25;
+
+	OUTPUT BOOL	:	Y_Achse_zurueck		AT 23;
+	OUTPUT BOOL	:	Y_Achse_nach_vorn	AT 24;
+	OUTPUT BOOL	:	Drehzylinder_0		AT 25;
+	OUTPUT BOOL	:	Drehzylinder_180	AT 26;
+	
+	INPUT REAL	: 	Z_ActPos		AT 40;
+BEGIN
+	if( fach > 31 ) then
+		{Z-Achse}
+		bewegeZNach(400, true);
+	else
+		{Hoch von Pos}
+		bewegeZNach( (Z_ActPos / 100) - 10, true);
+
+		{Mitte}
+		Y_Achse_zurueck := true;
+		Y_Achse_nach_vorn := false;
+		wait for Y_Achse_Pos1_hinten;
+	endif;
+
+ENDPROC;
+
+
+FUNCTION appLager ( IN ARRAY [1..7] OF REAL: Parameter ) : INT;
+VAR
+	INPUT  BOOL : GreiferIstAuf AT 26;
+	INPUT  BOOL : SensorPalettePortal AT 27;
+	INPUT  BOOL : SensorPaletteFach90 AT 28;
+	INPUT  BOOL : SensorPalettefach91 AT 30;
+	
+	INPUT  BOOL : LagerInitialisiert AT 140;
+	
+	OUTPUT BOOL : GreiferAuf AT 27;
+	OUTPUT BOOL : GreiferZu AT  28;
+	OUTPUT BOOL : IsActive AT 139;
+
+	REAL : vonFach;
+	REAL : nachFach;
+	REAL : partNo;
+BEGIN
+	IsActive := false;
+	wait for LagerInitialisiert;
+	
+	IsActive := true;
+	vonFach := Parameter[1];
+	nachFach := Parameter[2];
+	partNo := Parameter[3];
+	
+	if( nachFach = 90 ) then
+	  if( SensorPalettefach90 ) then
+		return( 100 );
+	  endif;
+	endif;
+	if( nachFach = 91 ) then
+	  if( SensorPalettefach91 ) then
+		return( 100 );
+	  endif;
+	endif;
+	
+	bewegeNach( vonFach );
+	
+	{Check Sensor}
+	if( not SensorPalettePortal ) then
+		if( vonFach < 90 ) then
+			{Fach ist leer, sollte aber befüllt sein,
+			 Fach sperren und abbrechen}
+			claimCommunication( true );
+			SetBufPos( myResourceID, 0, 0, 1, vonFach, 0, 26, 0 );
+			claimCommunication( false );
+			IsActive := false;
+			return( 100 );
+		endif;
+	endif;
+	
+	{Greifen}
+	GreiferAuf := true;
+	GreiferZu := false;
+	WAIT FOR GreiferIstAuf;
+	
+	bewegeZuMitte( vonFach );
+	
+	{Leeres Fach an MES melden}
+	if( vonFach < 90 ) then
+		claimCommunication( true );
+		SetBufPos( myResourceID, 0, 0, 1, vonFach, 0, 0, 0 );
+		claimCommunication( false );
+	endif;	
+	
+	bewegeNach( nachFach );
+	
+	{Loslassen}
+	GreiferAuf := false;
+	GreiferZu := true;
+	WAIT FOR not GreiferIstAuf;
+	
+	{Neue Fachbelegung an MES melden}
+	if( nachFach < 90 ) then
+		claimCommunication( true );
+		SetBufPos( myResourceID, 0, 0, 1, nachFach, 0, partNo, 0 );
+		claimCommunication( false );
+	endif;
+	
+	bewegeZuMitte( nachFach ); {Grundstellung}
+	
+	IsActive := false;
+	return( 0 );
+ENDFCT;
+
+ENDPROGRAM;

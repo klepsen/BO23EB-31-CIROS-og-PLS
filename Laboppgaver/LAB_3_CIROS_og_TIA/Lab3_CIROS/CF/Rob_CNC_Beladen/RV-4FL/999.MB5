@@ -1,0 +1,47 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - 999
+4 '###
+5 '### ProgramDescription:
+6 '### Initialise the values of the User Base Program
+7 '###
+8 '### Modifications:
+9 '###  - 26.08.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '###########################################################'
+14 '       Initialisation of Variables & Robot positions
+15 '###########################################################'
+16 '>>>>>>>>>>>> Constant Help position of the Robot <<<<<<<<<<<'
+17 P_tGripper=(108.7,0,110,0,90,0)
+18 
+19 P_WorldX180 = (+180.00,+0.00,+0.00,+0.00,+0.00,+0.00)
+20 P_WorldZ120 = (+0.00,+0.00,+120.00,+0.00,+0.00,+0.00)
+21 P_WorldX50 = (+50.00,+0.00,+0.00,+0.00,+0.00,+0.00)
+22 '
+23 '>>>>>>>>>>>> Constant Return  values to the PLC <<<<<<<<<<<'
+24 m_NoWpGrippedErr% = 1'
+25 m_NoPalAtByPass% = 2'
+26 m_ByPassPosOcc% = 3'
+27 M_DrOpenErr% = 11
+28 M_ViOpenErr% = 12
+29 M_DrCloseErr% = 13
+30 M_ViCloseErr% = 14
+31 M_CNCRdyErr% = 15
+32 M_UndefPartInCNC% = 16
+33 M_CNCFreePoseErr% = 17
+34 '
+35 '>>>>>>>>>>>> Flags and internally used varibles <<<<<<<<<<<'
+36 m_IsRobotArmHome% = 0'
+37 m_IsRobotArmBPas% = 0 '
+38 m_IsRobotArmMill% = 0'
+39 m_ReturnedError% = 0'
+40 m_VerySlow% = 20'
+41 m_Slow% = 250'
+42 m_Fast% = 500'
+43 m_ProgOvrd% = 50
+44 m_ForceCNCDrOpen% = 0
+45 '
+46 '###########################################################'
+47 

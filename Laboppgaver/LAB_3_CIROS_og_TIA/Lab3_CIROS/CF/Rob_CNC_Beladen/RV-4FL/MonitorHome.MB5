@@ -1,0 +1,72 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - MonitorHome
+4 '###
+5 '### ProgramDescription:
+6 '### Check if the robot arm is at a safe position
+7 '###
+8 '### Modifications:
+9 '###  - 30.08.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '##########################################################'
+14 '		Decleration Of Input and Output signals
+15 '##########################################################'
+16 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+17 Def Io IsRbtArmHome = Bit,132 'Robot arm is in Home position
+18 '
+19 '##########################################################'
+20 '		Decleration Of Local Positions
+21 '##########################################################'
+22 Def POS HomeZoneCorner1
+23 Def POS HomeZoneCorner2
+24 Def POS HelpZoneCorner1
+25 Def POS HelpZoneCorner2
+26 Def POS CurrentPosition
+27 '
+28 '##########################################################'
+29 '		Decleration Of Local Variable
+30 '##########################################################'
+31 Def Inte ArmInHomeZone
+32 Def Inte ArmInHelpZone
+33 '
+34 '###########################################################'
+35 '       Program
+36 '###########################################################'
+37 '>>>>>> Initialize the values for Home zone <<<<<<<<<<'
+38 CurrentPosition.X = P_Curr.X
+39 CurrentPosition.Y = P_Curr.Y
+40 CurrentPosition.Z = P_Curr.Z
+41 HomeZoneCorner1.X = P_Home.X - 30 
+42 HomeZoneCorner1.Y = P_Home.Y - 30 
+43 HomeZoneCorner1.Z = P_Home.Z - 20 
+44 HomeZoneCorner2.X = P_Home.X + 30 
+45 HomeZoneCorner2.Y = P_Home.Y + 30 
+46 HomeZoneCorner2.Z = P_Home.Z + 40 
+47 ArmInHomeZone = 0
+48 '
+49 '>>>>>> Initialize the values for Help zone <<<<<<<<<<'
+50 HelpZoneCorner1.X = P_HelpLoadPose2.X - 10 
+51 HelpZoneCorner1.Y = P_HelpLoadPose2.Y - 10 
+52 HelpZoneCorner1.Z = P_HelpLoadPose2.Z - 10 
+53 HelpZoneCorner2.X = P_HelpLoadPose2.X + 10 
+54 HelpZoneCorner2.Y = P_HelpLoadPose2.Y + 10 
+55 HelpZoneCorner2.Z = P_HelpLoadPose2.Z + 10 
+56 ArmInHelpZone = 0
+57 '
+58 '>>>>>> Check if the robot arm is at home <<<<<<<<<<'
+59 ArmInHomeZone = ZONE(CurrentPosition,HomeZoneCorner1,HomeZoneCorner2)
+60 '
+61 '>>>>>> Check if the robot arm is at help <<<<<<<<<<'
+62 ArmInHelpZone = ZONE(CurrentPosition,HelpZoneCorner1,HelpZoneCorner2)
+63 
+64 IF ((ArmInHomeZone = 1) OR (ArmInHelpZone = 1)) THEN
+65 	IsRbtArmHome = 1
+66 ELSE
+67 	IsRbtArmHome = 0
+68 ENDIF
+69 
+70 m_IsRobotArmHome = ArmInHomeZone
+71 'm_IsRobotArmHelp = ArmInHelpZone
+72 

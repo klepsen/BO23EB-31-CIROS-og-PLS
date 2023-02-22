@@ -1,0 +1,136 @@
+PROGRAM IRL;
+
+FROM MES_200 IMPORT ALL;
+FROM RFID_100 IMPORT ALL;
+FROM Applikationen IMPORT ALL;
+FROM MES_Com IMPORT ALL;
+
+VAR
+	INT : appId;
+	
+{
+ Linearmodul
+}
+PROCESS CPFactory_Linearmodul();
+VAR
+	INPUT BOOL	:	DI_StopperUnten	 AT 8;
+	INPUT BOOL	:	DI_ID0		 AT 9;
+	INPUT BOOL	:	DI_ID1		 AT 10;
+	INPUT BOOL	:	DI_ID2		 AT 11;
+	INPUT BOOL	:	DI_ID3	 	 AT 12;
+	INPUT BOOL	:	DI_PaletteLinks	 AT 14;
+	INPUT BOOL	:	DI_PaletteRechts AT 15;
+
+	INPUT BOOL	: 	DI_Stauueberwachung AT 90;
+	INPUT BOOL	: 	DI_Bandabschaltung  AT 91;
+
+
+	INPUT REAL	: 	AI_IW4		 AT 0;
+	INPUT REAL	: 	AI_IW6		 AT 1;
+	INPUT REAL	: 	AI_IW8		 AT 2;
+	INPUT REAL	: 	AI_IW10		 AT 3;
+
+	OUTPUT BOOL	:	DO_BandRechtslauf   	AT 19;
+	OUTPUT BOOL	:	DO_BandLinkslauf    	AT 20;
+	OUTPUT BOOL	:	DO_BandSchleichgang 	AT 21;
+	OUTPUT BOOL	:	DO_StopperSenken   	AT 7;
+	
+	REAL : nextResourceId;
+
+	RFIDFields : rfid;
+	MESFields  : mes; 
+BEGIN
+	{Band einschalten}
+	DO_BandRechtslauf := true;	
+
+	{MES Zustand initialisieren}
+	setStateMESMode( true );
+	setStateAuto( true ); 
+	setStateReset( false );
+	setStateError( -1 ); 
+		
+while( true )	
+	{Stopper ausfahren und auf WT warten}
+	DO_StopperSenken := false; 
+	wait for DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3;
+	
+	nextResourceId := -1;		
+	if( checkForWorkInThisStation( 1, rfid, mes ) ) then
+	
+		if( DI_Bandabschaltung ) then
+			{Band stoppen}
+			DO_BandRechtslauf := false;
+		endif;
+
+		if( myResourceId = 0 ) then
+			{Standarablauf}
+			nextResourceId := App(appId, mes);
+		else
+			nextResourceId := callApp( 1, appId, rfid, mes );
+		endif;
+	endif;
+
+	{Findet der nächste Arbeitsschritt in dieser Station statt?}
+	if( myResourceId = 0 OR nextResourceId <> myResourceId ) then
+		{Falls nein: WT entlassen}		
+		{Band starten}
+		DO_BandRechtslauf := true;
+		
+		{Stopper einfahren und warten dass WT weiter gefahren ist}
+		
+		if( DI_Stauueberwachung ) then
+			wait for not DI_PaletteRechts;
+		endif;
+		
+		DO_StopperSenken := true;
+		wait for not( DI_ID0 AND DI_ID1 AND DI_ID2 AND DI_ID3 );
+		wait 1.0 sec;
+		
+		{Stopper ausfahren}
+		DO_StopperSenken := false;
+		wait for not DI_StopperUnten;
+	endif;	
+endwhile;
+ENDPROCESS;
+
+PROCEDURE startGM(IN INT: gmId);
+BEGIN
+	CASE gmId OF
+	WHEN 0: 
+		RUN CPFactory_Linearmodul;
+	ENDCASE;
+ENDPROC;
+
+PROCEDURE stopGM(IN INT: gmId);
+BEGIN
+	CASE gmId OF
+	WHEN 0: 
+		CANCEL CPFactory_Linearmodul;
+	ENDCASE;
+ENDPROC;
+{
+ Hauptmodul
+}
+PROCEDURE CPFactory(IN INT: gmId; IN INT: _appId);
+VAR
+	INPUT BOOL	:	DI_SPSEnable 	 AT 16;
+BEGIN
+	appId := _appId;
+	
+while( true )
+	setStateError( 0 );
+	setStateAuto( false );
+
+	WAIT FOR DI_SPSEnable;
+	startGM(gmId);
+	setStateError( -1 );
+	setStateAuto( true );
+	
+	WAIT FOR NOT DI_SPSEnable;
+	stopGM(gmId);
+	
+	resetAppOutputs();
+endwhile;	
+
+ENDPROC;
+ENDPROGRAM;

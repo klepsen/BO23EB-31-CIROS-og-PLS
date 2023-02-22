@@ -1,0 +1,95 @@
+TIMESTAMP: DATE: 17.6.2019 TIME: 13:7:58
+---------------------------------------------------------------------------
+
+MODUL: §$$$PROG$$$GRPCLOSE§ 
+COMPILER: cirosCompilerMelfaBasic5.EXE
+VERSION: 6.4.2.16148
+NEXT GLOBAL ADDRESS: <0:3>
+
+---------------------------------------------------------------------------
+EXPORT
+---------------------------------------------------------------------------
+
+PROC: $$$PROG$$$GRPCLOSE
+FORMAL PARAMETERS: 
+
+---------------------------------------------------------------------------
+IMPORT
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+SYMBOLIC IRDATA
+---------------------------------------------------------------------------
+DECLARATION :
+BEGIN
+DEFREC,1,I; <TYPE:1,I><USER:$$$PROG$$$GRPCLOSE#DI_GRIPPEROPENED> :=  <0:0>
+DEFREC,1,I; <TYPE:1,I><USER:$$$PROG$$$GRPCLOSE#DI_PARTGRIPPED> :=  <0:1>
+DEFREC,1,I; <TYPE:1,I><USER:$$$PROG$$$GRPCLOSE#DI_GRIPPERCLOSED> :=  <0:2>
+END
+---------------------------------------------------------------------------
+BODY :
+BEGIN
+TSKBEG,0,25,'TASK::$$$PROG$$$GRPCLOSE';
+MOVDAT,I,%ST,0,I,%CON,24270;
+!EXT:$$$PROG$$$GRPCLOSE!!$$$PROG$$$GRPCLOSE:_$$$PROG$$$GRPCLOSE!PRCBEG,0,'$$$PROG$$$GRPCLOSE';
+BLBEG,0,1;
+DEFREC,1,R;// Direct Source Register
+DEFREC,1,B;// Direct Source Register
+!$$$PROG$$$GRPCLOSE:1!CASE,%ST,0,-1,?$$$PROG$$$GRPCLOSE:2?;
+!$$$PROG$$$GRPCLOSE:2!!$$$PROG$$$GRPCLOSE:_1!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,1;
+!$$$PROG$$$GRPCLOSE:_2!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,2;
+!$$$PROG$$$GRPCLOSE:_3!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,3;
+!$$$PROG$$$GRPCLOSE:_4!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,4;
+!$$$PROG$$$GRPCLOSE:_5!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,5;
+!$$$PROG$$$GRPCLOSE:_6!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,6;
+!$$$PROG$$$GRPCLOSE:_7!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,7;
+!$$$PROG$$$GRPCLOSE:_8!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,8;
+!$$$PROG$$$GRPCLOSE:_9!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,9;
+!$$$PROG$$$GRPCLOSE:_10!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,10;
+!$$$PROG$$$GRPCLOSE:_11!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,11;
+!$$$PROG$$$GRPCLOSE:_12!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,12;
+!$$$PROG$$$GRPCLOSE:_13!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,13;
+!$$$PROG$$$GRPCLOSE:_14!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,14;
+!$$$PROG$$$GRPCLOSE:_15!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,15;
+!$$$PROG$$$GRPCLOSE:_16!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,16;
+!$$$PROG$$$GRPCLOSE:_17!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,17;
+!$$$PROG$$$GRPCLOSE:_18!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,18;
+!$$$PROG$$$GRPCLOSE:_19!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,19;
+!$$$PROG$$$GRPCLOSE:_20!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,20;
+!$$$PROG$$$GRPCLOSE:_21!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,21;
+!$$$PROG$$$GRPCLOSE:_22!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,22;
+!$$$PROG$$$GRPCLOSE:_23!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,23;
+!$$$PROG$$$GRPCLOSE:_24!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,24;
+!$$$PROG$$$GRPCLOSE:_25!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,25;
+LINENO,25,'..\GRPCLOSE.MB5',513;
+TYPCON,R,%BR,<1:0>,I,%CON,1;
+MOVDAT,R,%ST,0,R,%BR,<1:0>;
+CALL,?SYS:HCLOSE?;
+!$$$PROG$$$GRPCLOSE:_26!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,26;
+LINENO,26,'..\GRPCLOSE.MB5',513;
+SUSPND,%CON,0.2;
+!$$$PROG$$$GRPCLOSE:_27!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,27;
+LINENO,27,'..\GRPCLOSE.MB5',513;
+!$$$PROG$$$GRPCLOSE:3!DIGIN,%CON,900,%CON,1,I,%BR,<0:0>;
+EQ,B,%BR,<1:1>,I,%BR,<0:0>,I,%CON,0;
+SUSPND,%CON,0.0;
+IF,%BR,<1:1>,?$$$PROG$$$GRPCLOSE:3?;
+!$$$PROG$$$GRPCLOSE:_28!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,28;
+LINENO,28,'..\GRPCLOSE.MB5',513;
+!$$$PROG$$$GRPCLOSE:4!DIGIN,%CON,902,%CON,1,I,%BR,<0:2>;
+EQ,B,%BR,<1:1>,I,%BR,<0:2>,I,%CON,1;
+SUSPND,%CON,0.0;
+IF,%BR,<1:1>,?$$$PROG$$$GRPCLOSE:4?;
+!$$$PROG$$$GRPCLOSE:_29!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,29;
+LINENO,29,'..\GRPCLOSE.MB5',513;
+SUSPND,%CON,0.2;
+!$$$PROG$$$GRPCLOSE:0!CONSTATE,%CON,-2,%CON,0;
+BLEND;
+PRCEND;
+TSKEND;
+END
+---------------------------------------------------------------------------
+SUBROUTINES :
+BEGIN
+END
+---------------------------------------------------------------------------

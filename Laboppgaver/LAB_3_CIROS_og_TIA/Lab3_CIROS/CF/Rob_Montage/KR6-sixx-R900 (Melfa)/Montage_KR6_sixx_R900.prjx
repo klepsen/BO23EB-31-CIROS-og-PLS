@@ -1,0 +1,56 @@
+<!-- Diese Datei bitte nur mit der CIROS-Projektverwaltung modfizieren! -->
+<?xml version="1.0"?>
+<CirosCompilerProject Version="1.0">
+	<CompilerType>MBA5</CompilerType>
+	<Name>Montage_KR6_sixx_R900</Name>
+	<ReadOnly>false</ReadOnly>
+	<Files>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5mlib.rob</File>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5flib.rob</File>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5mtlib.rob</File>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5movlib.rob</File>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5sysvarlib.rob</File>
+		<File Type="Library" Mode="Normal">.\lib\MBA5\mba5stmtlib.rob</File>
+		<File Type="System" Mode="Hidden">.\$system.mb5</File>
+		<File Type="System" Mode="Hidden">.\$fdecl.mb5</File>
+		<File Type="Module" Mode="Normal">.\UBP.MB5</File>
+		<File Type="Module" Mode="Normal">.\1.MB5</File>
+		<File Type="Module" Mode="Normal">.\2.MB5</File>
+		<File Type="Module" Mode="Normal">.\3.MB5</File>
+		<File Type="Module" Mode="Normal">.\4.MB5</File>
+		<File Type="Module" Mode="Normal">.\5.MB5</File>
+		<File Type="Module" Mode="Main">.\RobotSystemDriver.mb5</File>
+		<File Type="Module" Mode="Normal">.\123.MB5</File>
+		<File Type="Module" Mode="Normal">.\255.MB5</File>
+		<File Type="Module" Mode="Normal">.\999.MB5</File>
+		<File Type="Module" Mode="Normal">.\DemoMountPCB.MB5</File>
+		<File Type="Module" Mode="Normal">.\ENRGSAVEVACU.MB5</File>
+		<File Type="Module" Mode="Normal">.\GETCAMRESULT.MB5</File>
+		<File Type="Module" Mode="Normal">.\GETCURTOOLNO.MB5</File>
+		<File Type="Module" Mode="Normal">.\GETFUSEMAGNO.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPCLOSE.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPLOCK.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPOPEN.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPRELEASE.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPVACOFF.MB5</File>
+		<File Type="Module" Mode="Normal">.\GRPVACON.MB5</File>
+		<File Type="Module" Mode="Normal">.\INITIALIZE.MB5</File>
+		<File Type="Module" Mode="Normal">.\MonitorHome.MB5</File>
+		<File Type="Module" Mode="Normal">.\MonitorPalWS.MB5</File>
+		<File Type="Module" Mode="Normal">.\MOUNTBOTFUSE.MB5</File>
+		<File Type="Module" Mode="Normal">.\MOUNTPCB.MB5</File>
+		<File Type="Module" Mode="Normal">.\MOUNTTOPFUSE.MB5</File>
+		<File Type="Module" Mode="Normal">.\PCBTrayCntrl.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKFRMSTOPR.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKFRMVISON.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKFUSFRMAG.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKNEWTOOL.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKPCBFRPAL.MB5</File>
+		<File Type="Module" Mode="Normal">.\PICKWPFRMASS.MB5</File>
+		<File Type="Module" Mode="Normal">.\PLACETOSTOPR.MB5</File>
+		<File Type="Module" Mode="Normal">.\PLACETOVISON.MB5</File>
+		<File Type="Module" Mode="Normal">.\PLACEWPTOASS.MB5</File>
+		<File Type="Module" Mode="Normal">.\SENSORCHECK.MB5</File>
+		<File Type="PositionList" Mode="Normal">.\UBP.POS</File>
+	</Files>
+</CirosCompilerProject>

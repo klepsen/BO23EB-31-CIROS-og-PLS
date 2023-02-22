@@ -1,0 +1,81 @@
+1  '|------------------------------------------------------------------------------------------------------------------|
+2  '| Emulation der Robotersystem-E/As                 										                          |
+3  '|   																	                            				  |
+4  '|                                                                                                                  |
+5  '|------------------------------------------------------------------------------------------------------------------|
+6  '| Author    : Sven Severin Fa. RIF Robotertechnik 29.07.15                                    					  |
+7  '|------------------------------------------------------------------------------------------------------------------|
+8 DEF IO I_Start = BIT, 101
+9 DEF IO I_IOENA = BIT, 102
+10 DEF IO I_SlotInit = BIT, 103
+11 DEF IO I_SrvOn = BIT, 104
+12 DEF IO I_SrvOff = BIT, 105
+13 DEF IO I_ErrReset = BIT, 106
+14 DEF IO I_PrgSel = BIT, 107
+15 DEF IO I_ErrOut = BIT, 111
+16 DEF IO O_Stopped = BIT, 100
+17 DEF IO O_Run = BIT, 101
+18 DEF IO O_IOENA = BIT, 102
+19 DEF IO O_SlotInit = BIT, 103
+20 DEF IO O_SrvOn = BIT, 104
+21 DEF IO O_SrvOff = BIT, 105
+22 DEF IO O_Error = BIT, 106
+23 DEF IO O_Ready = BIT, 107
+24 DEF IO O_BattErr = BIT, 108
+25 DEF IO O_ErrOut = BIT, 111
+26 DEF IO O_TeachMode = BIT, 114
+27 DEF IO I_Data = WORD, 116
+28 DEF INTE startCount
+29 xrun 2, "UBP"
+30 WAIT  M_RUN(2) = 0
+31 xrun 2, "999"
+32 O_Stopped   = 0
+33 O_Run		   = 0
+34 O_SlotInit   = 1
+35 O_Error     = 0
+36 O_Ready    = 1
+37 O_BattErr    = 0
+38 O_ErrOut		= 0
+39 O_TeachMode		= 0
+40 startCount = 0
+41 
+42 WHILE 1
+43 	'Rep Programme ausführen
+44 	if( M_RUN(3) = 0) then
+45 		xrun 3, "MonitorMill"
+46 	endif
+47 	if( M_RUN(4) = 0) then
+48 		xrun 4, "MonitorHome"
+49 	endif
+50 	if( M_RUN(5) = 0) then
+51 		xrun 5, "MonitorBPas"
+52 	endif
+53 
+54 	if( I_Start ) then
+55 		if( I_Data = 1 ) then
+56 			xrun 2, "1"
+57 		endif 
+58 		if( I_Data = 2 ) then
+59 			xrun 2, "2"
+60 		endif 
+61 		if( I_Data = 3 ) then
+62 			xrun 2, "3"
+63 		endif 
+64 		O_Run = 1
+65 		O_SlotInit = 0
+66 		DLY 1
+67 		'WEND
+68 		WAIT  M_RUN(2) = 0
+69 		'WEND
+70 		O_ErrOut = 0
+71 		O_Run = 0
+72 		O_SlotInit = 1
+73 	endif
+74 	O_IOENA = I_IOENA
+75 	O_SrvOff = I_SrvOff
+76 	O_SrvOn = I_SrvOn
+77 WEND
+78 
+79 END
+80 END
+81 

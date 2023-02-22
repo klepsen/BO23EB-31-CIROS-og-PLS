@@ -1,0 +1,117 @@
+PROGRAM RFM_commands;
+
+
+VAR
+	INPUT BOOL	:	NewJob	AT 150;
+	INPUT BOOL	:	StateSent	AT 151;
+	INPUT BOOL	:	GoToPosition	AT 152;
+	INPUT BOOL	:	DockTo	AT 153;
+	INPUT BOOL	:	LoadBox	AT 154;
+	INPUT BOOL	:	UnloadBox	AT 155;
+	INPUT BOOL	:	isManual	AT 156;
+	INPUT BOOL	:	Undock	AT 157;
+	INPUT BOOL	:	DockToCharger	AT 158;
+	INPUT BOOL	:	UndockCharger	AT 159;
+	INPUT BOOL	:	CancelJob	AT 160;
+	INPUT REAL	:	poseID	AT 150;
+	INPUT REAL	:	beltNo	AT 151;
+	INPUT REAL	:	pos_x	AT 152;
+	INPUT REAL	:	pos_y	AT 153;
+	INPUT REAL	:	pos_phi	AT 154;
+
+VAR
+	OUTPUT BOOL	:	laserwarning	AT 150;
+	OUTPUT BOOL	:	lasersafety	AT 151;
+	OUTPUT BOOL	:	boxpresent	AT 152;
+	OUTPUT REAL	:	batteryvoltage	AT 150;
+	OUTPUT REAL	:	current	AT 151;
+
+	OUTPUT BOOL	:	StateStarted	AT 153;
+	OUTPUT BOOL	:	StateFinished	AT 154;
+	OUTPUT REAL	:	StateError	AT 152;
+
+	SEMA 	: rfmCommunictaion := 1;
+
+TYPE
+RECORD
+	bool	:	GoToPosition;
+	bool	:	DockTo;
+	bool	:	LoadBox;
+	bool	:	UnloadBox;
+	bool	:	Undock;
+	bool	:	DockToCharger;
+	bool	:	UndockCharger;
+	bool	:	isManual;
+	real	:	poseID;
+	real	:	beltNo;
+	real	: 	pos_x;
+	real	: 	pos_y;
+	real	: 	pos_phi;
+
+ENDRECORD = RFMJob;
+
+CONST
+real : NoError := 0;
+real : ErrPathBlocked := 1;
+real : ErrNoDockStation := 2;
+real : ErrNoResponseFromStation := 3;
+real : ErrBoxPresent := 4;
+real : ErrNoBox := 5;
+real : ErrNoCharger := 6;
+real : ErrRobotNotDocked:= 7;
+
+PROCEDURE RFM_SendState( IN bool : started; IN bool : finished; IN real : errorState );
+BEGIN
+	SEMA_WAIT rfmCommunictaion;
+
+	if( started <> false OR finished <> false OR errorState <> 0 ) then
+		StateStarted 	:= started;
+		StateFinished 	:= finished;
+		StateError	:= errorState;
+		
+		wait for StateSent;
+	endif;
+
+	StateStarted 	:= false;
+	StateFinished 	:= false;
+	StateError	:= 0;	
+	
+	wait for not StateSent;
+	SEMA_SIGNAL rfmCommunictaion;
+ENDPROC;
+
+PROCEDURE RFM_ClearJob( OUT RFMJob : job );
+BEGIN
+	job.GoToPosition := false;
+	job.DockTo:= false;
+	job.LoadBox:= false;
+	job.UnloadBox:= false;
+	job.Undock:= false;
+	job.DockToCharger:= false;
+	job.UndockCharger:= false;
+	job.isManual:= false;
+	job.poseID:= 0;
+	job.beltNo:= 0;
+	job.pos_x:= 0;
+	job.pos_y:= 0;
+	job.pos_phi:= 0;
+ENDPROC;
+
+PROCEDURE RFM_CobyJob( OUT RFMJob : job );
+BEGIN
+	job.GoToPosition := GoToPosition;
+	job.DockTo:= DockTo;
+	job.LoadBox:= LoadBox;
+	job.UnloadBox:= UnloadBox;
+	job.Undock:= Undock;
+	job.DockToCharger:= DockToCharger;
+	job.UndockCharger:= UndockCharger;
+	job.isManual:= isManual;
+	job.poseID:= poseID;
+	job.beltNo:= beltNo;
+	job.pos_x:= pos_x;
+	job.pos_y:= pos_y;
+	job.pos_phi:= pos_phi;	
+ENDPROC;
+
+ENDPROGRAM;
