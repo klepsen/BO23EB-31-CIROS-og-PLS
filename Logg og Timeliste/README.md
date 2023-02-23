@@ -237,3 +237,17 @@ Jobbet videre med highbay storage ennå ikke funnet ut hvordan jeg kan styre ser
 
 ### Johannes 21.02.23
 SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til servo kontrollere så trenger kanskje ikke styre med bus ordning
+
+### Møtereferat med veileder 23.02.23: 
+
+    Lage en liste med typiske feilmeldinger 
+
+    Ta skjermbilder av feil som skjer 
+
+    Lage en Q&A i slutten av intro 
+
+    Lage noen kontrollspørsmål på alle oppgaver 
+
+    Eks oppg 1: hvor lenge stopper arbeidsstykke på midten, hvilke farge er arbeidsstykke? 
+
+    Eks oppg 2: Hva skjer når de trykker på de forskjellige tingene? 
