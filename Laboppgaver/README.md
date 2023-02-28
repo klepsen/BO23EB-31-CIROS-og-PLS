@@ -8,7 +8,7 @@
 
 ## Lab 2
 
-[Introduksjon til lab](https://1drv.ms/w/s!An4Z2t_LGP8EgrsjD3dqyqnhsTZDtQ?e=NjqPK8)
+[Laboppgave 2 SCL](https://1drv.ms/w/s!An4Z2t_LGP8EgrsjD3dqyqnhsTZDtQ?e=NjqPK8)
  
 ## Lab 3
 [Laboppgave 3](https://1drv.ms/w/s!AnjnZHW7OCFb3zmsL_KFSh-egZvb?e=sqnDLM)
