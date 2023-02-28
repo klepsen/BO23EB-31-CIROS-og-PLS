@@ -251,3 +251,7 @@ SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til
     Eks oppg 1: hvor lenge stopper arbeidsstykke på midten, hvilke farge er arbeidsstykke? 
 
     Eks oppg 2: Hva skjer når de trykker på de forskjellige tingene? 
+
+
+### Johannes 28.02.23
+for å hente ut intern program fra ciros start en ferdig definert modell så minimer vinduet og vinduer med koden vises bakom
