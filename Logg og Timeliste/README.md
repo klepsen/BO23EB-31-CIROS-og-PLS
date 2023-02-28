@@ -267,3 +267,4 @@ SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til
 
 ### Johannes 28.02.23
 for å hente ut intern program fra ciros start en ferdig definert modell så minimer vinduet og vinduer med koden vises bakom
+notat: 0ca080f for blackmail av josef :smiling_imp:
