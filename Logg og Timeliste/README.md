@@ -187,7 +187,7 @@ Idag skrev jeg kode for å få transportbåndet skulle virke. Jeg fikk det godt 
 Jobbet med forprosjekt rapport og skrevet ferdig valgt løsning (2.3)
 
 ### Josef 31.01.23
-Jobbet lii med forprosjektrapporten, men hovedsaklig jobbet videre med modellen i CIROS og TIA
+Jobbet litt med forprosjektrapporten, men hovedsaklig jobbet videre med modellen i CIROS og TIA
 
 ### Josef 01.02.23
 Jobbet Videre med modellen min I CIROS og TIA. Laget ekstra funksjonalitet for knappene. Begynt å skrive kode i TIA som er i blokkdiagram og ikke SCL.
@@ -205,11 +205,17 @@ Arbeidet videre med modellen min i CIROS. Lagt på applokasjonsmodul og laget fu
 Idag fikk jeg lagt til iDrill modulen til å stå oppå transportbåndet. Måten jeg gjorde dette på var ved å lagge den til fra "Model library", så fant jeg I/O på denne siden: https://ip.festo-didactic.com/InfoPortal/CPFactoryLab/hardware/application/datasheet.php?model=CP-AM-iDRILL&lang=en 
 Deretter lagde jeg følgende I/O i tag table i TIA portalen. Det står på nettsiden at det er CECC I/O, men det funket helt fint å bruke disse som vanlig PLS I/O. Når disse var lagt inn i tag table, måtte jeg inn i SPS_A for CP_L_CONVEYOR, og la til de nye tagsene i CIROS. Når jeg såg at disse funket, koden jeg i fb´en, og gjorde slik at arbeidsstykket skulle stoppe på midten og bli borret på. Problemet med dette var at sourcen vår ikke gav arbeidstykke med front og bak deksel. Men jeg klarte å finne denne sourcen på en ferdiglaget drill inni model library. Når jeg fikk til denne fungerte drillen sånn halveis, neste steg vil være å legge til en timer som kan telle hvor lenge den skal borre fremme og bak på dekselet.
 
+### Josef 07.02.23
+Støtt på problemer med kontrollering av applikasjonsmodulen. Pressa kontrolleres vanligvis gjennom HMI-en og det kontrollsystemet er ikke tilgjgelig for meg. Prøver å finne en løsning på problemet men så langt uten hell. Har konaktet Guttorm for tilgang på forumet til FESTO CP og venter på å høre tilbakke.
+
 ### Johannes 07.02.23
 Lest opp på navn konvensjoner i pls programmering fra plcopen og IEC. Ellers bare definert tag-table til lagerhus modellen og startet å gjøre meg kjent med modellen. Så langt kommet frem til at modellen har 2 pls-er 1 for transportbåndene og 1 for den kartesiske roboten
 
 ### Johannes 08.02.23
 Jobbet videre med Highbay-storage modulen og gjort meg kjent med databladet til den. Merker spesielt nyttig med sekvens diagram i databladet
+
+### Josef 08.02.23
+Begynner arbeidet med å lage laboppgavene til studentene ved Fagskulen.
 
 ### Johannes 09.02.23
 Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse problemer daniel og josef har allerede utredet disse problemene før så jeg utdyper ikke her
@@ -229,11 +235,17 @@ Lite fremgang idag mye problemere med CIROS som henger seg opp og diverse proble
 ### Johannes 14.02.23
 Idag har jeg jobbet videre med Highbay-storage modulen. Det har vært lite fremgang i dag av synlige resultater, men har funnet ut endel om modulen. X og Z retningen til den cartesiske roboten styres via 2 servomotor-kontrollere av typen https://www.festo.com/net/SupportPortal/Files/380659/CMMP-AS-M3-HW_2012-03_760322g1.pdf via profinet. I morgen må jeg finne ut hvordan jeg kan skrive posisjons kommandoer fra hoved PLSen til servo motorene. Fant også ut hvordan å flytte roboten fra IO interfacen i CIROS ved å skrive verdier direkte til servocontroller target og så sette start utgangen høy.
 
+### Josef 14.02.23
+Fortstter arbeidet med laboppgavene, fokuserer på oppstartsmanualen i dag som vil være oppgave 1.
+
 ### Daniel 15.02.23
 Idag jobbet jeg videre med å få timeren til iDrilling modulen til å fungere. Det fungerte sånn halvveis. Jeg la inn 3 timere som gjorde at det kan gå 5 sek med hver timer, der vi skal bruke 5 sek på å borre fremme, så 5 sek på å flytte borene bak, så 5 sek for å borre bak. Men problemet jeg møtte på var at alle timerene startet samtidig, som skapte problemer.
 
 ### Johannes 15.02.23
 Jobbet videre med highbay storage ennå ikke funnet ut hvordan jeg kan styre servo-kontrollerene fra en tia pls
+
+### Josef 15.02.23
+Ferdigstiller laboppgave 1 idag før møte med Guttorm neste veke. Forventer litt tilbakemelding.
 
 ### Johannes 21.02.23
 SpsA_lager har kanskje allerede noen utganger definert som ser ut til å gå til servo kontrollere så trenger kanskje ikke styre med bus ordning
