@@ -273,3 +273,25 @@ utganger relevant for flytting av z og x akse i asrs32:
 1. z_moveabs, x_moveabs
 2. z_setpos, x_setpos
 ref cpapplikasjon for virkemåte
+
+### Møtereferat med Guttorm 15.03.23
+## Våre punkter:
+•	Trenger vi å være til stede under lab testene? Siden vi har kanskje ikke tid pga. midtveispresentasjon. Kan legges opp til dette fra vår side.
+•	Hvor lang tid får de til dispensasjon?
+•	Har de CIROS og TIA lastet ned og klar?
+•	Hvor mange laber kan vi få testet?
+•	Kan vi gå ned og ta bilder av den fysiske fabrikken?
+•	Johannes sin modul spørsmål.
+
+## Punkter underveid:
+•	De er halveis i løpet, gjerne scl
+•	Lage to zipper en oppgave og en løsning og sende til Guttorm
+•	Får rikelig med tid
+•	Kanskje klar CIROS til torsdag
+•	13:20 – 15:45 på torsdag 23.03.23
+•	Kan fordele labene på de
+•	Kanskje skifte til nyere versjoner av TIA og SIM
+
+## Referat:
+Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i løpet, aka. holdt på i et år. De har holdt på med Python, men de kan ikke SCL. På torsdag er det fra 13:20-15:45, noen av de har forhåpentligvis fått lastet ned CIROS før dette, men vi må sannsynligvis hjelpe noen av de med nedlastning, før de kan starte med labbene. De får lengre tid enn kun torsdag, de har hele fredagen til rådighet, og eventuelt på nettet senere for å fullføre.
+
