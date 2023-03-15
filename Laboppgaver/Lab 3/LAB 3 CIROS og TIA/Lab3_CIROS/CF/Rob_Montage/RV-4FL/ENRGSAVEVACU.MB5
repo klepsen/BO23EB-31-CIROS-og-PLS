@@ -1,0 +1,36 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - EnrgSaveVacu
+4 '###
+5 '### ProgramDescription:
+6 '### Turn on the vaccum of the gripper when lost
+7 '###
+8 '### Modifications:
+9 '###  - 27.07.2016		Puneeth Rajendra		Created
+10 '###
+11 '##########################################################'
+12 '
+13 '##########################################################'
+14 '		Decleration Of Input and Output signals
+15 '##########################################################'
+16 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+17 Def Io DI_Hand1Open = Bit,900
+18 Def Io DI_Hand2Open = Bit,901
+19 '
+20 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+21 Def Io DI_PCBGripped = Bit,900 'PCB pallet is gripped
+22 '
+23 '###########################################################'
+24 '       Program
+25 '###########################################################'
+26 '>>>>>> Turn on the vaccum of the gripper when signal lost<<<<<<<<<<'
+27 If (m_IsVacEnrgSvEna = 1) Then
+28 	If (DI_PCBGripped = 1) Then
+29 		DI_Hand1Open = 0
+30 		DI_Hand2Open = 0
+31 	Else
+32 		DI_Hand1Open = 1
+33 		DI_Hand2Open = 0
+34 	EndIf
+35 EndIf
+36 

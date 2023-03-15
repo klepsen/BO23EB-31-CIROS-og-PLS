@@ -1,0 +1,19 @@
+ * RobotSystemDriver.mb5 erstellt um Ansteuerung durch SPS zu simulieren
+ * Die numerische Toolzuweisung (M_TOOL=x) wird in CIROS nicht unterstützt
+  * Def Pos P_tGripperVac, P_tGripperWP, P_tGripperFuse und P_tGripperNone' zu Programm UBP hinzugefügt
+  * Tools P_tGripperVac, P_tGripperWP, P_tGripperFuse, P_tGripperNone definiert
+  * M_TOOL = m_ -> TOOL = P_t 
+ * CIROS unterstützt nur 1024 digitale E/As. Adressen die oberhalb liegen können nicht verarbeitet werden, daher wurden die E/As ab 2000 in den Bereich ab 100 gemappt.
+ * Serielle Kommunikation wird nicht unterstützt. Die Lage der Werkstücke wird nicht über eine Kamera erkannt. Der entsprechende Code ist auskommentiert.
+   
+NEU:
+ 2.MB5:
+ - SensorCheck2 prüft ob die Spanneinheit geschlossen ist und erzeugt dann einen Fehler. Die Spanneinheit sollte aber noch geschlossen sein, da ein OpenVice erst mit PickFromMill gesendet wird?
+   + provisorisch CallP "CNCINTFACE16","OpenVice" ergänzt
+ UBP.MB5;
+  Redundante Definition der Roboterpositionen P_* entfernt
+ PICKNEWTOOL.MB5:
+  Z 104: Leere IF THEN ELSE Anweisung
+ PICKFUSFRMAG.MB5:
+  Z 60: m_UndefFuseNo nicht definiert
+ 

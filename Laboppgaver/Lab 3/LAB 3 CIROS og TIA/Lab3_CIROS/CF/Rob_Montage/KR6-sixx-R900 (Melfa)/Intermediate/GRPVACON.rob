@@ -1,0 +1,75 @@
+TIMESTAMP: DATE: 17.6.2019 TIME: 13:7:57
+---------------------------------------------------------------------------
+
+MODUL: §$$$PROG$$$GRPVACON§ 
+COMPILER: cirosCompilerMelfaBasic5.EXE
+VERSION: 6.4.2.16148
+NEXT GLOBAL ADDRESS: <0:0>
+
+---------------------------------------------------------------------------
+EXPORT
+---------------------------------------------------------------------------
+
+PROC: $$$PROG$$$GRPVACON
+FORMAL PARAMETERS: 
+
+---------------------------------------------------------------------------
+IMPORT
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+SYMBOLIC IRDATA
+---------------------------------------------------------------------------
+DECLARATION :
+BEGIN
+END
+---------------------------------------------------------------------------
+BODY :
+BEGIN
+TSKBEG,0,25,'TASK::$$$PROG$$$GRPVACON';
+MOVDAT,I,%ST,0,I,%CON,24270;
+!EXT:$$$PROG$$$GRPVACON!!$$$PROG$$$GRPVACON:_$$$PROG$$$GRPVACON!PRCBEG,0,'$$$PROG$$$GRPVACON';
+BLBEG,0,1;
+DEFREC,1,R;// Direct Source Register
+DEFREC,1,R;// Direct Source Register
+!$$$PROG$$$GRPVACON:1!CASE,%ST,0,-1,?$$$PROG$$$GRPVACON:2?;
+!$$$PROG$$$GRPVACON:2!!$$$PROG$$$GRPVACON:_1!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,1;
+!$$$PROG$$$GRPVACON:_2!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,2;
+!$$$PROG$$$GRPVACON:_3!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,3;
+!$$$PROG$$$GRPVACON:_4!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,4;
+!$$$PROG$$$GRPVACON:_5!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,5;
+!$$$PROG$$$GRPVACON:_6!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,6;
+!$$$PROG$$$GRPVACON:_7!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,7;
+!$$$PROG$$$GRPVACON:_8!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,8;
+!$$$PROG$$$GRPVACON:_9!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,9;
+!$$$PROG$$$GRPVACON:_10!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,10;
+!$$$PROG$$$GRPVACON:_11!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,11;
+!$$$PROG$$$GRPVACON:_12!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,12;
+!$$$PROG$$$GRPVACON:_13!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,13;
+!$$$PROG$$$GRPVACON:_14!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,14;
+!$$$PROG$$$GRPVACON:_15!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,15;
+!$$$PROG$$$GRPVACON:_16!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,16;
+!$$$PROG$$$GRPVACON:_17!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,17;
+LINENO,17,'..\GRPVACON.MB5',513;
+TYPCON,R,%BR,<1:0>,I,%CON,2;
+MOVDAT,R,%ST,0,R,%BR,<1:0>;
+CALL,?SYS:HCLOSE?;
+!$$$PROG$$$GRPVACON:_18!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,18;
+LINENO,18,'..\GRPVACON.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,1;
+MOVDAT,R,%ST,0,R,%BR,<1:1>;
+CALL,?SYS:HOPEN?;
+!$$$PROG$$$GRPVACON:_19!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,19;
+LINENO,19,'..\GRPVACON.MB5',513;
+SUSPND,%CON,0.5;
+!$$$PROG$$$GRPVACON:_20!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,20;
+!$$$PROG$$$GRPVACON:0!CONSTATE,%CON,-2,%CON,0;
+BLEND;
+PRCEND;
+TSKEND;
+END
+---------------------------------------------------------------------------
+SUBROUTINES :
+BEGIN
+END
+---------------------------------------------------------------------------

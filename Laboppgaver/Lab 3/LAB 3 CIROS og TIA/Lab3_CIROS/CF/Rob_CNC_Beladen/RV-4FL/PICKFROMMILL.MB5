@@ -1,0 +1,98 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PickFromMill
+4 '###
+5 '### ProgramDescription:
+6 '### The robot unloads the mill machine with the workpiece
+7 '###
+8 '### Modifications:
+9 '###  - 26.08.2016		Puneeth Rajendra		Created
+10 '###
+11 '### Process of Operation:
+12 '### The robot picks the workpiece from mill
+13 '##########################################################'
+14 '
+15 '##########################################################'
+16 '		Decleration Of Input parameters for the Program
+17 '##########################################################'
+18 Def Pos PickPose
+19 '
+20 '##########################################################'
+21 '		Decleration Of Input and Output signals
+22 '##########################################################'
+23 '
+24 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+25 Def Io DoorOpened = Bit,16   'CNC door is opened
+26 Def Io PartGripped  = Bit,901      'Work piece gripped by the robot
+27 Def Io FullyClosed  = Bit,902      'Gripper fully closed
+28 '
+29 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+30 Def Io DI_RetryLastStep = Bit,132
+31 Def Io DI_ExitCurrCycle = Bit,133
+32 '
+33 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+34 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+35 '
+36 '##########################################################'
+37 '		Decleration Of Local Variables
+38 '##########################################################'
+39 Def Inte FunErrorStatus
+40 Def Inte GripPoseOffset
+41 '
+42 '###########################################################'
+43 '       Program
+44 '###########################################################'
+45 '>>>>>> Pick from the turn Machine <<<<<<<<'
+46 *RetryStep:
+47  '>>>>>> Initialize the values <<<<<<<<<<'
+48  FunErrorStatus% = 0
+49  ReturnErrorValue = 0
+50  Spd m_Fast
+51  Ovrd m_ProgOvrd
+52  If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+53  '>>>>>> Validate mill machine <<<<<<<<'
+54  If DoorOpened = 0 Then
+55   FunErrorStatus% = M_CNCRdyErr
+56  EndIf
+57  If (FunErrorStatus% > 0) GoTo *ErrorLable
+58  '
+59  '>>>>>> Calculate the Pick position <<<<<<<<<<'
+60  PickPose = P_MillClampPose
+61  '
+62  '>>>>>> Pick from the mill machine <<<<<<<<<<'
+63  Mvs PickPose, -80
+64  Mvs PickPose
+65  Dly 0.5
+66  CallP "GrpClose"
+67  If PartGripped = 0 And FullyClosed = 1 Then
+68   FunErrorStatus% = m_NoWpGrippedErr
+69   CallP "GrpOpen"
+70  Else
+71   CallP "CNCINTFACE16","OpenVice"
+72   FunErrorStatus% = m_ReturnedError
+73   If (m_ReturnedError > 0) Then
+74    CallP "GrpOpen"
+75   EndIf
+76  EndIf
+77  Spd m_Slow
+78  Mvs PickPose, -80
+79  If (m_ReturnedError > 0) GoTo *EndOfProg
+80  If (FunErrorStatus% > 0) GoTo *ErrorLable
+81  '
+82  '>>>>>> Return if no error found <<<<<<<<<<'
+83  Spd m_Fast
+84  Cnt 1, 20,20
+85  Mvs P_HelpLoadPose2
+86  Mov P_HelpLoadPose1
+87  GoTo *EndOfProg
+88  '
+89 *ErrorLable:
+90  ReturnErrorValue = FunErrorStatus%
+91  If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+92  If DI_RetryLastStep = 1 GoTo *RetryStep
+93  If DI_ExitCurrCycle = 1 Then
+94   ReturnErrorValue = 0
+95  EndIf
+96 *EndOfProg:
+97  m_ReturnedError = FunErrorStatus%
+98 

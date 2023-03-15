@@ -1,0 +1,142 @@
+TIMESTAMP: DATE: 17.6.2019 TIME: 13:7:58
+---------------------------------------------------------------------------
+
+MODUL: §$$$PROG$$$3§ 
+COMPILER: cirosCompilerMelfaBasic5.EXE
+VERSION: 6.4.2.16148
+NEXT GLOBAL ADDRESS: <0:0>
+
+---------------------------------------------------------------------------
+EXPORT
+---------------------------------------------------------------------------
+
+PROC: $$$PROG$$$3
+FORMAL PARAMETERS: 
+
+---------------------------------------------------------------------------
+IMPORT
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+SYMBOLIC IRDATA
+---------------------------------------------------------------------------
+DECLARATION :
+BEGIN
+END
+---------------------------------------------------------------------------
+BODY :
+BEGIN
+TSKBEG,0,25,'TASK::$$$PROG$$$3';
+MOVDAT,I,%ST,0,I,%CON,24270;
+!EXT:$$$PROG$$$3!!$$$PROG$$$3:_$$$PROG$$$3!PRCBEG,0,'$$$PROG$$$3';
+BLBEG,0,1;
+DEFREC,1,S;// Direct Source Register
+DEFREC,1,R;// Direct Source Register
+!$$$PROG$$$3:1!CASE,%ST,0,-1,?$$$PROG$$$3:2?;
+!$$$PROG$$$3:2!!$$$PROG$$$3:_1!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,1;
+!$$$PROG$$$3:_2!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,2;
+LINENO,2,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpClose';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_3!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,3;
+LINENO,3,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_4!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,4;
+LINENO,4,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpOpen';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_5!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,5;
+LINENO,5,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_6!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,6;
+LINENO,6,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpClose';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_7!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,7;
+LINENO,7,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_8!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,8;
+LINENO,8,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpOpen';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_9!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,9;
+LINENO,9,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_10!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,10;
+LINENO,10,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpClose';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_11!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,11;
+LINENO,11,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_12!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,12;
+LINENO,12,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpOpen';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_13!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,13;
+LINENO,13,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_14!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,14;
+LINENO,14,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpClose';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_15!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,15;
+LINENO,15,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_16!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,16;
+LINENO,16,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpOpen';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_17!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,17;
+LINENO,17,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_18!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,18;
+LINENO,18,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpClose';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:_19!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,19;
+LINENO,19,'..\3.MB5',513;
+TYPCON,R,%BR,<1:1>,I,%CON,5;
+SUSPND,%BR,<1:1>;
+!$$$PROG$$$3:_20!MOVDAT,I,%BR,<SYS:LINE:0>,I,%CON,20;
+LINENO,20,'..\3.MB5',513;
+CONCAT,S,%BR,<1:0>,S,%CON,'$$$PROG$$$',S,%CON,'GrpOpen';
+MOVDAT,I,%ST,0,I,%CON,-1;
+CALL,-1,S,%BR,<1:0>;
+CONSTATE,%CON,-2,%CON,1;
+!$$$PROG$$$3:0!CONSTATE,%CON,-2,%CON,0;
+BLEND;
+PRCEND;
+TSKEND;
+END
+---------------------------------------------------------------------------
+SUBROUTINES :
+BEGIN
+END
+---------------------------------------------------------------------------

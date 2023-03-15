@@ -1,9 +1,0 @@
-DEF POS P_Home=(20.00,-325.00,245.00,-180.00,-0.00,180.00)(6,0) *// Home position
-DEF POS P_ByPassPalPose=(-209.50,-480.00,171.50,-180.00,0.00,90.00)(6,0) *// Front cover pick position at the bypass station
-DEF POS P_HelpLoadPose1=(435.00,-0.00,315.00,-180.00,-0.57,-180.00)(6,0) *// Help position 1 for loading the machine
-DEF POS P_HelpLoadPose2=(380.00,270.00,336.00,179.79,3.40,-146.53)(6,0) *// Help position 2 for loading the machine
-DEF POS P_MillClampPose=(-47.50,602.81,283.00,179.77,-0.57,-90.15)(6,0) *// Product held at the vice of the Mill machine
-DEF POS P_WorldX180=(180.00,0.00,0.00,0.00,0.00,0.00)
-DEF POS P_WorldZ120=(0.00,0.00,120.00,0.00,0.00,0.00)
-DEF POS P_WorldX50=(50.00,0.00,0.00,0.00,0.00,0.00)
-DEF POS P181=(435.00,0.00,315.00,-180.00,0.00,-180.00)(6,0)

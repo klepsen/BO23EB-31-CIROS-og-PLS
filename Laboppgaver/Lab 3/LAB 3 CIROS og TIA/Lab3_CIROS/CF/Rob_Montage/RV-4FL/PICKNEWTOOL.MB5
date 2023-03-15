@@ -1,0 +1,180 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - PickNewTool
+4 '###
+5 '### Function Input Parameters:
+6 '###  - RequiredGripper
+7 '###
+8 '### ProgramDescription:
+9 '### Check the Current gripper tool
+10 '### Place the current tool if its not the required tool
+11 '### Pick the required tool
+12 '###
+13 '### Modifications:
+14 '###  - 27.07.2016		Puneeth Rajendra		Created
+15 '###
+16 '##########################################################'
+17 '
+18 '##########################################################'
+19 '		Decleration Of Input parameters for the Program
+20 '##########################################################'
+21 Def INTE RequiredGripper 'Requested gripper by the program
+22 FPrm RequiredGripper%
+23 '
+24 '##########################################################'
+25 '		Decleration Of Local Positions
+26 '##########################################################'
+27 Def Pos pStorageTarget
+28 Def Pos pStorageFront
+29 Def Pos pStorageAux
+30 '
+31 '##########################################################'
+32 '		Decleration Of Input and Output signals
+33 '##########################################################'
+34 '>>>>>> OUTPUTS - Robot Controller <<<<<<<<'
+35 Def Io DO_MountLock = Bit,16
+36 '
+37 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+38 Def Io DI_RetryLastStep = Bit,132
+39 Def Io DI_ExitCurrCycle = Bit,133
+40 '
+41 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+42 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+43 '
+44 '##########################################################'
+45 '		Decleration Of Local Variables
+46 '##########################################################'
+47 Def Inte FunErrorStatus
+48 Def Inte CurrentToolNo
+49 '
+50 '###########################################################'
+51 '       Program
+52 '###########################################################'
+53 *RetryStep:
+54 	'>>>>>> Initialize the values <<<<<<<<<<'
+55 	FunErrorStatus% = 0
+56 	ReturnErrorValue = 0
+57 	JOvrd 20
+58 	Ovrd m_ProgOvrd
+59 	Accel 15,15
+60 	If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+61 	'
+62 	'>>>>>> Get the current tool number <<<<<<<<<<'
+63 	CallP "GetCurToolNo"
+64 	CurrentToolNo% = m_CurrentGripper
+65 	'
+66 	'>>>>>> Validate current tool number <<<<<<<<<<'
+67 	If ((CurrentToolNo% < 0) Or (CurrentToolNo% > 4)) Then
+68 		FunErrorStatus% = m_RobotToolError
+69 	EndIf
+70 	If (FunErrorStatus% > 0) GoTo *ErrorLable
+71 	'
+72 	'>>>>>> Return if there is nothing to do <<<<<<<<<<'
+73 	If (RequiredGripper% = CurrentToolNo%) GoTo *EndOfProg
+74 	'
+75 	'>>>>>> Place back the current tool <<<<<<<<<<'
+76 	Select CurrentToolNo%
+77 		Case m_GripperVac
+78 			pStorageTarget = P_GrpStorageVac
+79 			pStorageFront = P_GrpStorageVac + P_ToolXZ180
+80 			pStorageAux = P_GrpStorageVac + P_ToolX180
+81 			Break
+82 		Case m_GripperWP
+83 			pStorageTarget = P_GrpStorageWp
+84 			pStorageFront = P_GrpStorageWp + P_ToolX180
+85 			pStorageAux = P_GrpStorageWp + P_ToolX180
+86 			Break
+87 		Case m_GripperFuse
+88 			pStorageTarget = P_GrpStorageFuse
+89 			pStorageFront = P_GrpStorageFuse + P_ToolX180
+90 			pStorageAux = P_GrpStorageFuse + P_ToolX180
+91 			Break
+92 		Case m_GripperNone
+93 			pStorageTarget = P_GrpStorageWp + P_ToolX180
+94 			pStorageFront = P_GrpStorageWp + P_ToolX180
+95 			pStorageAux = P_GrpStorageWp + P_ToolX180
+96 			Break
+97 		Default
+98 			FunErrorStatus% = m_RobotToolError
+99 			Break
+100 	End Select
+101 	If (FunErrorStatus% > 0) GoTo *ErrorLable
+102 	If (CurrentToolNo% = m_GripperVac) Then
+103 		If (m_IsRobotArmTray = 1) Then
+104 		'
+105 		Else
+106 			Spd m_Fast
+107 			TOOL P_tGripperNone
+108 			Mov P_Home
+109 		EndIf
+110 	ELSE
+111 		Spd m_Fast
+112 		TOOL P_tGripperNone
+113 		Mov P_Home		
+114 		If (CurrentToolNo% <> m_GripperNone) Then
+115 			CallP "GrpOpen"
+116 		EndIf
+117 	EndIf
+118 	Spd m_Fast
+119 	TOOL P_tGripperNone
+120 	Mov pStorageFront
+121 	Prec On
+122 	Spd m_Slow
+123 	Mvs pStorageAux
+124 	Mvs pStorageTarget
+125 	Dly 0.5
+126 	CallP "GrpRelease"
+127 	Mvs pStorageTarget, - 30
+128 	Prec Off
+129 	'
+130 	'>>>>>> Get the new tool <<<<<<<<<<'
+131 	Select RequiredGripper%
+132 		Case m_GripperVac
+133 			pStorageTarget = P_GrpStorageVac
+134 			pStorageFront = P_GrpStorageVac + P_ToolXZ180
+135 			pStorageAux = P_GrpStorageVac + P_ToolX180
+136 			Break
+137 		Case m_GripperWP
+138 			pStorageTarget = P_GrpStorageWp
+139 			pStorageFront = P_GrpStorageWp + P_ToolX180
+140 			pStorageAux = P_GrpStorageWp + P_ToolX180
+141 			Break
+142 		Case m_GripperFuse
+143 			pStorageTarget = P_GrpStorageFuse
+144 			pStorageFront = P_GrpStorageFuse + P_ToolX180
+145 			pStorageAux = P_GrpStorageFuse + P_ToolX180
+146 			Break
+147 		Default
+148 			FunErrorStatus% = m_RobotToolError
+149 			Break
+150 	End Select
+151 	If (FunErrorStatus% > 0) GoTo *ErrorLable
+152 	TOOL P_tGripperNone
+153 	Spd m_Fast
+154 	Prec On
+155 	Mvs pStorageTarget, -30
+156 	Spd m_Slow
+157 	Mvs pStorageTarget
+158 	Dly 0.5
+159 	CallP "GrpLock"
+160 	Mvs pStorageAux
+161 	Mvs pStorageFront
+162 	Prec Off
+163 	If (RequiredGripper% <> m_GripperVac) Then
+164 		CallP "GrpOpen"
+165 		Spd m_Fast
+166 		Mov P_Home
+167 	EndIf
+168 	GoTo *EndOfProg
+169 	'
+170 *ErrorLable:
+171 	ReturnErrorValue = FunErrorStatus%
+172 	If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+173 	If DI_RetryLastStep = 1 GoTo *RetryStep
+174 	If DI_ExitCurrCycle = 1 Then
+175 		ReturnErrorValue = 0
+176 		DO_MountLock = 0
+177 	EndIf
+178 *EndOfProg:
+179 	m_ReturnedError = FunErrorStatus%
+180 

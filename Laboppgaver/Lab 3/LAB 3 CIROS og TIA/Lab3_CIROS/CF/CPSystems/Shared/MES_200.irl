@@ -1,0 +1,1219 @@
+PROGRAM MES_commands;
+
+VAR
+	INPUT BOOL	:	AnswerValid	AT 200;
+	INPUT REAL	:	MyResourceId	AT 200;
+	INPUT REAL	:	I_MClass	AT 201;
+	INPUT REAL	:	I_MNo	AT 202;
+	INPUT REAL	:	I_ErrorState	AT 203;
+	INPUT REAL	:	I_DataLength	AT 204;
+	INPUT REAL	:	I_ResourceID	AT 205;
+	INPUT REAL	:	I_ONo	AT 206;
+	INPUT REAL	:	I_OPos	AT 207;
+	INPUT REAL	:	I_WPNo	AT 208;
+	INPUT REAL	:	I_OpNo	AT 209;
+	INPUT REAL	:	I_BufNo	AT 210;
+	INPUT REAL	:	I_BufPos	AT 211;
+	INPUT REAL	:	I_CarrierID	AT 212;
+	INPUT REAL	:	I_PalletID	AT 213;
+	INPUT REAL	:	I_PalletPos	AT 214;
+	INPUT REAL	:	I_PNo	AT 215;
+	INPUT REAL	:	I_StopperID	AT 216;
+	INPUT REAL	:	I_Dummy	AT 217;
+	INPUT REAL	:	I_StepNo	AT 218;
+	INPUT REAL	:	I_MaxRecords	AT 219;
+	INPUT REAL	:	I_BoxID	AT 220;
+	INPUT REAL	:	I_BoxPos	AT 221;
+	INPUT REAL	:	I_MainOPos	AT 222;
+	INPUT REAL	:	I_BeltNo	AT 223;
+	INPUT REAL	:	I_CNo	AT 224;
+	INPUT REAL	:	I_BoxPNo	AT 225;
+	INPUT REAL	:	I_PalletPNo	AT 226;
+	INPUT REAL	:	I_Aux1Int	AT 227;
+	INPUT REAL	:	I_Aux2Int	AT 228;
+	INPUT REAL	:	I_Aux1DInt	AT 229;
+	INPUT REAL	:	I_Aux2DInt	AT 230;
+	INPUT REAL	:	I_MainPNo	AT 231;
+	INPUT REAL	:	I_Parameter_1	AT 232;
+	INPUT REAL	:	I_Parameter_2	AT 233;
+	INPUT REAL	:	I_Parameter_3	AT 234;
+	INPUT REAL	:	I_Parameter_4	AT 235;
+	INPUT REAL	:	I_Parameter_5	AT 236;
+	INPUT REAL	:	I_Parameter_6	AT 237;
+	INPUT REAL	:	I_Parameter_7	AT 238;
+
+VAR
+	OUTPUT BOOL	:	SendRequest	AT 200;
+	OUTPUT BOOL	:	Automatic_Mode	AT 201;
+	OUTPUT BOOL	:	Manual_Mode	AT 202;
+	OUTPUT BOOL	:	Busy	AT 203;
+	OUTPUT BOOL	:	Reset	AT 204;
+	OUTPUT BOOL	:	Error_L0	AT 205;
+	OUTPUT BOOL	:	Error_L1	AT 206;
+	OUTPUT BOOL	:	Error_L2	AT 207;
+	OUTPUT BOOL	:	MES_Mode	AT 208;
+	OUTPUT REAL	:	O_MClass	AT 200;
+	OUTPUT REAL	:	O_MNo	AT 201;
+	OUTPUT REAL	:	O_ErrorState	AT 202;
+	OUTPUT REAL	:	O_DataLength	AT 203;
+	OUTPUT REAL	:	O_ResourceID	AT 204;
+	OUTPUT REAL	:	O_ONo	AT 205;
+	OUTPUT REAL	:	O_OPos	AT 206;
+	OUTPUT REAL	:	O_WPNo	AT 207;
+	OUTPUT REAL	:	O_OpNo	AT 208;
+	OUTPUT REAL	:	O_BufNo	AT 209;
+	OUTPUT REAL	:	O_BufPos	AT 210;
+	OUTPUT REAL	:	O_CarrierID	AT 211;
+	OUTPUT REAL	:	O_PalletID	AT 212;
+	OUTPUT REAL	:	O_PalletPos	AT 213;
+	OUTPUT REAL	:	O_PNo	AT 214;
+	OUTPUT REAL	:	O_StopperID	AT 215;
+	OUTPUT REAL	:	O_Dummy	AT 216;
+	OUTPUT REAL	:	O_StepNo	AT 217;
+	OUTPUT REAL	:	O_MaxRecords	AT 218;
+	OUTPUT REAL	:	O_BoxID	AT 219;
+	OUTPUT REAL	:	O_BoxPos	AT 220;
+	OUTPUT REAL	:	O_MainOPos	AT 221;
+	OUTPUT REAL	:	O_BeltNo	AT 222;
+	OUTPUT REAL	:	O_CNo	AT 223;
+	OUTPUT REAL	:	O_BoxPNo	AT 224;
+	OUTPUT REAL	:	O_PalletPNo	AT 225;
+	OUTPUT REAL	:	O_Aux1Int	AT 226;
+	OUTPUT REAL	:	O_Aux2Int	AT 227;
+	OUTPUT REAL	:	O_Aux1DInt	AT 228;
+	OUTPUT REAL	:	O_Aux2DInt	AT 229;
+	OUTPUT REAL	:	O_MainPNo	AT 230;
+	OUTPUT REAL	:	O_Parameter_1	AT 231;
+	OUTPUT REAL	:	O_Parameter_2	AT 232;
+	OUTPUT REAL	:	O_Parameter_3	AT 233;
+	OUTPUT REAL	:	O_Parameter_4	AT 234;
+	OUTPUT REAL	:	O_Parameter_5	AT 235;
+	OUTPUT REAL	:	O_Parameter_6	AT 236;
+	OUTPUT REAL	:	O_Parameter_7	AT 237;
+	
+	SEMA 	: mesCommunictaion := 1;
+
+TYPE
+RECORD
+	REAL	:	MClass;
+	REAL	:	MNo;
+	REAL	:	ErrorState;
+	REAL	:	DataLength;
+	REAL	:	ResourceID;
+	REAL	:	ONo;
+	REAL	:	OPos;
+	REAL	:	WPNo;
+	REAL	:	OpNo;
+	REAL	:	BufNo;
+	REAL	:	BufPos;
+	REAL	:	CarrierID;
+	REAL	:	PalletID;
+	REAL	:	PalletPos;
+	REAL	:	PNo;
+	REAL	:	StopperID;
+	REAL	:	Dummy;
+	REAL	:	StepNo;
+	REAL	:	MaxRecords;
+	REAL	:	BoxID;
+	REAL	:	BoxPos;
+	REAL	:	MainOPos;
+	REAL	:	BeltNo;
+	REAL	:	CNo;
+	REAL	:	BoxPNo;
+	REAL	:	PalletPNo;
+	REAL	:	Aux1Int;
+	REAL	:	Aux2Int;
+	REAL	:	Aux1DInt;
+	REAL	:	Aux2DInt;
+	REAL	:	MainPNo;
+	ARRAY [1..7] OF REAL: Parameter;
+ENDRECORD = MESFields;
+
+PROCEDURE saveMESAnswer( OUT MESFields : fields );
+BEGIN
+	fields.MClass 		:= I_MClass;
+	fields.MNo 			:= I_MNo;
+	fields.ErrorState 	:= I_ErrorState;
+	fields.DataLength 	:= I_DataLength;
+	fields.ResourceID 	:= I_ResourceID;
+	fields.ONo 			:= I_ONo;
+	fields.OPos 		:= I_OPos;
+	fields.WPNo 		:= I_WPNo;
+	fields.OpNo 		:= I_OpNo;
+	fields.BufNo 		:= I_BufNo;
+	fields.BufPos 		:= I_BufPos;
+	fields.CarrierID 	:= I_CarrierID;
+	fields.PalletID 	:= I_PalletID;
+	fields.PalletPos 	:= I_PalletPos;
+	fields.PNo 			:= I_PNo;
+	fields.StopperID 	:= I_StopperID;
+	fields.Dummy 		:= I_Dummy;
+	fields.StepNo 		:= I_StepNo;
+	fields.MaxRecords 	:= I_MaxRecords;
+	fields.BoxID 		:= I_BoxID;
+	fields.BoxPos 		:= I_BoxPos;
+	fields.MainOPos 	:= I_MainOPos;
+	fields.BeltNo 		:= I_BeltNo;
+	fields.CNo 			:= I_CNo;
+	fields.BoxPNo 		:= I_BoxPNo;
+	fields.PalletPNo 	:= I_PalletPNo;
+	fields.Aux1Int 		:= I_Aux1Int;
+	fields.Aux2Int 		:= I_Aux2Int;
+	fields.Aux1DInt 	:= I_Aux1DInt;
+	fields.Aux2DInt 	:= I_Aux2DInt;
+	fields.MainPNo 		:= I_MainPNo;
+	fields.Parameter[1]	:= I_Parameter_1;
+	fields.Parameter[2]	:= I_Parameter_2;
+	fields.Parameter[3]	:= I_Parameter_3;
+	fields.Parameter[4]	:= I_Parameter_4;
+	fields.Parameter[5]	:= I_Parameter_5;
+	fields.Parameter[6]	:= I_Parameter_6;
+	fields.Parameter[7] := I_Parameter_7;
+ENDPROC;
+
+PROCEDURE claimCommunication (IN bool : claim);
+BEGIN
+	if( claim ) then
+		SEMA_WAIT mesCommunictaion;
+	else
+{		if( mesCommunictaion ) then
+			writeln( 'MES claim error' );
+		endif;
+}
+		SEMA_SIGNAL mesCommunictaion;
+	endif;
+ENDPROC;
+
+PROCEDURE dataHandshake ();
+BEGIN
+	SendRequest := true;
+	wait for AnswerValid = true;
+	SendRequest := false;
+	wait for AnswerValid = false;
+ENDPROC;
+
+PROCEDURE setStateAuto ( IN bool : onOff );
+BEGIN
+	Automatic_Mode := onOff;
+	Manual_Mode := not onOff;
+ENDPROC;
+
+PROCEDURE setStateBusy ( IN bool : onOff );
+BEGIN
+	Busy := onOff;
+ENDPROC;
+
+PROCEDURE setStateReset ( IN bool : onOff );
+BEGIN
+	Reset := onOff;
+ENDPROC;
+
+PROCEDURE setStateError ( IN int : level );
+BEGIN
+	Error_L0 := level = 0; 
+	Error_L1 := level = 1; 
+	Error_L2 := level = 2; 
+ENDPROC;
+
+PROCEDURE setStateMESMode ( IN bool : onOff );
+BEGIN
+	MES_Mode := onOff;
+ENDPROC;
+
+PROCEDURE PartProduced ();
+VAR
+
+BEGIN
+	O_MClass := 10;
+	O_MNo := 1;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForRsc ( IN real : resourceId );
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 1;
+	O_ResourceID := resourceId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForPallet ( IN real : resourceId; IN real : palletId );
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 2;
+	O_ResourceID := resourceId;
+	O_PalletID := palletId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForCarrier (IN real : resourceId; IN real : carrierId);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 3;
+	O_ResourceID := resourceId;
+	O_CarrierID := carrierId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFirstOpForRsc (IN real : resourceId);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 4;
+	O_ResourceID := resourceId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForOrderInBuf (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 5;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForONoOPos (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 6;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForONoOPosStopper (IN real : oNo; IN real : oPos; IN real : stopperID);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 6;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_StopperID := stopperID;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetDefOpForRsc (IN real : resourceId; IN real : opNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 7;
+	O_ResourceID := resourceId;
+	O_OpNo := opNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpPNoForBuf (IN real : resourceId);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 8;
+	O_ResourceID := resourceId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForFiFo (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 9;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetDefOpPNoForRsc (IN real : resourceId; IN real : opNo; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 10;
+	O_ResourceID := resourceId;
+	O_OpNo := opNo;
+	O_PNo := pNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpInBox (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 11;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFirstOpPosForRscBuf (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 12;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFirstOpForOpNo (IN real : wPNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 13;
+	O_WPNo := wPNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFirstOpForRscBufTF (IN real : resourceId; IN real : opNo; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 14;
+	O_ResourceID := resourceId;
+	O_OpNo := opNo;	
+	O_BufNo := bufNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFirstOpForRscTF2 (IN real : resourceId; IN real : stopperID);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 15;
+	O_ResourceID := resourceId;
+	O_StopperID := stopperID;	
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetOpForASRS (IN real : resourceId; IN real : stopperID);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 25;
+	O_ResourceID := resourceId;
+	O_StopperID := stopperID;	
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE OrderInfo (IN real : oNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 30;
+	O_ONo := oNo;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetCustomerInfo (IN real : oNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 31;
+	O_ONo := oNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetTextForManWP (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 32;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetFinOrder (IN real : oNo);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 41;
+	O_ONo := oNo;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetParSubPosFin (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 43;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE PL_GetOrderToDeliver (IN real : resourceId; IN real : bufNo; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 100;
+	O_MNo := 101;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_MaxRecords := 0;
+	O_Aux1Int := aux1Int;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetPar (IN real : oNo; IN real : oPos; IN real : stepNo; IN real : Parameter_1; IN real : Parameter_2; IN real : Parameter_3; IN real : Parameter_4);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 1;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_StepNo := stepNo;
+	O_DataLength := 4 * 4;
+	O_Parameter_1 := Parameter_1;
+	O_Parameter_2 := Parameter_2;
+	O_Parameter_3 := Parameter_3;
+	O_Parameter_4 := Parameter_4;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetNewOrder (IN real : wPNo; IN real : pNo; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 2;
+	O_WPNo := wPNo;
+	O_PNo := pNo;
+	O_Aux1Int := aux1Int;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetNewOrderDT (IN real : wPNo; IN real : pNo; IN real : aux1Int; IN real : dateTime);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 3;
+	O_WPNo := wPNo;
+	O_PNo := pNo;
+	O_Aux1Int := aux1Int;
+	
+	O_DataLength := 4;
+	O_Parameter_1 := dateTime;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE PlanNewOrder (IN real : wPNo; IN real : pNo; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 4;
+	O_WPNo := wPNo;
+	O_PNo := pNo;
+	O_Aux1Int := aux1Int;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE EnableOrder (IN real : oNo);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 9;
+	O_ONo := oNo;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE OpStart (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 10;
+	O_ONo := oNo;
+	O_OPos := oPos;	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE OpReset (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 15;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE OpEnd (IN real : errorState; IN real : oNo; IN real : oPos; IN real : carrierID);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 20;
+	O_ErrorState := errorState;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_CarrierID := carrierID;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE EndOPos (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 21;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE WriteEnergyData (IN real : oNo; IN real : oPos; IN real : stepNo; IN real : aux1DInt; IN real : aux2DInt);
+VAR
+
+BEGIN
+	O_MClass := 101;
+	O_MNo := 30;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_StepNo := stepNo;
+	O_Aux1DInt := aux1DInt;
+	O_Aux2DInt := aux2DInt;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetShuntForTarget (IN real : sourceId; IN real: sourcePosition; IN real : targetId; IN real : targetPosition);
+VAR
+
+BEGIN
+	O_MClass := 110;
+	O_MNo := 1;
+	O_MaxRecords := 1;
+	
+	O_DataLength := 4 * 4;
+	O_Parameter_1 := sourceId;
+	O_Parameter_2 := sourcePosition;
+	O_Parameter_3 := targetId;
+	O_Parameter_4 := targetPosition;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufForBufNo (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 1;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufForRsc (IN real : resourceId);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 2;
+	O_ResourceID := resourceId;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufRscForBufNo (IN real : resourceId; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 3;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufPos (IN real : resourceId; IN real : bufNo; IN real : bufPos);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 5;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_BufPos := bufPos;	
+	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetPNoCntFromBox (IN real : resourceId; IN real : bufNo; IN real : bufPos; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 6;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_BufPos := bufPos;	
+	O_PNo := pNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufPosForONoOPosPNo (IN real : resourceId; IN real : oNo; IN real : oPos; IN real : bufNo; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 10;
+	O_ResourceID := resourceId;
+	O_ONo := oNo;	
+	O_oPos := oPos;	
+	O_BufNo := bufNo;	
+	O_PNo := pNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufPosIfStore (IN real : resourceId; IN real : bufNo; IN real : palletID);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 11;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_PalletID := palletID;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufPosPNoNe (IN real : resourceId; IN real : bufNo; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 12;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_PNo := pNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufPosForPNo (IN real : resourceId; IN real : bufNo; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 13;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_PNo := pNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBufForONoOPos (IN real : resourceId; IN real : oNo; IN real : oPos; IN real : bufNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 14;
+	O_ResourceID := resourceId;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_BufNo := bufNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetPartsInBufCiros (IN real : resourceId; IN real : bufNo; IN real : starBufPos; IN real : maxRecords);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 16;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_BufPos := starBufPos;	
+	O_MaxRecords := maxRecords;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetPalletInfo (IN real : palletID);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 50;
+	O_palletID := palletID;
+	O_MaxRecords := 0;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetParSubPos (IN real : oNo; IN real : oPos);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 51;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_MaxRecords := 0;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetCarrierInfo (IN real : carrierID);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 60;
+	O_CarrierID := carrierID;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBoxPosFromBuf (IN real : resourceId; IN real : bufNo; IN real : bufPos; IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 70;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_BufPos := bufPos;	
+	O_PNo := pNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBoxPosAll ( IN real : boxID; IN real : boxPNo );
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 71;
+	O_MaxRecords := 0;
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBoxPosAllRsc ( IN real : boxID; IN real : boxPNo );
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 72;
+	O_MaxRecords := 0;
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetBoxPosCiros ( IN real : boxID; IN real : boxPNo; IN real : maxRecords; IN real : boxPos );
+VAR
+
+BEGIN
+	O_MClass := 150;
+	O_MNo := 73;
+	O_MaxRecords := maxRecords;
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+	O_BoxPos := boxPos;
+	dataHandshake();
+ENDPROC
+
+PROCEDURE AddToFiFo (IN real : resourceID; IN real : oNo; IN real : oPos; IN real : bufNo; IN real : palletID; IN real : pNo; IN real : boxID );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 1;
+	O_ResourceID := resourceID;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_BufNo := bufNo;
+	O_PalletID := palletID;	
+	O_PNo := pNo;	
+	O_BoxID := boxID;
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE DelFiFoPos (IN real : resourceID; IN real : bufNo; IN real : bufPos );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 2;
+	O_ResourceID := resourceID;
+	O_BufNo := bufNo;	
+	O_BufPos := bufPos;
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE MoveBuf (IN real : oldResourceID; IN real : oldBufNo; IN real : oldBufPos; IN real : newResourceID; IN real : newBufNo; IN real : newBufPos );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 5;
+
+	O_DataLength := 4 * 6;
+	O_Parameter_1 := oldResourceID;
+	O_Parameter_2 := oldBufNo;
+	O_Parameter_3 := oldBufPos;
+	O_Parameter_4 := newResourceID;
+	O_Parameter_5 := newBufNo;
+	O_Parameter_6 := newBufPos;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetBufPos (IN real : resourceID; IN real : oNo; IN real : oPos; IN real : bufNo; IN real : bufPos; IN real : palletID; IN real : pNo; IN real : boxID );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 10;
+	O_ResourceID := resourceID;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_BufNo := bufNo;
+	O_BufPos := bufPos;
+	O_PalletID := palletID;	
+	O_PNo := pNo;	
+	O_BoxID := boxID;
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE DelBuf (IN real : resourceID; IN real : bufNo );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 12;
+	O_ResourceID := resourceID;
+	O_BufNo := bufNo;
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetPallet (IN real : oNo; IN real : oPos; IN real : palletID; IN real : pNo );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 50;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_PalletID := palletID;	
+	O_PNo := pNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetCarrier (IN real : oNo; IN real : oPos; IN real : carrierID; IN real : pNo );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 60;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_CarrierID := carrierID;	
+	O_PNo := pNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE FillBox ( IN real : pNo; IN real : boxID; IN real : boxPNo );
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 70;
+	O_PNo := pNo;	
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetBoxPos (IN real : oNo; IN real : oPos; IN real : pNo; IN real : boxID; IN real : boxPos; IN real : boxPNo);
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 71;
+	O_ONo := oNo;	
+	O_OPos := oPos;	
+	O_PNo := pNo;	
+	O_BoxID := boxID;	
+	O_BoxPos := boxPos;	
+	O_BoxPNo := boxPNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetBoxONo (IN real : oNo; IN real : boxID; IN real : boxPNo);
+VAR
+
+BEGIN
+	O_MClass := 151;
+	O_MNo := 72;
+	O_ONo := oNo;	
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetTransOrder ( IN real : aux1Int; IN real : aux2Int);
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 1;
+	O_MaxRecords := 0;	
+	O_Aux1Int := aux1Int;	
+	O_Aux2Int := aux2Int;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetTransOrderRsc (IN real : resourceID; IN real : aux1Int; IN real : aux2Int);
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 2;
+	O_ResourceID := resourceID;
+	O_MaxRecords := 0;	
+	O_Aux1Int := aux1Int;	
+	O_Aux2Int := aux2Int;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetTransOrderBox (IN real : resourceID; IN real : boxID; IN real : boxPNo);
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 3;
+	O_ResourceID := resourceID;
+	O_MaxRecords := 0;	
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetTransOrderRscPend (IN real : resourceID; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 4;
+	O_ResourceID := resourceID;
+	O_MaxRecords := 0;	
+	O_Aux1Int := aux1Int;	
+
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetUnknownParts ();
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 5;
+	O_MaxRecords := 0;	
+		
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetToAgvBufForPNo (IN real : pNo);
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 20;
+	O_PNo := pNo;
+	O_MaxRecords := 0;	
+			
+	dataHandshake();
+ENDPROC
+
+PROCEDURE GetToAgvBuf ();
+VAR
+
+BEGIN
+	O_MClass := 200;
+	O_MNo := 21;
+	O_MaxRecords := 0;	
+			
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetTransOrder (IN real : resourceId; IN real : bufNo; IN real : bufPos; IN real : boxID; IN real : boxPNo; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 201;
+	O_MNo := 1;
+	O_ResourceID := resourceId;
+	O_BufNo := bufNo;	
+	O_BufPos := bufPos;	
+	O_BoxID := boxID;	
+	O_BoxPNo := boxPNo;	
+	O_Aux1Int := aux1Int;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE StartTransOrder (IN real : boxID; IN real : aux1Int);
+VAR
+
+BEGIN
+	O_MClass := 201;
+	O_MNo := 2;
+	O_BoxID := boxID;	
+	O_Aux1Int := aux1Int;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE SetTransOrderState (IN real : aux2Int; IN real : aux1DInt);
+VAR
+
+BEGIN
+	O_MClass := 201;
+	O_MNo := 3;
+	O_Aux2Int := aux2Int;	
+	O_Aux1DInt := aux1DInt;	
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE DelTransOrderRsc (IN real : resourceId);
+VAR
+
+BEGIN
+	O_MClass := 201;
+	O_MNo := 5;
+	O_ResourceID := resourceId;
+	
+	dataHandshake();
+ENDPROC
+
+PROCEDURE ChangeRsc (IN real : resourceId; IN real : oNo; IN real : oPos; IN real : stepNo);
+VAR
+
+BEGIN
+	O_MClass := 210;
+	O_MNo := 1;
+	O_ResourceID := resourceId;
+	O_ONo := oNo;
+	O_OPos := oPos;
+	O_StepNo := stepNo;
+	
+	dataHandshake();
+ENDPROC
+
+ENDPROGRAM;

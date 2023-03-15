@@ -1,0 +1,40 @@
+PROGRAM IRL;
+
+FUNCTION RunProgram_Mitsubishi( IN real : progNumber) : bool;
+VAR 
+	OUTPUT BOOL : O_Start AT 41;
+	OUTPUT BOOL : O_ErrReset AT 46;
+	
+	OUTPUT REAL : O_Data AT 2;
+	OUTPUT REAL : O_StopperNr AT 3;
+	
+	
+	INPUT BOOL : I_Run AT 41;
+	INPUT BOOL : I_Error AT 51;
+	
+	bool : ret;
+BEGIN
+	O_Start := false;
+	WAIT FOR NOT I_Run;
+	
+	O_StopperNr := 1;
+	
+	O_Data := progNumber;
+	O_Start := true;
+	WAIT FOR I_Run;
+	
+	ret := I_Error;
+	
+	if( I_Error )then
+		O_ErrReset := true;
+		wait for not I_Error;
+		O_ErrReset := false;
+	endif;
+	
+	O_Start := false;
+	WAIT FOR NOT I_Run;
+		
+	return( ret );
+ENDFCT;
+
+ENDPROGRAM;

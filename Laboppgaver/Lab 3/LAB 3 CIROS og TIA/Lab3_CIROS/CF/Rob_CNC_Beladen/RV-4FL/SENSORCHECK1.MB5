@@ -1,0 +1,82 @@
+1 '##########################################################'
+2 '### ProgramName:
+3 '###  - SensorCheck1
+4 '###
+5 '### ProgramDescription:
+6 '### Check the bypass sensors
+7 '### Check the CNC machine
+8 '###
+9 '### Modifications:
+10 '###  - 29.08.2016		Puneeth Rajendra		Created
+11 '###
+12 '##########################################################'
+13 '
+14 '##########################################################'
+15 '		Decleration Of Input and Output signals
+16 '##########################################################'
+17 '>>>>>> INPUTS - Robot Controller <<<<<<<<'
+18 Def Io ViceClosed = Bit,19   'CNC vice is closed
+19 Def Io CNCStopped = Bit,21  'CNC axis are stopped
+20 Def Io CNCInError = Bit,22  'CNC has error
+21 '
+22 '>>>>>> INPUTS - ProfiNet <<<<<<<<'
+23 Def Io DI_WPPalAvail = Bit,244   'Workpiece pallet is available
+24 Def Io DI_WPAtStopAvail = Bit,245  'Workpiece is present at the stopper position
+25 Def Io DI_RetryLastStep = Bit,132
+26 Def Io DI_ExitCurrCycle = Bit,133
+27 Def Io DI_CNCInFreePose = Bit,135
+28 '
+29 '>>>>>> OUTPUTS - ProfiNet <<<<<<<<'
+30 Def Io ReturnErrorValue = Byte,164 'Return value of Error to the PLC
+31 '
+32 '##########################################################'
+33 '		Decleration Of Local Variables
+34 '##########################################################'
+35 Def Inte FunErrorStatus
+36 '
+37 '###########################################################'
+38 '       Program
+39 '###########################################################'
+40 *RetryStep:
+41  '>>>>>> Initialize the values <<<<<<<<<<'
+42  FunErrorStatus% = 0
+43  ReturnErrorValue = 0
+44  If ((DI_RetryLastStep = 1) Or (DI_ExitCurrCycle = 1)) GoTo *RetryStep
+45  '
+46  '>>>>>> Validate the bypass sensors <<<<<<<<'
+47  If DI_WPAtStopAvail = 0 Then
+48   FunErrorStatus% = m_NoWpGrippedErr
+49  EndIf
+50  If (FunErrorStatus% > 0) GoTo *ErrorLable
+51  '
+52  '>>>>>> Validate the CNC machine <<<<<<<<'
+53  If ((CNCInError = 1) Or (CNCStopped = 0)) Then
+54   FunErrorStatus% = M_CNCRdyErr
+55  EndIf
+56  If (FunErrorStatus% > 0) GoTo *ErrorLable
+57  '
+58  '>>>>>> Validate the CNC machine <<<<<<<<'
+59  If ViceClosed = 1 Then
+60   FunErrorStatus% = M_UndefPartInCNC
+61  EndIf
+62  If (FunErrorStatus% > 0) GoTo *ErrorLable
+63  '
+64  '>>>>>> Validate CNC free pose error <<<<<<<<'
+65  If DI_CNCInFreePose = 0 Then
+66   FunErrorStatus% = M_CNCFreePoseErr
+67  EndIf
+68  If (FunErrorStatus% > 0) GoTo *ErrorLable
+69  '
+70 '>>>>>> Return if no error found <<<<<<<<<<'
+71  GoTo *EndOfProg
+72  '
+73 *ErrorLable:
+74  ReturnErrorValue = FunErrorStatus%
+75  If ((DI_RetryLastStep = 0) And (DI_ExitCurrCycle = 0)) GoTo *ErrorLable
+76  If DI_RetryLastStep = 1 GoTo *RetryStep
+77  If DI_ExitCurrCycle = 1 Then
+78   ReturnErrorValue = 0
+79  EndIf
+80 *EndOfProg:
+81  m_ReturnedError = FunErrorStatus%
+82 

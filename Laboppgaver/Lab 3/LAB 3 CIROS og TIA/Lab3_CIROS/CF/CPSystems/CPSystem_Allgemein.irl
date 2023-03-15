@@ -1,0 +1,45 @@
+PROGRAM IRL;
+
+FROM CPLab 		IMPORT CPLab;
+FROM CPLabBridge      	IMPORT CPLabBridge;
+FROM CPLabLager      	IMPORT CPLabLager;
+FROM CPFactory  	IMPORT CPFactory;
+FROM CPFactoryWeiche  	IMPORT CPFactory_StartWeiche;
+FROM CPFactoryByPass  	IMPORT CPFactory_StartByPass;
+FROM CPFactoryLager   	IMPORT CPFactory_StartLager;
+FROM CPFactoryRoboter 	IMPORT CPFactory_StartRoboter;
+FROM CPMR_Kistenpuffer 	IMPORT CPKistenpuffer;
+		
+VAR 
+	INPUT REAL	:	CIROS_Serie_ID	AT 97;	
+	INPUT REAL	:	CIROS_GM_ID	AT 98;	
+	INPUT REAL	:	CIROS_App_ID	AT 99;	
+BEGIN
+	if( CIROS_Serie_ID = 0 ) then
+		if( CIROS_GM_ID = 0 ) then 
+			CPFactory( Round(CIROS_GM_ID), Round(CIROS_App_ID));		
+		else if( CIROS_GM_ID = 1 ) then 
+			CPFactory_StartWeiche( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		else if( CIROS_GM_ID = 2 ) then 
+			CPFactory_StartByPass( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		else if( CIROS_GM_ID = 3 ) then 
+			CPFactory_StartLager( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		else if( CIROS_GM_ID = 4 ) then 
+			CPFactory_StartRoboter( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		endif; endif; endif; endif; endif;
+	endif;
+	if( CIROS_Serie_ID = 1 ) then
+		if( CIROS_GM_ID = 0 ) then 
+			CPLab( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		else if( CIROS_GM_ID = 1 ) then 
+			CPLabBridge( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		else if( CIROS_GM_ID = 2 ) then 
+			CPLabLager( Round(CIROS_GM_ID), Round(CIROS_App_ID));			
+		endif; endif; endif;
+	endif;
+	if( CIROS_Serie_ID = 2 ) then
+		if( CIROS_GM_ID = 0 ) then 
+			CPKistenpuffer( Round(CIROS_GM_ID), Round(CIROS_App_ID));
+		endif;
+	endif;
+ENDPROGRAM;
