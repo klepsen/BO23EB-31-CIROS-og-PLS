@@ -304,18 +304,33 @@ Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i l
 
 #### Punkter underveis:
 •	Kanskje gjøre alt helt norsk
+
 •	Spørre spørsmål om normally closed og open
+
 •	Fikse float diagrammet for lab 1
+
 •	Fikse float diagrammet fra lab 3
+
 •	Ha bilder på alle slidsene
+
 •	Ha kode som egne slides
+
 •	Skrive om fokus til nå
+
 •	En med opprinnelig Gantt plan og en med oppdatert
+
 •	Vurdere om vi skal legge lab 4 død
+
 •	Lage en liste over hva vi tenker må gjøres for å få lab 4 til å fungere
+
 •	Skriv opp alt vi har brukt i kilder
+
 •	Sette prosjekt planen tidligere i presentasjonen, gjerne rett før «hva er gjort/oppnådd»
+
 •	Lage en slide med intro til labene før de presenteres
+
 •	Få verifisert vansklighetsgraden spørsmål på lab 3 før vi bytter over til neste slide
+
 •	Stille spørsmål før vi switcher slide
+
 
