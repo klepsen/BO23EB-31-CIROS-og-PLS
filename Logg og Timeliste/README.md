@@ -295,3 +295,42 @@ ref cpapplikasjon for virkemåte
 #### Referat:
 Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i løpet, aka. holdt på i et år. De har holdt på med Python, men de kan ikke SCL. På torsdag er det fra 13:20-15:45, noen av de har forhåpentligvis fått lastet ned CIROS før dette, men vi må sannsynligvis hjelpe noen av de med nedlastning, før de kan starte med labbene. De får lengre tid enn kun torsdag, de har hele fredagen til rådighet, og eventuelt på nettet senere for å fullføre.
 
+### Møte med Gerhard 16.03.23
+#### Våre punkter:
+•	Tilbakemelding på midtveispresentasjon
+•	Eventuelle mangler og fiks
+•	Tilbakemelding på lab 2 og 3
+•	Burde vi gjøre mer før skriving på bachelor rapporten?
+
+#### Punkter underveis:
+•	Kanskje gjøre alt helt norsk
+
+•	Spørre spørsmål om normally closed og open
+
+•	Fikse float diagrammet for lab 1
+
+•	Fikse float diagrammet fra lab 3
+
+•	Ha bilder på alle slidsene
+
+•	Ha kode som egne slides
+
+•	Skrive om fokus til nå
+
+•	En med opprinnelig Gantt plan og en med oppdatert
+
+•	Vurdere om vi skal legge lab 4 død
+
+•	Lage en liste over hva vi tenker må gjøres for å få lab 4 til å fungere
+
+•	Skriv opp alt vi har brukt i kilder
+
+•	Sette prosjekt planen tidligere i presentasjonen, gjerne rett før «hva er gjort/oppnådd»
+
+•	Lage en slide med intro til labene før de presenteres
+
+•	Få verifisert vansklighetsgraden spørsmål på lab 3 før vi bytter over til neste slide
+
+•	Stille spørsmål før vi switcher slide
+
+
