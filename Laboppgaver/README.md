@@ -15,3 +15,6 @@
 
 ## Lab 4
  noe noe
+ 
+ ## Generelt
+ [Spørreundersøkelse](https://1drv.ms/w/s!An4Z2t_LGP8EgvRlkgRGiX5SAZpqkA?e=phB2et)
