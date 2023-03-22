@@ -18,3 +18,4 @@
  
  ## Generelt
  [Spørreundersøkelse](https://1drv.ms/w/s!An4Z2t_LGP8EgvRlkgRGiX5SAZpqkA?e=phB2et)
+ [Lab 1 Spørreundersøkelse](https://1drv.ms/w/s!AnjnZHW7OCFb30P_naajoWvmHUa0?e=hk4pdo)
