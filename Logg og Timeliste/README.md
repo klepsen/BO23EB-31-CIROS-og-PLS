@@ -334,3 +334,27 @@ Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i l
 •	Stille spørsmål før vi switcher slide
 
 
+### Test av lab 1
+
+•	Lage instrukser på TIA nedlastning.
+
+•	Instrukser for lisens ut henting.
+
+•	Det er kun brukernavn på innlogging og bruk av VPN.
+
+•	Endre filnavn i manual fra «Lab_1» til «Lab_1_FBD» eller «Lab_1_SCL»
+
+•	Legg til steg for å legge til lisens til VPN og CIROS. Codemeter.  ferdig
+
+•	Endre Lab1_FBD.
+
+•	Når man skal legge til lisens, kan man bare plugge i usb-en, og trykke retry på mangler lisens.
+
+•	Lage en skala for tilbakemelding på lab.
+
+•	Vurdere om vi skulle laget mer ryddige eller illustrative oppgaver. 
+
+•	Skjenke han Daniel med litt jager, vi veit han elska det.
+
+•	Legge inn tips om å stanse CIROS i oppgave 2.6 i lab 1. Dette vil gjøre det enklere å se hvilke tags som endrer verdi.
+
