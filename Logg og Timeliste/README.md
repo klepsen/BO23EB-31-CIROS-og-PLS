@@ -358,3 +358,5 @@ Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i l
 
 •	Legge inn tips om å stanse CIROS i oppgave 2.6 i lab 1. Dette vil gjøre det enklere å se hvilke tags som endrer verdi.
 
+Legge vårt navn på lab oppgavene for credit
+
