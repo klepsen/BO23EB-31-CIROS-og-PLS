@@ -360,3 +360,43 @@ Vi skal møte klassen for å ha test oppgaver. De er 6 stk., de er halv veis i l
 
 Legge vårt navn på lab oppgavene for credit
 
+
+### Møte 13.04 veileder
+
+•	Få med hele prosessen vi har hatt, steg for steg.
+
+•	Må sjekke opp i om vi får lov å skifte tittel.
+
+•	Sette av plass i rapporten for fremtidig arbeid for lignende arbeid, eventuelt forandringer.
+
+•	Diskutere litt rundt høynivåspråk og blokkdiagram.
+
+•	Vise til det vi kunne utvidet bacheloren med, gjerne i punktet diskusjon
+
+•	Huske å gi god dokumentasjon for videre arbeid.
+
+•	Gi en god begrunnelse for hvorfor oppdragsgiver får bruk for dette, gjerne med noen gode eksempler fra virkeligheten.
+
+•	Gi gode innledninger med eksempler under «innledning».
+
+•	Gjerne bruke litt digiwells kanskje.
+
+•	Finne noen artikler som omhandler digital tvilling i industrien.
+
+•	Forklare at dette kan forberede studentene framtidig industri.
+
+•	Litt sånn save the world at dette kan hjelpe å forbedre de på dette.
+
+•	Bruke dette som motivasjon for lab oppgavene.
+
+•	Skrive om behov og motivasjon i innledning.
+
+•	Få litt mer flyt og bindinger i avsnittene.
+
+•	Skrive mer om at vi har laget brukerveiledninger til lærere i «ide til løsningsforslag».
+
+•	Helt i starten bør vi lage en lite med begreper og forklaringer.
+
+•	Vi trenger ikke å gi store forklaringer på hva begrepene betyr, det er deres eget ansvar.
+
+
