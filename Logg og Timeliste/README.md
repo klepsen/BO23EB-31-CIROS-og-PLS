@@ -399,4 +399,24 @@ Legge vårt navn på lab oppgavene for credit
 
 •	Vi trenger ikke å gi store forklaringer på hva begrepene betyr, det er deres eget ansvar.
 
+### Møte med Guttorm 18.04.2023
+
+•	Lab 2 gikk ganske greit
+
+•	Kanskje noen problemer med mappen til lab3, kanskje manglende filer.
+
+•	Se over tekst og bilder på labene.
+
+•	Diskutere i rapporten at det er en langsiktig plan for å lage en reell digital tvilling med EasyPort.
+
+•	Skal prøve å få flere tilbakemeldinger, spesielt fra lab 2 og 3.
+
+•	Lab 1: Kutte ned meste av teorien, og gjøre det mer til en lab enn forelesning.
+
+•	Tenke at de kan navigere TIA-portalen.
+
+•	Passe på at vi har svart på alt vi har fått med i forstudie.
+
+•	Fagskolen har lisens for bilder fra Festo, men usikkert om vi kan bruke de
+
 
