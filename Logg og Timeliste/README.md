@@ -420,3 +420,29 @@ Legge vårt navn på lab oppgavene for credit
 •	Fagskolen har lisens for bilder fra Festo, men usikkert om vi kan bruke de
 
 
+### Referat med veileder 17.04:
+
+•	Vi har egentlig ikke noen andre muligheter for å koble det sammen enn det vi har gjort.
+
+•	Lage forskjellige alternativer, så ende opp med til slutt for å svare på hvilken løsning vi valgte (pga. fagskolen skulle ha det slik).
+
+•	Gjerne ikke kalle det for løsningsalternativ.
+
+•	Sette mer fokus på lab oppgavene i løsningsdelen 3.2.
+
+•	«Vi valgte denne løsningen siden det var et krav fra fagskolen».
+
+•	Dele opp testing i avsnitt i stedet for del kapitler.
+
+•	Dele diskusjonsdelen i 2, teknisk del og lab del.
+
+•	Samme med konklusjonen.
+
+•	Skrive tittel, omarbeidet fra kilde
+
+•	Rekonstruere noen bilder
+
+•	Ellers er bilder ok å bare skrive kilder på.
+
+•	Kalle labene for lab 1 – så navnet
+
