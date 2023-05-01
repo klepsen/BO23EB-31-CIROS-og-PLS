@@ -420,7 +420,7 @@ Legge vårt navn på lab oppgavene for credit
 •	Fagskolen har lisens for bilder fra Festo, men usikkert om vi kan bruke de
 
 
-### Referat med veileder 17.04:
+### Referat med veileder 27.04:
 
 •	Vi har egentlig ikke noen andre muligheter for å koble det sammen enn det vi har gjort.
 
@@ -445,4 +445,5 @@ Legge vårt navn på lab oppgavene for credit
 •	Ellers er bilder ok å bare skrive kilder på.
 
 •	Kalle labene for lab 1 – så navnet
+
 
