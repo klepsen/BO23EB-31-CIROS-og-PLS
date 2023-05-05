@@ -446,4 +446,12 @@ Legge vårt navn på lab oppgavene for credit
 
 •	Kalle labene for lab 1 – så navnet
 
+### Møtereferat Veileder 05.05.23
+
+•	Legg til alle dokument i Appendix(Klipp og lim inn).
+•	Alle filene skal også være med som vedlegg
+•	Skaler ned bildekvaliteten i Word eller PDF slik at filstørrelsen ikke blir for stor.
+•	Sjekk at formatet i hele rapporten er likt
+•	Språket i rapporten bør endres på noen plasser. Eksempel i PDF-fil.
+•	Vi får en PDF med mer spesifikke kommentarer om språket etter hvert.
 
