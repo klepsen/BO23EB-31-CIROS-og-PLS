@@ -446,6 +446,17 @@ Legge vårt navn på lab oppgavene for credit
 
 •	Kalle labene for lab 1 – så navnet
 
+### Møte veileder 11.05.2023
+
+•	Utfylle konklusjonen mer, gi mer sammendrag.
+
+•	Skrive konklusjonen tørr og bestemt «dette ble gjort, dette ble gjort» osv...
+
+•	Skrive ting rett ut, regne med at leseren er fagutdannet, så skriv heller mer omfattende i forkortelse listen.
+
+•	Skrive opp flere kilder.
+
+
 ### Møtereferat Veileder 05.05.23
 
 •	Legg til alle dokument i Appendix(Klipp og lim inn).
