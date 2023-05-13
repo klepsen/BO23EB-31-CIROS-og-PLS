@@ -5,6 +5,8 @@
 [Laboppgave 1 FBD](https://1drv.ms/w/s!An4Z2t_LGP8Egsxkm6CNP4HC8s6pJw?e=ZEaa5l)
 <br>
 [Introduksjon til lab](https://1drv.ms/w/s!An4Z2t_LGP8EgrAnP6pxB3tBjuQjeQ?e=HJPEry)
+<br>
+[Laboppgave 1 Kort](https://1drv.ms/w/s!An4Z2t_LGP8Eg7AmJICQ1wsudBirWQ?e=rgxkkG)
 
 ## Lab 2
 
